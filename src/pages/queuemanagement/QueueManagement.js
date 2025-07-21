@@ -447,7 +447,7 @@
 
 // export default QueueManagement;
 const QueueManagement = () => (
-  <div className='vh-100 bg-white p-3'>
+  <div className='  bg-white '>
     {/* TOPBAR */}
     <div className='d-flex justify-content-between'>
       <h2>Enterprise Queue Management</h2>

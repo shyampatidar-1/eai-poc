@@ -140,34 +140,40 @@
 // export default Sidebar;
 
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  FaTachometerAlt, FaPlug, FaTools, FaListUl, FaEnvelope,
-  FaUserShield, FaKey
-} from 'react-icons/fa';
+import { MdDashboard, MdIntegrationInstructions, MdSecurity, MdOutlinePolicy } from "react-icons/md";
+import { MdOutlineTrackChanges, MdOutlineManageAccounts, MdOutlineSupervisorAccount } from "react-icons/md";
+import { RiGitMergeLine } from "react-icons/ri";
+import { BiTask } from "react-icons/bi";
+import { FaEnvelope } from "react-icons/fa";
+import { MdOutlineEventNote } from "react-icons/md";
 import { useEffect, useState } from 'react';
 import { ROUTES } from '../hooks/routes/routes-constant';
 
 const menuItems = [
-  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <FaTachometerAlt /> },
-  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <FaTachometerAlt /> },
-  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <FaTools /> },
-  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <FaPlug /> },
-  { path: ROUTES?.QUEUE, label: 'Queues', icon: <FaListUl /> },
-  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope /> },
+  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <MdDashboard className="fs-4" /> },
+  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className="fs-4" /> },
+  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className="fs-4" /> },
+  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className="fs-4" /> },
+  { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className="fs-4" /> },
+  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className="fs-4" /> },
   {
     label: 'Role Management',
     path: ROUTES?.ROLE,
-    icon: <FaUserShield />,
+    icon: <MdOutlineManageAccounts className="fs-4" />,
     children: [
-      { path: ROUTES?.ROLE, label: 'Role' },
-      { path: ROUTES?.STAFF, label: 'Staff' },
+      { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className="fs-4" /> },
+      { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className="fs-4" /> },
     ],
   },
-  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <FaKey /> },
-  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <FaKey /> },
+  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className="fs-4" /> },
+  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className="fs-4" /> },
 ];
 
+
+
+
 const Sidebar = () => {
+  const topbarHeight = '64px'; // Customize if your topbar has different height
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const location = useLocation();
 
@@ -185,21 +191,21 @@ const Sidebar = () => {
   }, [location.pathname]);
 
   return (
-    <div className="bg-dark text-white position-fixed h-100 sidebar shadow-sm" style={{ width: '250px' }}>
-      <div className="p-3 border-bottom border-secondary">
+    <div className="bg-dark text-white  sidebar shadow-sm " style={{ width: '300px', height: '100%' }}>
+      {/* <div className="p-3 border-bottom border-secondary">
         <h4 className="text-white">🧩 EAI</h4>
-      </div>
+      </div> */}
 
-      <ul className="nav flex-column mt-3">
+      <ul className="nav flex-column  gap-2 p-3 ">
         {menuItems.map((item, index) => (
-          <li className="nav-item" key={index}>
+          <li className="nav-item " key={index}>
             {item.children ? (
               <>
                 <button
                   className="btn btn-dark w-100 text-start d-flex justify-content-between align-items-center px-3 py-2"
                   onClick={() => setOpenSubmenu(openSubmenu === index ? null : index)}
                 >
-                  <span className="d-flex align-items-center gap-2">
+                  <span className="d-flex align-items-center gap-2 ">
                     {item.icon} {item.label}
                   </span>
                   <span>{openSubmenu === index ? '▲' : '▼'}</span>
@@ -211,7 +217,7 @@ const Sidebar = () => {
                         <NavLink
                           to={child.path}
                           className={({ isActive }) =>
-                            `nav-link  px-3 py-2 ${isActive ? 'bg-light text-dark fw-semibold' : 'text-white'
+                            `nav-link  px-3 py-2  ${isActive ? 'bg-light text-dark fw-semibold ' : 'text-white '
                             }`
                           }
                         >
