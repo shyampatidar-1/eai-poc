@@ -140,31 +140,62 @@
 // export default Sidebar;
 
 import { NavLink, useLocation } from 'react-router-dom';
-import {
-  FaTachometerAlt, FaPlug, FaTools, FaListUl, FaEnvelope,
-  FaUserShield, FaKey
-} from 'react-icons/fa';
+// import {
+//   FaTachometerAlt, FaPlug, FaTools, FaListUl, FaEnvelope,
+//   FaUserShield, FaKey
+// } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { ROUTES } from '../hooks/routes/routes-constant';
+import { MdDashboard, MdIntegrationInstructions, MdOutlineManageAccounts, MdSecurity, MdOutlinePolicy } from 'react-icons/md';
 
+import { MdOutlineTrackChanges, MdOutlineSupervisorAccount } from 'react-icons/md';
+
+import { RiGitMergeLine } from 'react-icons/ri';
+
+import { BiTask } from 'react-icons/bi';
+
+import { FaEnvelope } from 'react-icons/fa';
+
+import { MdOutlineEventNote } from 'react-icons/md';
+
+
+// const menuItems = [
+//   { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <FaTachometerAlt /> },
+//   { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <FaTachometerAlt /> },
+//   { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <FaTools /> },
+//   { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <FaPlug /> },
+//   { path: ROUTES?.QUEUE, label: 'Queues', icon: <FaListUl /> },
+//   { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope /> },
+//   {
+//     label: 'Role Management',
+//     path: ROUTES?.ROLE,
+//     icon: <FaUserShield />,
+//     children: [
+//       { path: ROUTES?.ROLE, label: 'Role' },
+//       { path: ROUTES?.STAFF, label: 'Staff' },
+//     ],
+//   },
+//   { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <FaKey /> },
+//   { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <FaKey /> },
+// ];
 const menuItems = [
-  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <FaTachometerAlt /> },
-  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <FaTachometerAlt /> },
-  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <FaTools /> },
-  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <FaPlug /> },
-  { path: ROUTES?.QUEUE, label: 'Queues', icon: <FaListUl /> },
-  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope /> },
+  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <MdDashboard className='fs-5' /> },
+  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className='fs-5' /> },
+  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className='fs-5' /> },
+  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className='fs-5' /> },
+  { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className='fs-5' /> },
+  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className='fs-5' /> },
   {
     label: 'Role Management',
     path: ROUTES?.ROLE,
-    icon: <FaUserShield />,
+    icon: <MdOutlineManageAccounts className='fs-5' />,
     children: [
-      { path: ROUTES?.ROLE, label: 'Role' },
-      { path: ROUTES?.STAFF, label: 'Staff' },
+      { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className='fs-5' /> },
+      { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className='fs-5' /> },
     ],
   },
-  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <FaKey /> },
-  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <FaKey /> },
+  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className='fs-5' /> },
+  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className='fs-5' /> },
 ];
 
 const Sidebar = () => {

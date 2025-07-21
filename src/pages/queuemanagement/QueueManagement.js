@@ -447,516 +447,565 @@
 
 // export default QueueManagement;
 const QueueManagement = () => (
-  <div className='vh-100 bg-white p-3'>
-    {/* TOPBAR */}
-    <div className='d-flex justify-content-between'>
-      <h2>Enterprise Queue Management</h2>
-      {/* <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-      </svg> */}
-    </div>
+  <>
+    {/* <div className='vh-100 bg-white p-3'> */}
+    <div className='main_datatable'>
+      <div className='d-flex justify-content-between'>
+        <h2>Enterprise Queue Management</h2>
+        <h5 className="fs-3 fw-600 ">Enterprise Queue Management</h5>
+      </div>
 
-    <div className="row gx-4 my-3">
-      <div className="col-3">
-        <div className="input-group mb-0">
-          <span className="input-group-text" id="basic-addon1" style={{ background: "white !important" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by queue name..."
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-          />
+      <div className="row gx-4 my-3">
+        <div className="col-4">
+          <div className="input-group mb-0">
+            <span className="input-group-text" id="basic-addon1" style={{ background: "white !important" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by queue name..."
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+        <div className="d-flex col-8 gap-2">
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pause" viewBox="0 0 16 16">
+                <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5" />
+              </svg>
+              <span className="ms-1 fs-6">Pause</span>
+            </button>
+          </div>
+
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
+                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+              </svg>
+              <span className="ms-2 fs-6">Route Test</span>
+            </button>
+          </div>
+
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+              </svg>
+              <span className="ms-2">Enqueue</span>
+            </button>
+          </div>
+
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+              </svg>
+              <span className="ms-2">Refresh</span>
+            </button>
+          </div>
+
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+              </svg>
+            </button>
+          </div>
+          <div className="">
+            <button className="btn border border-1 w-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
-      <div className="d-flex col-9 gap-2">
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-pause" viewBox="0 0 16 16">
-              <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5" />
-            </svg>
-            <span className="ms-1">Pause</span>
-          </button>
-        </div>
 
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
-              <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
-            </svg>
-            <span className="ms-2">Route Test</span>
-          </button>
+      <div className='row mb-3'>
+        <div className='col-2'>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Type</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
-
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
-            </svg>
-            <span className="ms-2">Enqueue</span>
-          </button>
+        <div className='col-2'>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Any</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
-
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-              <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
-              <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
-            </svg>
-            <span className="ms-2">Refresh</span>
-          </button>
+        <div className='col-2'>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Status</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
-
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
-              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-            </svg>
-          </button>
-        </div>
-        <div className="">
-          <button className="btn border border-1 w-100">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
-              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-            </svg>
-          </button>
+        <div className='col-2'>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Any</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+        </div> <div className='col-2'>
+          <select class="form-select" aria-label="Default select example">
+            <option selected>Any</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
         </div>
       </div>
-    </div>
 
-    <div className='row mb-3'>
-      <div className='col-2'>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Type</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
-      <div className='col-2'>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Any</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
-      <div className='col-2'>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Status</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
-      <div className='col-2'>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Any</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div> <div className='col-2'>
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Any</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
-    </div>
+      {/* MAINCONTENT */}
+      {/* <div className='row'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+            <div className='d-flex justify-content-between'>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
 
-    {/* MAINCONTENT */}
-    <div className='row'>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
-
-          <div className='d-flex justify-content-between'>
-
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row'>
+              <div className='col-4'>
+                <div>
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row'>
-            <div className='col-4'>
-              <div>
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
 
-          <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between'>
 
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
+
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row'>
+              <div className='col-4'>
+                <div>
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row'>
-            <div className='col-4'>
-              <div>
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
 
-          <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between'>
 
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
+
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row'>
+              <div className='col-4'>
+                <div>
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row'>
-            <div className='col-4'>
-              <div>
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
 
-          <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between'>
 
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
+
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row'>
+              <div className='col-4'>
+                <div>
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row'>
-            <div className='col-4'>
-              <div>
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
 
-          <div className='d-flex justify-content-between'>
+            <div className='d-flex justify-content-between'>
 
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
+
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row'>
+              <div className='col-4'>
+                <div>
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row'>
-            <div className='col-4'>
-              <div>
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-      <div className='col-4 '>
-        <div className='shadow-sm p-3 mb-5 bg-white rounded'>
+        <div className='col-4 '>
+          <div className='shadow-sm p-3 mb-5 bg-white rounded'>
 
-          <div className='d-flex justify-content-between '>
+            <div className='d-flex justify-content-between '>
 
-            <div className='d-flex'>
-              <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
-              <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              <div className='d-flex'>
+                <div style={{ width: '20px', height: "20px" }} className='bg-primary rounded-circle'></div>
+                <div style={{ width: '20px', height: "20px" }} className='bg-secondary rounded-circle'></div>
+              </div>
+              <h5>Core.Commands.User</h5>
+              <button className='btn btn-success btn-sm'>Command</button>
+
             </div>
-            <h5>Core.Commands.User</h5>
-            <button className='btn btn-success btn-sm'>Command</button>
+
+            <div className='row '>
+              <div className='col-4'>
+                <div >
+                  <h4>4.12K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4>4.11K</h4>
+                  <small>Messages</small>
+                </div>
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >10</h4>
+                  <p ><small>Pending</small></p>
+                </div>
+              </div>
+              <div className='col-4'>
+
+                <div>
+                  <h4 >0.2%</h4>
+                  <p ><small>Eruror</small></p>
+                </div>
+
+              </div>
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+                  <p ><small>Retries</small></p>
+                </div>
+              </div>
+
+              <div className='col-4'>
+                <div>
+                  <h4 >2</h4>
+
+                </div>
+              </div>
+            </div>
+
+            <div className='d-flex justify-content-between'>
+              <button className='btn btn-light'>Pause</button>
+              <button className='btn btn-light'>Purge</button>
+              <button className='btn btn-light'>Reprocess</button>
+            </div>
 
           </div>
-
-          <div className='row '>
-            <div className='col-4'>
-              <div >
-                <h4>4.12K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4>4.11K</h4>
-                <small>Messages</small>
-              </div>
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >10</h4>
-                <p ><small>Pending</small></p>
-              </div>
-            </div>
-            <div className='col-4'>
-
-              <div>
-                <h4 >0.2%</h4>
-                <p ><small>Eruror</small></p>
-              </div>
-
-            </div>
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                <p ><small>Retries</small></p>
-              </div>
-            </div>
-
-            <div className='col-4'>
-              <div>
-                <h4 >2</h4>
-                {/* <p ><small>Retries</small></p> */}
-              </div>
-            </div>
-          </div>
-
-          <div className='d-flex justify-content-between'>
-            <button className='btn btn-light'>Pause</button>
-            <button className='btn btn-light'>Purge</button>
-            <button className='btn btn-light'>Reprocess</button>
-          </div>
-
         </div>
-      </div>
-    </div>
+      </div> */}
+      <div className="row">
+        {[...Array(6)].map((_, index) => (
+          <div key={index} className="col-12 col-md-6 col-lg-4 mb-3">
+            <div className="shadow-sm p-1 bg-white rounded h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div className="d-flex ">
+                    <div style={{ width: '12px', height: '12px' }} className="bg-primary rounded-circle"></div>
+                    <div style={{ width: '12px', height: '12px' }} className="bg-secondary rounded-circle"></div>
+                  </div>
+                  <p className="m-0 fs-6 fw-bolder">Core.Commands.User</p>
+                  <button className="btn btn-success btn-sm   p-1">Command</button>
+                </div>
 
-  </div >)
+                <div className="row text-center">
+                  <div className="col-4 mb-3">
+                    <h6>4.12K</h6>
+                    <small>Messages</small>
+                  </div>
+                  <div className="col-4 mb-3">
+                    <h6>4.11K</h6>
+                    <small>Messages</small>
+                  </div>
+                  <div className="col-4 mb-3">
+                    <h6>10</h6>
+                    <small>Pending</small>
+                  </div>
+                  <div className="col-4 mb-3">
+                    <h6>0.2%</h6>
+                    <small>Error</small>
+                  </div>
+                  <div className="col-4 mb-3">
+                    <h6>2</h6>
+                    <small>Retries</small>
+                  </div>
+                  <div className="col-4 mb-3">
+                    <h6>2</h6>
+                    <small>&nbsp;</small>
+                  </div>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-between ">
+                <button className="btn btn-light btn-sm">Pause</button>
+                <button className="btn btn-light btn-sm">Purge</button>
+                <button className="btn btn-light btn-sm">Reprocess</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div >
+  </>)
 export default QueueManagement;

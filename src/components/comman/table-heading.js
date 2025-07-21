@@ -51,7 +51,7 @@ const TableHeading = ({
       <div className=" row mb-3">
         <div className="col-12 col-md-6 ps-0 mb-sm-0 mb-2 d-flex align-items-center">
           <div className="mb-md-0 mb-2">
-            <h5 className={`fs-18 fw-600 ${className}`}>{title}</h5>
+            <h5 className={`fs-3 fw-600 ${className}`}>{title}</h5>
           </div>
 
         </div>
@@ -127,7 +127,7 @@ const TableHeading = ({
                 >
                   {"Add " + data}
                   <span >
-                    <img src={PLUS_ICON} alt="" className="plusicon"/>
+                    <img src={PLUS_ICON} alt="" className="plusicon" />
                   </span>
                 </button>
               )}

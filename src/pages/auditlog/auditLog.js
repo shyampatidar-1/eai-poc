@@ -124,7 +124,7 @@ const AuditLog = () => {
   const tableColumnsRole = [
     {
       name: 'Sr. No.',
-      selector: (row, index) => (page - 1) * pageSize + index + 1,
+      selector: (row, index) => index,
       width: '100px',
     },
     {
@@ -199,7 +199,7 @@ const AuditLog = () => {
   };
 
   return (
-    <div className="table-wrapper">
+    <div className='main_datatable'>
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h5 className="mb-0">Audit Logs</h5>
         <div>
@@ -228,7 +228,7 @@ const AuditLog = () => {
       />
 
       {/* Bootstrap Modal */}
-      {/* <div
+      <div
         className="modal fade"
         id="filterModal"
         tabIndex="-1"
@@ -278,52 +278,7 @@ const AuditLog = () => {
             </div>
           </div>
         </div>
-      </div> */}
-      <div
-        className="modal fade"
-        id="filterModal"
-        tabIndex="-1"
-        aria-labelledby="filterModalLabel"
-        aria-hidden="true"
-        ref={filterModalRef}
-      >
-        <div className="modal-dialog modal-dialog-slideout">
-          <div className="modal-content" style={{ minHeight: "100vh", width: "400px", marginLeft: "auto" }}>
-            <div className="modal-header">
-              <h5 className="modal-title" id="filterModalLabel">Apply Filter</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              <div className="mb-3">
-                <label htmlFor="filterAction" className="form-label">Action</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="filterAction"
-                  value={filterValues.action}
-                  onChange={e => setFilterValues(prev => ({ ...prev, action: e.target.value }))}
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="filterUser" className="form-label">User</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="filterUser"
-                  value={filterValues.user}
-                  onChange={e => setFilterValues(prev => ({ ...prev, user: e.target.value }))}
-                />
-              </div>
-              {/* Add more filter fields here if needed */}
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={applyFilter}>Apply Filter</button>
-            </div>
-          </div>
-        </div>
       </div>
-
     </div>
   );
 };

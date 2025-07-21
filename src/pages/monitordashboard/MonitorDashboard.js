@@ -10,6 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import DataTable from 'react-data-table-component';
+import { useState } from 'react';
+import TableLayout from '../../components/layout/table-layout';
 
 ChartJS.register(
   ArcElement,
@@ -22,6 +24,13 @@ ChartJS.register(
 );
 
 export default function MonitorDashboard() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pending, setPending] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState();
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  const [totalRows, setTotalRows] = useState(0);
   const lineChartData = {
     labels: ['7:00', '8:00', '9:00', '10:00', '11:00'],
     datasets: [
@@ -110,6 +119,7 @@ export default function MonitorDashboard() {
     { name: 'Time', selector: row => row.time, sortable: true },
     {
       name: 'Actions',
+      width: '200px',
       cell: row => (
         <div className="d-flex gap-2">
           <button className="btn btn-sm btn-primary">Reprocess</button>
@@ -133,8 +143,8 @@ export default function MonitorDashboard() {
   return (
     <div className="container" style={{ background: '#f3f4f6', minHeight: '100vh' }}>
       <h4 className="mb-4 fw-semibold">Monitoring Dashboard</h4>
-      <div className="row g-4">
-        <div className="col-12 col-lg-8 d-flex flex-column gap-4">
+      <div className="row g-3">
+        <div className="col-12 col-lg-8 d-flex flex-column gap-3">
           <div className="bg-white p-4 rounded-4 shadow-sm">
             <h5 className="mb-3 text-secondary">Process Health</h5>
             <div className="row g-3">
@@ -149,7 +159,7 @@ export default function MonitorDashboard() {
             </div>
           </div>
 
-          <div className="row g-4">
+          <div className="row g-3">
             <div className="col-12 col-md-6">
               <div className="bg-white p-4 rounded-4 shadow-sm">
                 <h6 className="text-secondary mb-3">Errors by Type</h6>
@@ -175,7 +185,7 @@ export default function MonitorDashboard() {
           </div>
         </div>
 
-        <div className="col-12 col-lg-4 d-flex flex-column gap-4">
+        <div className="col-12 col-lg-4 d-flex flex-column gap-3">
           <div className="bg-white p-4 rounded-4 shadow-sm" style={{ height: '300px' }}>
             <h6 className="text-secondary mb-2">Uptime</h6>
             <h3 className="fw-bold text-primary mb-3">99.9%</h3>
@@ -210,7 +220,7 @@ export default function MonitorDashboard() {
         </div>
 
         <div className="col-12">
-          <div className="bg-white p-4 rounded-4 shadow-sm" style={{ height: '300px' }}>
+          <div className="bg-white p-4 rounded-4 shadow-sm" style={{ height: '350px' }}>
             <h6 className="text-secondary mb-3">Load Distribution</h6>
             <Line data={lineChartData} options={options} />
             <div className="mt-2 text-muted small d-flex justify-content-center gap-3">
@@ -222,9 +232,23 @@ export default function MonitorDashboard() {
         </div>
 
         <div className="col-12">
-          <div className="bg-white p-4 rounded-4 shadow-sm">
+          <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-3">Failed Transactions</h6>
-            <DataTable columns={columns} data={data} noHeader pagination responsive highlightOnHover dense />
+            <TableLayout
+              _tblColumns={columns}
+              _rowData={data}
+              pending={pending}
+              pagination={true}
+              selectableRows={false}
+              setPending={setPending}
+              _totalRows={totalRows}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              setPage={setPage}
+              setSortColumn={setSortColumn}
+              setSortDirection={setSortDirection}
+            />
+            {/* <DataTable columns={columns} data={data} noHeader pagination responsive highlightOnHover dense /> */}
           </div>
         </div>
       </div>

@@ -1,62 +1,123 @@
+import { useRef, useState } from "react";
+import TableLayout from "../../components/layout/table-layout";
+import TableHeading from "../../components/comman/table-heading";
+
 const Connectors = () => {
+  const [pending, setPending] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState();
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  const [totalRows, setTotalRows] = useState(0);
+  const [rowData, setRowData] = useState([
+    {
+      id: 1,
+      name: 'JDBC Connector',
+      type: 'Database',
+      status: 'Connected',
+      endpoint: 'jdbc:/.../mydb',
+      protocol: 'JDBC',
+    },
+    {
+      id: 2,
+      name: 'Salesforce Connector',
+      type: 'Application',
+      status: 'Connected',
+      endpoint: 'https://.../api',
+      protocol: 'SOAP',
+    },
+    {
+      id: 3,
+      name: 'FTP Connector',
+      type: 'File',
+      status: 'Connected',
+      endpoint: 'ftp://.../data',
+      protocol: 'FTP',
+    },
+    {
+      id: 4,
+      name: 'HTTP Connector',
+      type: 'Web Service',
+      status: 'Disconnected',
+      endpoint: 'http://.../api',
+      protocol: 'HTTP',
+    }
+
+  ]);
+
+  const tableColumnsRole = [
+    {
+      name: 'Sr. No.',
+      selector: (row, index) => index + 1,
+      width: '100px',
+    },
+    {
+      name: 'Name',
+      selector: row => row.name,
+      sortable: true,
+    },
+    {
+      name: 'Type',
+      selector: row => row.type,
+      sortable: true,
+    },
+    {
+      name: 'Status',
+      selector: row => <p className={`rounded-2 px-2 text-white  mb-0 ${row?.status === "Connected" ? "bg-success" : "bg-danger"}`}>{row.status}</p>,
+    },
+    {
+      name: 'Endpoint',
+      selector: row => row.endpoint,
+    },
+    {
+      name: 'Protocol',
+      selector: row => row.protocol,
+    },
+  ];
+  const modalRef = useRef(null);
+
+  const handleAdd = () => {
+    const modal = new window.bootstrap.Modal(modalRef.current);
+    modal.show();
+  };
   return (
     <>
-      <div className="">
-        <div className="row">
-          {/* Main Content */}
-          <div className="col-md-12 ">
-            <div className="d-flex justify-content-between align-items-center mb-4">
-              <h3>Connectors</h3>
-              <button className="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>
-            </div>
-
-            <table className="table table-bordered table-hover bg-white">
-              <thead className="table-light">
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Endpoint</th>
-                  <th>Protocol</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>JDBC Connector</td>
-                  <td>Database</td>
-                  <td><span className="badge bg-success">Connected</span></td>
-                  <td>jdbc:/.../mydb</td>
-                  <td><strong>JDBC</strong></td>
-                </tr>
-                <tr>
-                  <td>Salesforce Connector</td>
-                  <td>Application</td>
-                  <td><span className="badge bg-success">Connected</span></td>
-                  <td>https://.../api</td>
-                  <td><strong>SOAP</strong></td>
-                </tr>
-                <tr>
-                  <td>FTP Connector</td>
-                  <td>File</td>
-                  <td><span className="badge bg-success">Connected</span></td>
-                  <td>ftp://.../data</td>
-                  <td><strong>FTP</strong></td>
-                </tr>
-                <tr>
-                  <td>HTTP Connector</td>
-                  <td>Web Service</td>
-                  <td><span className="badge bg-danger">Disconnected</span></td>
-                  <td>http://.../api</td>
-                  <td><strong>HTTP</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div className="main_datatable">
+        <TableHeading
+          title="Connectors"
+          showsearchinput={false}
+          data="Create "
+          showbutton={true}
+          addButtonClick={handleAdd}
+        />
+        <div className="table-wrapper">
+          <TableLayout
+            _tblColumns={tableColumnsRole}
+            _rowData={rowData}
+            pending={pending}
+            pagination={true}
+            selectableRows={false}
+            setPending={setPending}
+            _totalRows={totalRows}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            setPage={setPage}
+            setSortColumn={setSortColumn}
+            setSortDirection={setSortDirection}
+          />
         </div>
       </div>
 
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ref={modalRef}
+      >
         <div class="modal-dialog modal-dialog-centered modal-md">
           <div class="modal-content">
             <div class="modal-header">
