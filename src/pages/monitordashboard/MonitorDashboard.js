@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import DataTable from 'react-data-table-component';
+
 import { useState } from 'react';
 import TableLayout from '../../components/layout/table-layout';
 
