@@ -18,9 +18,7 @@ h5,
 h6,
 p {
   margin: 0px !important;
-
 }
-
 
 .bg-light {
   background-color: #f9fafb !important;
@@ -43,8 +41,6 @@ p {
 .shadow-sm {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-
-
 
 .rounded-4 {
   border-radius: 0.75rem !important;
@@ -157,8 +153,6 @@ body {
   margin-bottom: 8px;
 }
 
-
-
 .step-box {
   background: #fff;
   border: 2px solid #0d6efd;
@@ -256,7 +250,6 @@ body {
 }
 
 /* QueueManagement  */
-
 
 /* Queue Management Styles */
 .queue-card {
@@ -367,11 +360,16 @@ body {
   display: inline-block;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 /* side bar css */
 
 /* Sidebar link default */
 .sidebar .nav-link {
   color: #d1d5db;
+  border-radius: 10px;
   /* light gray */
   transition: background-color 0.2s ease, color 0.2s ease;
 }
@@ -406,8 +404,6 @@ body {
   /* light blue for submenu active */
 }
 
-
-
 /* log in css */
 .login-bg-img-div {
   width: 100%;
@@ -417,8 +413,6 @@ body {
   width: 100%;
   object-fit: contain;
 }
-
-
 
 /* table css */
 .main_datatable {
@@ -434,5 +428,21 @@ body {
 /* topbar */
 
 .topbar {
-  height: 62px;
+  height: 63px;
+}
+
+/* modal right side */
+.modal-dialog-right {
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin: 0;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
+  max-width: 400px;
+}
+
+.modal.fade.show .modal-dialog-right {
+  transform: translateX(0);
 }
