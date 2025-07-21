@@ -17,11 +17,11 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
   return (
     <div className="topbar bg-dark text-white d-flex justify-content-between align-items-center px-4 py-3 shadow-sm ">
-      <div className="navbar-brand m-0 fw-semibold fs-5 ">
+      <div className="navbar-brand m-0 fw-semibold fs-6">
 
         <GiHamburgerMenu className="cursor-pointer" onClick={handleToggleSidebar} />
 
-        <span className="ms-2 ">Enterprise Integration</span>
+        <span className="ms-2">Enterprise Integration</span>
       </div>
       <div className="d-flex gap-3 align-items-center">
         {/* <span className="text-white">Logs</span>
