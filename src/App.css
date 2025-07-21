@@ -1,0 +1,495 @@
+body {
+  background-color: #f8f9fa;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px !important;
+
+}
+
+
+.bg-light {
+  background-color: #f9fafb !important;
+}
+
+.text-muted {
+  color: #6b7280 !important;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-outline-secondary {
+  border-color: #d1d5db;
+  color: #6b7280;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.rounded-4 {
+  border-radius: 0.75rem !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.text-warning {
+  color: #f59e0b !important;
+}
+
+.text-success {
+  color: #10b981 !important;
+}
+
+.text-danger {
+  color: #ef4444 !important;
+}
+
+/* dashboard css file */
+
+.custom-navbar {
+  background-color: #0d1b45 !important;
+}
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.metric {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.dot.green {
+  background-color: #28a745;
+}
+
+/*  */
+
+/* Common */
+body {
+  background-color: #f8f9fa;
+}
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+.metric {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.dot.green {
+  background-color: #28a745;
+}
+
+/* Navbar */
+.custom-navbar {
+  background-color: #0d1b45 !important;
+}
+
+/* CreateIntegration Styles */
+.header-bar {
+  background-color: #0d3f91;
+  color: #ffffff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  background-color: #ffffff;
+  border-right: 1px solid #dee2e6;
+  height: 100vh;
+}
+
+.content h6 {
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.content .btn {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 8px;
+}
+
+
+
+.step-box {
+  background: #fff;
+  border: 2px solid #0d6efd;
+  border-radius: 10px;
+  padding: 15px 20px;
+  text-align: center;
+  min-width: 140px;
+  font-weight: 500;
+  margin: 10px;
+}
+
+.arrow-right::after {
+  content: "→";
+  font-size: 1.5rem;
+  margin: 0 10px;
+  color: #0d6efd;
+}
+
+.arrow-down::after {
+  content: "↓";
+  font-size: 1.5rem;
+  margin: 0 10px;
+  color: #0d6efd;
+}
+
+.gateway {
+  border-style: dashed;
+  border-color: #ffc107;
+}
+
+.end {
+  border-color: red;
+  background-color: #ffe6e6;
+}
+
+.properties-panel {
+  background-color: #ffffff;
+  border-left: 1px solid #dee2e6;
+  padding: 20px 0px;
+  height: 100vh;
+  /* overflow-y: auto; */
+}
+
+.vertical-line {
+  border-left: 2px dashed #ffc107;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.column-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.warning-box {
+  color: #856404;
+  background-color: #fff3cd;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+.form-label {
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* Connectors Page Styles */
+.sidebar-connectors {
+  height: 100vh;
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem;
+}
+
+.sidebar-connectors a {
+  color: #bdc3c7;
+  text-decoration: none;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.sidebar-connectors a.active {
+  font-weight: bold;
+  color: white;
+}
+
+/* QueueManagement  */
+
+
+/* Queue Management Styles */
+.queue-card {
+  border: 1px solid #e1e4e8;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.queue-badge {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  color: white;
+}
+
+.badge-command {
+  background-color: #00b894;
+}
+
+.badge-event {
+  background-color: #0984e3;
+}
+
+.badge-dlq {
+  background-color: #636e72;
+}
+
+.badge-retry {
+  background-color: #6c5ce7;
+}
+
+.badge-status {
+  background-color: #00cec9;
+}
+
+.card-metric {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.action-btn {
+  margin-right: 0.5rem;
+}
+
+.tab-footer {
+  border-top: 1px solid #dee2e6;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+}
+
+.tab-footer a {
+  text-decoration: none;
+  color: #0d6efd;
+  font-weight: 500;
+  margin-right: 1.5rem;
+}
+
+.tab-footer a.active {
+  border-bottom: 2px solid #0d6efd;
+  padding-bottom: 0.2rem;
+}
+
+/* massage traceker */
+/* Message Tracker Styles */
+body {
+  background-color: #f8f9fa;
+}
+
+.topbar {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 1rem;
+}
+
+.topbar a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.status-success {
+  color: green;
+  font-weight: bold;
+}
+
+.status-failure {
+  color: red;
+  font-weight: bold;
+}
+
+.message-flow-box {
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+.flow-step {
+  background-color: #0d6efd;
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.3rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
+/* side bar css */
+
+/* .layout {
+  min-height: 100vh;
+
+}
+
+.sidebar {
+  width: 230px;
+  background-color: #0D1B45;
+  color: white;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  font-size: 1.2rem;
+}
+
+.sidebar-link {
+  color: white;
+  padding: 6px 6px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: #314d6a;
+}
+
+.sidebar-link.active {
+  background-color: #18285a;
+  color: white;
+} */
+
+/* Sidebar link default */
+.sidebar .nav-link {
+  color: #d1d5db;
+  /* light gray */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover effect */
+.sidebar .nav-link:hover {
+  background-color: #374151;
+  /* hover dark bg */
+  /* color: #ffffff !important; */
+}
+
+/* Active state */
+.sidebar .nav-link.active {
+  background-color: #1f2937;
+  /* darker blue/gray */
+  color: #ffffff !important;
+  font-weight: 600;
+  border-left: 4px solid #3b82f6;
+  /* blue left border for active */
+}
+
+/* Submenu styling */
+.sidebar .nav .nav-link {
+  padding-left: 2rem;
+  font-size: 0.95rem;
+}
+
+/* Submenu active link */
+.sidebar .nav .nav-link.active {
+  background-color: #1f2937;
+  color: #3b82f6 !important;
+  /* light blue for submenu active */
+}
+
+
+
+/* log in css */
+.login-bg-img-div {
+  width: 100%;
+}
+
+.login-bg-img {
+  width: 100%;
+  object-fit: contain;
+}
+
+
+
+/* table css */
+.main_datatable {
+  background-color: #ffff;
+  padding: 18px;
+  border-radius: 8px;
+}
+
+.buttonColor {
+  background-color: #0d6efd;
+}
+
+/* topbar */
+
+.topbar {
+  height: 62px;
+}
+
+/* modal right side */
+.modal-dialog-right {
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin: 0;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-out;
+  max-width: 400px;
+}
+
+.modal.fade.show .modal-dialog-right {
+  transform: translateX(0);
+}
