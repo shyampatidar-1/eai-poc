@@ -198,7 +198,7 @@ const Sidebar = () => {
         <h4 className="text-white">🧩 EAI</h4>
       </div> */}
 
-      <ul className="nav flex-column  gap-2 p-3 ">
+      <ul className="nav flex-column  gap-1 p-2 ">
         {menuItems.map((item, index) => (
           <li className="nav-item " key={index}>
             {item.children ? (

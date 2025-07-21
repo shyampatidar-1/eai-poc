@@ -1,107 +1,3 @@
-// import React from 'react'
-// // import TableLayout from '../../components/layout/table-layout'
-
-// // const auditLog = () => {
-// //   return (
-// //     <div>
-// //       <div className="table-wrapper">
-// //         <TableLayout
-// //           _tblColumns={tableColumnsRole}
-// //           _rowData={rowData}
-// //           pending={pending}
-// //           pagination={true}
-// //           selectableRows={false}
-// //           setPending={setPending}
-// //           _totalRows={totalRows}
-// //           pageSize={pageSize}
-// //           setPageSize={setPageSize}
-// //           setPage={setPage}
-// //           setSortColumn={setSortColumn}
-// //           setSortDirection={setSortDirection}
-// //         />
-// //       </div>
-// //     </div>
-// //   )
-// // }
-
-// // export default auditLog
-
-// import { useState, useEffect } from 'react';
-// import TableLayout from '../../components/layout/table-layout';
-
-// const AuditLog = () => {
-//   const [rowData, setRowData] = useState([]);
-//   const [pending, setPending] = useState(true);
-//   const [totalRows, setTotalRows] = useState(0);
-//   const [pageSize, setPageSize] = useState(10);
-//   const [page, setPage] = useState(1);
-//   const [sortColumn, setSortColumn] = useState('');
-//   const [sortDirection, setSortDirection] = useState('');
-
-//   const tableColumnsRole = [
-//     {
-//       name: 'Sr. No.',
-//       selector: (row, index) => (page - 1) * pageSize + index + 1,
-//       width: '100px',
-//     },
-//     {
-//       name: 'Timestamp',
-//       selector: row => row.timestamp,
-//       sortable: true,
-//     },
-//     {
-//       name: 'Action',
-//       selector: row => row.action,
-//       sortable: true,
-//     },
-//     {
-//       name: 'Description',
-//       selector: row => row.description,
-//     },
-//     {
-//       name: 'User',
-//       selector: row => row.user,
-//     },
-//     {
-//       name: 'IP Address',
-//       selector: row => row.ip,
-//     },
-//   ];
-
-//   // Simulate loading
-//   useEffect(() => {
-//     setPending(true);
-
-//     setTimeout(() => {
-//       const data = []; // No data available
-//       setRowData(data);
-//       setTotalRows(data.length);
-//       setPending(false);
-//     }, 500); // Simulate API delay
-//   }, [page, pageSize, sortColumn, sortDirection]);
-
-//   return (
-//     <div className="table-wrapper">
-//       <TableLayout
-//         _tblColumns={tableColumnsRole}
-//         _rowData={rowData}
-//         pending={pending}
-//         pagination={true}
-//         selectableRows={false}
-//         setPending={setPending}
-//         _totalRows={totalRows}
-//         pageSize={pageSize}
-//         setPageSize={setPageSize}
-//         setPage={setPage}
-//         setSortColumn={setSortColumn}
-//         setSortDirection={setSortDirection}
-//       />
-//     </div>
-//   );
-// };
-
-// export default AuditLog;
-
 import React, { useState, useEffect, useRef } from 'react';
 import TableLayout from '../../components/layout/table-layout';
 
@@ -201,7 +97,7 @@ const AuditLog = () => {
   return (
     <div className='main_datatable'>
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="mb-0">Audit Logs</h5>
+        <h5 className="fs-3 fw-600 ">Audit Logs</h5>
         <div>
           <button className="btn btn-outline-secondary me-2" onClick={openFilterModal}>
             Filter
@@ -243,7 +139,7 @@ const AuditLog = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">
-              <div className="mb-3">
+              <div className="">
                 <label htmlFor="filterAction" className="form-label">Action</label>
                 <input
                   type="text"
@@ -255,7 +151,7 @@ const AuditLog = () => {
                   }
                 />
               </div>
-              <div className="mb-3">
+              <div className="">
                 <label htmlFor="filterUser" className="form-label">User</label>
                 <input
                   type="text"

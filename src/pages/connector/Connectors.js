@@ -128,19 +128,19 @@ const Connectors = () => {
             <div class="modal-body">
               <form>
 
-                <div class="mb-3">
+                <div class="">
                   <label for="workflowName" class="form-label">Name</label>
                   <input type="text" class="form-control" id="workflowName" placeholder="Enter workflow name" />
                 </div>
 
 
-                <div class="mb-3">
+                <div class="">
                   <label for="workflowDescription" class="form-label">Description</label>
                   <textarea class="form-control" id="workflowDescription" rows="3" placeholder="Enter workflow description"></textarea>
                 </div>
 
 
-                <div class="mb-3">
+                <div class="">
                   <label class="form-label">Design a Workflow</label>
                   <div class="border border-dashed rounded d-flex align-items-center justify-content-center py-4" style={{ "cursor": "pointer" }}>
                     <div class="text-center text-primary">

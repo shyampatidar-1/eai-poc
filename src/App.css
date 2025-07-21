@@ -10,6 +10,68 @@ body {
   margin: 0;
 }
 
+:root {
+  --white: #ffffff;
+  --buttonColor: #0099ff;
+  --buttonlightRedColor: #ffe2e2;
+  --buutonlightPrimeryColor: #c0e6ff;
+  --buttonLightColor: #f0f9ff;
+  --headingColor: #0099ff;
+  --grayparaColor: #808080;
+  --lightgrayColor: #e6e6e6;
+  --dangerColor: #d30404;
+  --dangerColorLight: #fbc3c3;
+  --successColor: #409261;
+  --successColorDark: #008000;
+  --successColorLight: #dffddd;
+  --placeHolderColor: #9198a3;
+  --labelColor: #344054;
+  --inputColor: #666;
+  --backgroundgrayColor: #f5f5f5;
+  --backgroundOffWhiteColor: #f8f8f8;
+  --darkColor: #111111;
+  --lightColor: #ffffff;
+  --footerparaColor: #cccccc;
+  --backroundColor: #0167ff;
+  --barchartColor: #3167f2;
+  --dashboardIconbgColor: #1673ff;
+  --overlayBackgroundColor: #0099ffa3;
+  --btnPrimaryBackground: #09f;
+  --btnSecondaryBackground: #e4e4e4;
+  --btnSecondaryColor: #808080;
+  --borderTopLogoutColor: #97c1ff;
+  --lightPinkColor: #ffe5e5;
+  --lightOrangeColor: #fff2dd;
+  --btnbackground: #c2e7ff;
+  --disbledColor: rgb(233, 236, 239);
+  --darkOrangeColor: #d98634;
+  --halfWhite: rgba(255, 255, 255, 0.5);
+  --font12: 12px;
+  --font13: 13px;
+  --font14: 14px;
+  --font16: 16px;
+  --font18: 18px;
+  --font20: 20px;
+  --font22: 22px;
+  --font24: 24px;
+  --font26: 26px;
+  --font28: 28px;
+  --font30: 30px;
+  --font32: 32px;
+  --font35: 35px;
+  --font40: 40px;
+  --font45: 45px;
+  --font55: 55px;
+  --fontw3: 300;
+  --fontw4: 400;
+  --fontw5: 500;
+  --fontw6: 600;
+}
+
+a {
+  text-decoration: none;
+}
+
 h1,
 h2,
 h3,
@@ -18,6 +80,68 @@ h5,
 h6,
 p {
   margin: 0px !important;
+}
+
+input::placeholder {
+  font-size: var(--font14);
+  /* color: var(--placeHolderColor); */
+}
+
+/* common font-size css */
+.fs-12 {
+  font-size: var(--font12);
+}
+
+.fs-13 {
+  font-size: var(--font13);
+}
+
+.fs-14 {
+  font-size: var(--font14);
+}
+
+.fs-16 {
+  font-size: var(--font16);
+}
+
+.fs-18 {
+  font-size: var(--font18);
+}
+
+.fs-20 {
+  font-size: var(--font20);
+}
+
+.fs-22 {
+  font-size: var(--font22);
+}
+
+.fs-26 {
+  font-size: var(--font26);
+}
+
+.fs-35 {
+  font-size: var(--font35);
+}
+
+.fs-45 {
+  font-size: var(--font35);
+}
+
+.fs-55 {
+  font-size: var(--font55);
+}
+
+.fw-500 {
+  font-weight: var(--fontw5);
+}
+
+.fw-400 {
+  font-weight: var(--fontw4);
+}
+
+.fw-600 {
+  font-weight: var(--fontw6);
 }
 
 .bg-light {
@@ -416,7 +540,8 @@ body {
 
 /* table css */
 .main_datatable {
-  background-color: #ffff;
+  /* background-color: #ffff; */
+  background-color: #f3f4f6;
   padding: 18px;
   border-radius: 8px;
 }

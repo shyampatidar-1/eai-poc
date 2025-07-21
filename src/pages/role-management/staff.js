@@ -72,7 +72,7 @@ const Staff = () => {
 
 
   return (
-    <div className="main_datatable my-lg-3 mt-1">
+    <div className="main_datatable">
       <div className="tab-pane fade show active">
         <TableHeading
           title="Staff"

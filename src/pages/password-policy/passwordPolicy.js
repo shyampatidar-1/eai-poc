@@ -70,21 +70,22 @@ const PasswordPolicy = () => {
             <div className="col-md-4 mb-4" key={policy.id}>
               <div className="card shadow-sm">
                 <div className="card-body">
-                  <h5 className="card-title">Policy #{index + 1}</h5>
+                  <h5 className="card-title mb-2">Policy #{index + 1}</h5>
                   {/* <p>Policy Name: <span>{policy.name}</span></p> */}
+
                   <ul className="list-unstyled small mb-1">
 
-                    <li><strong className=" ">Policy Name:</strong> {policy.name}</li>
-                    <li><strong>Min Length:</strong> {policy.minLength}</li>
-                    <li><strong>Uppercase:</strong> {policy.uppercase.toString()}</li>
-                    <li><strong>Lowercase:</strong> {policy.lowercase.toString()}</li>
-                    <li><strong>Special Char:</strong> {policy.specialChar.toString()}</li>
-                    <li><strong>Number:</strong> {policy.number.toString()}</li>
-                    <li><strong>Expire (Days):</strong> {policy.expireDays}</li>
-                    <li><strong>Warning (Days):</strong> {policy.warningDays}</li>
-                    <li><strong>Max Invalid Attempts:</strong> {policy.maxInvalidAttempts}</li>
-                    <li><strong>Lockout Duration:</strong> {policy.lockoutDuration}</li>
-                    <li><strong>Password History:</strong> {policy.passwordHistory}</li>
+                    <li><strong className="fw-500">Policy Name:</strong> {policy.name}</li>
+                    <li><strong className="fw-500">Min Length:</strong> {policy.minLength}</li>
+                    <li> <strong className="fw-500">Uppercase:</strong> {policy.uppercase.toString()}</li>
+                    <li> <strong className="fw-500">Lowercase:</strong> {policy.lowercase.toString()}</li>
+                    <li> <strong className="fw-500">Special Char:</strong> {policy.specialChar.toString()}</li>
+                    <li> <strong className="fw-500">Number:</strong> {policy.number.toString()}</li>
+                    <li> <strong className="fw-500">Expire (Days):</strong> {policy.expireDays}</li>
+                    <li> <strong className="fw-500">Warning (Days):</strong> {policy.warningDays}</li>
+                    <li> <strong className="fw-500">Max Invalid Attempts:</strong> {policy.maxInvalidAttempts}</li>
+                    <li> <strong className="fw-500">Lockout Duration:</strong> {policy.lockoutDuration}</li>
+                    <li> <strong className="fw-500">Password History:</strong> {policy.passwordHistory}</li>
                   </ul>
                   <div className="d-flex justify-content-between">
                     <button className="btn btn-sm btn-primary" onClick={handleAdd}>Edit</button>

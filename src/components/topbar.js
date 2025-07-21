@@ -31,9 +31,9 @@ const Topbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
 
             <FaUserCircle className="fs-1" />
           </a>
-          <ul className="dropdown-menu dropdown-menu-end cursor-pointer">
-            <li className="dropdown-item border-bottom border-1 mb-1 fs-5" onClick={logoutSession}>Admin</li>
-            <li className="dropdown-item" onClick={logoutSession}>Profile</li>
+          <ul className="dropdown-menu dropdown-menu-end cursor-pointer p-0 ">
+            <li className="dropdown-item border-bottom border-1   py-2 fw-bolder" >Admin</li>
+            <li className="dropdown-item" >Profile</li>
             <li className="dropdown-item" onClick={logoutSession}>Logout</li>
           </ul>
         </div>

@@ -80,7 +80,7 @@ const TableLayout = ({
     <>
       {_rowData && (
         <div className="row">
-          <div className="col-12 Table_content">
+          <div className="col-12 Table_content ">
             {_isExpandable ? (
               <DataTable
                 selectableRows={selectableRows}

@@ -1,6 +1,14 @@
+import { useState } from "react";
+import TableLayout from "../../components/layout/table-layout";
 
 
 const MessageTracker = () => {
+  const [pending, setPending] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState();
+  const [sortColumn, setSortColumn] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  const [totalRows, setTotalRows] = useState(0);
   const messageRows = [
     {
       id: 'a8f8e172',
@@ -28,103 +36,173 @@ const MessageTracker = () => {
       protocol: 'HTTP',
       status: 'Success',
       duration: 1210
-    }
+    },
+    {
+      id: 'd4e5a128',
+      flow: 'User Sync',
+      source: 'ERP System',
+      target: 'Order Management',
+      protocol: 'JMS',
+      status: 'Failure',
+      duration: 1273
+    },
+    {
+      id: 'c583a157',
+      flow: 'Payment Processing',
+      source: 'User Database',
+      target: 'User Database',
+      protocol: 'HTTP',
+      status: 'Success',
+      duration: 1210
+    },
+  ];
+  const tableColumnsRole = [
+    // {
+    //   name: 'Sr. No.',
+    //   selector: (row, index) => index + 1,
+    //   width: '100px',
+    // },
+    {
+      name: 'Message ID',
+      selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Integration Flow',
+      selector: row => row.flow,
+      sortable: true,
+    },
+    {
+      name: 'Source App',
+      selector: row => row.source,
+
+    },
+    {
+      name: 'Target App',
+      selector: row => row.target,
+    },
+    {
+      name: 'Protocol',
+      selector: row => row.protocol,
+    },
+    {
+      name: 'Status',
+      selector: row => <p className={`rounded-2 px-2 text-white  mb-0 ${row?.status === "Success" ? "bg-success" : "bg-danger"}`}>{row.status}</p>,
+    },
+    {
+      name: 'Duration (ms)',
+      selector: row => row.duration,
+    },
   ];
   return (
     <>
-      {/* Top Navigation Bar */}
-      {/* <div className="topbar d-flex justify-content-between align-items-center">
-        <div>
-          <a href="#">Integration Flow</a>
-          <a href="#">Partners</a>
-          <a href="#">Security</a>
-          <div className="dropdown d-inline">
-            <a href="#" className="dropdown-toggle" data-bs-toggle="dropdown">Admin</a>
-            <ul className="dropdown-menu dropdown-menu-end">
-              <li><a className="dropdown-item" href="#">Logout</a></li>
-            </ul>
+      <div className="main_datatable">
+        <h5 className="fs-3 fw-600 mb-3">Message Tracker</h5>
+
+        <div class="mb-3">
+          <div class="row g-3 align-items-end">
+            <div class="col-md">
+              <label for="integration" class="form-label">Integration</label>
+              <select class="form-select" id="integration">
+                <option selected>All</option>
+              </select>
+            </div>
+            <div class="col-md">
+              <label for="source" class="form-label">Source</label>
+              <select class="form-select" id="source">
+                <option selected>All</option>
+              </select>
+            </div>
+            <div class="col-md">
+              <label for="target" class="form-label">Target</label>
+              <select class="form-select" id="target">
+                <option selected>All</option>
+              </select>
+            </div>
+            <div class="col-md">
+              <label for="protocol" class="form-label">Protocol</label>
+              <select class="form-select" id="protocol">
+                <option selected>Last 24 Hours</option>
+              </select>
+            </div>
+            <div class="col-md">
+              <label for="status" class="form-label">Status</label>
+              <select class="form-select" id="status">
+                <option selected>Last 24 Hours</option>
+              </select>
+            </div>
+            <div class="col-md-auto">
+              <button class="btn btn-primary w-100">Apply Filters</button>
+            </div>
           </div>
         </div>
-      </div> */}
 
-      <div className="">
-        <h5 className="">Message Tracker</h5>
+
+
+        {/* Side Panel */}
         <div className="row">
-          {/* Filter + Table */}
-          <div className="col-md-9">
-            <div className="row g-2 mb-3">
-              {['Integration', 'Source', 'Target', 'Protocol', 'Status'].map((label, index) => (
-                <div key={index} className="col">
-                  <select className="form-select"><option>{label}</option></select>
+          <div className="col-md-8">
+            <TableLayout
+              _tblColumns={tableColumnsRole}
+              _rowData={messageRows}
+              pending={pending}
+              pagination={true}
+              selectableRows={false}
+              setPending={setPending}
+              _totalRows={totalRows}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              setPage={setPage}
+              setSortColumn={setSortColumn}
+              setSortDirection={setSortDirection}
+            />
+          </div>
+          <div className="col-md-4">
+            <div class="bg-white rounded shadow-sm p-3 mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+                <div class="bg-primary text-white text-center  p-2  rounded fs-13" >
+                  Source<br />App
                 </div>
-              ))}
-              <div className="col-auto">
-                <button className="btn btn-primary">Apply Filters</button>
+                <div class="text-primary fs-14">→</div>
+                <div class="bg-primary text-white text-center  p-2 rounded fs-13" >
+                  Integration<br />Flow
+                </div>
+                <div class="text-primary fs-14">→</div>
+                <div class="bg-primary text-white text-center p-2 rounded fs-13" >
+                  Target<br />App
+                </div>
               </div>
+              <p class="mb-1 fs-14"><strong className="fw-500"> Status:</strong> <span class="text-success fw-semibold">Success</span></p>
+              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 04/03/2024 11:30 AM</p>
+              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 04/03/2024 11:30 AM</p>
             </div>
 
-            <table className="table table-bordered bg-white">
-              <thead className="table-light">
-                <tr>
-                  <th>Message ID</th>
-                  <th>Integration Flow</th>
-                  <th>Source App</th>
-                  <th>Target App</th>
-                  <th>Protocol</th>
-                  <th>Status</th>
-                  <th>Duration (ms)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {messageRows.map((row, index) => (
-                  <tr key={index}>
-                    <td>{row.id}</td>
-                    <td>{row.flow}</td>
-                    <td>{row.source}</td>
-                    <td>{row.target}</td>
-                    <td>{row.protocol}</td>
-                    <td className={row.status === 'Success' ? 'status-success' : 'status-failure'}>{row.status}</td>
-                    <td>{row.duration}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* Pagination */}
-            <nav>
-              <ul className="pagination justify-content-center">
-                <li className="page-item disabled"><a className="page-link" href="#">&lt;</a></li>
-                {[1, 2, 3, 4, 5].map(num => (
-                  <li key={num} className={`page-item ${num === 1 ? 'active' : ''}`}>
-                    <a className="page-link" href="#">{num}</a>
-                  </li>
-                ))}
-                <li className="page-item"><a className="page-link" href="#">&gt;</a></li>
-              </ul>
-            </nav>
-          </div>
-
-          {/* Side Panel */}
-          <div className="col-md-3">
-            {[1, 2].map((_, idx) => (
-              <div className="message-flow-box mb-3" key={idx}>
-                <div className="mb-2 d-flex justify-content-between">
-                  <span className="flow-step fs-6">Source App</span>
-                  <span className="flow-step">Integration Flow</span>
-                  <span className="flow-step">Target App</span>
+            <div class="bg-white rounded shadow-sm p-3 mb-4">
+              <h6 class="fw-semibold mb-3">Message Flow</h6>
+              <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+                <div class="bg-primary text-white text-center  p-2  rounded fs-13" >
+                  Source<br />App
                 </div>
-                <p><strong>Status:</strong> <span className="status-success">Success</span></p>
-                <p><strong>Start:</strong> 04/03/2024 11:30 AM</p>
-                <p><strong>End:</strong> 04/03/2024 11:30 AM</p>
+                <div class="text-primary fs-14">→</div>
+                <div class="bg-primary text-white text-center  p-2 rounded fs-13" >
+                  Integration<br />Flow
+                </div>
+                <div class="text-primary fs-14">→</div>
+                <div class="bg-primary text-white text-center p-2 rounded fs-13" >
+                  Target<br />App
+                </div>
               </div>
-            ))}
+              <p class="mb-1 fs-14"><strong className="fw-500"> Status:</strong> <span class="text-success fw-semibold">Success</span></p>
+              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 04/03/2024 11:30 AM</p>
+              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 04/03/2024 11:30 AM</p>
+            </div>
+
+
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };
 
 export default MessageTracker;
-
-
