@@ -152,23 +152,23 @@ import { MdDashboard, MdIntegrationInstructions, MdOutlineManageAccounts, MdSecu
 
 
 const menuItems = [
-  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <MdDashboard className="fs-4" /> },
-  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className="fs-4" /> },
-  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className="fs-4" /> },
-  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className="fs-4" /> },
-  { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className="fs-4" /> },
-  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className="fs-4" /> },
+  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <MdDashboard className="fs-5" /> },
+  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className="fs-5" /> },
+  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className="fs-5" /> },
+  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className="fs-5" /> },
+  { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className="fs-5" /> },
+  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className="fs-5" /> },
   {
     label: 'Role Management',
     path: ROUTES?.ROLE,
-    icon: <MdOutlineManageAccounts className="fs-4" />,
+    icon: <MdOutlineManageAccounts className="fs-5" />,
     children: [
-      { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className="fs-4" /> },
-      { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className="fs-4" /> },
+      { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className="fs-5" /> },
+      { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className="fs-5" /> },
     ],
   },
-  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className="fs-4" /> },
-  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className="fs-4" /> },
+  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className="fs-5" /> },
+  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className="fs-5" /> },
 ];
 
 
@@ -223,7 +223,7 @@ const Sidebar = () => {
                             }`
                           }
                         >
-                          {child.label}
+                          {child.icon}  {child.label}
                         </NavLink>
                       </li>
                     ))}

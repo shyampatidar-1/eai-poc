@@ -107,7 +107,7 @@ const PasswordPolicy = () => {
           aria-hidden="true"
           ref={modalRef}
         >
-          <div className="modal-dialog modal-dialog-centered modal-lg">
+          <div className="modal-dialog modal-dialog-centered modal-md">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="passwordPolicyModalLabel">Password Policy</h5>

@@ -83,6 +83,7 @@ const MessageTracker = () => {
     },
     {
       name: 'Protocol',
+      width: "100px",
       selector: row => row.protocol,
     },
     {

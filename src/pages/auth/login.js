@@ -128,7 +128,7 @@ const Login = () => {
       <div className="login-container">
         <form onSubmit={handleSubmit}>
           <div className="login-welcome">
-            <h3 className="text-primary fw-bolder">Login</h3>
+            <h3 className="text-primary fw-bolder my-3  ">Login</h3>
             {/* <p className="text-dark fw-bolder">
               New to Medicine?
               <Link to={ROUTES?.REGISTER} style={{ textDecoration: "none" }}>
@@ -139,7 +139,7 @@ const Login = () => {
               </Link>
             </p> */}
           </div>
-          <div className="">
+          <div className="mb-2">
             <INPUTFIELD
               className="border-radius_input"
               type="text"
