@@ -103,7 +103,7 @@ const Dashboard = () => {
   };
 
   const barData = {
-    labels: ["FTP", "ORACLE", "JMS", "REST", "Salesforce"],
+    labels: ["FTP", "ORACLE", "OMS", "REST", "Salesforce"],
     datasets: [
       {
         label: "Running",
@@ -119,7 +119,7 @@ const Dashboard = () => {
   };
 
   const alertsData = {
-    labels: ["FTP", "ORACLE", "JMS"],
+    labels: ["FTP", "ORACLE", "OMS"],
     datasets: [
       {
         label: "Alerts",
