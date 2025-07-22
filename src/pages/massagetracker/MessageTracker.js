@@ -103,31 +103,31 @@ const MessageTracker = () => {
         <div class="mb-3">
           <div class="row g-3 align-items-end">
             <div class="col-md">
-              <label for="integration" class="form-label">Integration</label>
+              <label for="integration" class="form-label fs-14">Integration</label>
               <select class="form-select" id="integration">
                 <option selected>All</option>
               </select>
             </div>
             <div class="col-md">
-              <label for="source" class="form-label">Source</label>
+              <label for="source" class="form-label fs-14">Source</label>
               <select class="form-select" id="source">
                 <option selected>All</option>
               </select>
             </div>
             <div class="col-md">
-              <label for="target" class="form-label">Target</label>
+              <label for="target" class="form-label fs-14">Target</label>
               <select class="form-select" id="target">
                 <option selected>All</option>
               </select>
             </div>
             <div class="col-md">
-              <label for="protocol" class="form-label">Protocol</label>
+              <label for="protocol" class="form-label fs-14">Protocol</label>
               <select class="form-select" id="protocol">
                 <option selected>Last 24 Hours</option>
               </select>
             </div>
             <div class="col-md">
-              <label for="status" class="form-label">Status</label>
+              <label for="status" class="form-label fs-14">Status</label>
               <select class="form-select" id="status">
                 <option selected>Last 24 Hours</option>
               </select>
