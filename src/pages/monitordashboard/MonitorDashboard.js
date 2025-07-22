@@ -35,7 +35,7 @@ export default function MonitorDashboard() {
     labels: ['7:00', '8:00', '9:00', '10:00', '11:00'],
     datasets: [
       {
-        label: 'US-East',
+        label: 'FTP',
         data: [25, 35, 30, 50, 40],
         borderColor: '#36A2EB',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -43,7 +43,7 @@ export default function MonitorDashboard() {
         tension: 0.4,
       },
       {
-        label: 'US-West',
+        label: 'ORACLE',
         data: [20, 25, 35, 40, 30],
         borderColor: '#FF6384',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -51,7 +51,7 @@ export default function MonitorDashboard() {
         tension: 0.4,
       },
       {
-        label: 'EU-Central',
+        label: 'JMS',
         data: [30, 40, 45, 55, 50],
         borderColor: '#4BC0C0',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -281,7 +281,7 @@ export default function MonitorDashboard() {
           </div>
         </div> */}
         <div className="col-12">
-          <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '400px' }}>
+          <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '360px' }}>
             <h6 className="text-secondary mb-3">Load Distribution</h6>
 
             {/* Chart wrapper with relative positioning */}
@@ -289,11 +289,11 @@ export default function MonitorDashboard() {
               <Line data={lineChartData} options={options} />
             </div>
 
-            <div className="mt-2 text-muted small d-flex justify-content-center gap-3">
-              <span><span className="me-1" style={{ color: '#36A2EB' }}>●</span>US-East</span>
-              <span><span className="me-1" style={{ color: '#FF6384' }}>●</span>US-West</span>
-              <span><span className="me-1" style={{ color: '#4BC0C0' }}>●</span>EU-Central</span>
-            </div>
+            {/* <div className="mt-2 text-muted small d-flex justify-content-center gap-3">
+              <span><span className="me-1" style={{ color: '#36A2EB' }}>●</span>FTP</span>
+              <span><span className="me-1" style={{ color: '#FF6384' }}>●</span>ORACLE</span>
+              <span><span className="me-1" style={{ color: '#4BC0C0' }}>●</span>JMS</span>
+            </div> */}
           </div>
         </div>
 
