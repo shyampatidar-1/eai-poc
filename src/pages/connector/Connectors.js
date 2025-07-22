@@ -1,8 +1,13 @@
 import { useRef, useState } from "react";
 import TableLayout from "../../components/layout/table-layout";
 import TableHeading from "../../components/comman/table-heading";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../hooks/routes/routes-constant";
 
 const Connectors = () => {
+  const modalRef = useRef(null);
+  const modalInstance = useRef(null); // store modal instance
+  const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState();
@@ -74,12 +79,17 @@ const Connectors = () => {
       selector: row => row.protocol,
     },
   ];
-  const modalRef = useRef(null);
+
 
   const handleAdd = () => {
-    const modal = new window.bootstrap.Modal(modalRef.current);
-    modal.show();
+    modalInstance.current = new window.bootstrap.Modal(modalRef.current);
+    modalInstance.current.show();
   };
+  const handleClose = () => {
+    if (modalInstance.current) {
+      modalInstance.current.hide();
+    }
+  }
   return (
     <>
       <div className="main_datatable">
@@ -143,7 +153,10 @@ const Connectors = () => {
                 <div class="">
                   <label class="form-label">Design a Workflow</label>
                   <div class="border border-dashed rounded d-flex align-items-center justify-content-center py-4" style={{ "cursor": "pointer" }}>
-                    <div class="text-center text-primary">
+                    <div class="text-center text-primary" onClick={() => {
+                      handleClose()
+                      navigate(ROUTES.CREATEINT)
+                    }}>
                       <div class="fs-1">+</div>
                       <div>Create a new workflow</div>
                     </div>

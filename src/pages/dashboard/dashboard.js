@@ -91,11 +91,11 @@ import "chart.js/auto";
 
 const Dashboard = () => {
   const lineChartData = {
-    labels: ["Today", "1 day", "2 day", "4 days", "Ago"],
+    labels: ["1 day", "2 day", "4 days"],
     datasets: [
       {
         label: "Processes",
-        data: [6, 9, 12, 10, 13],
+        data: [9, 12, 10],
         borderColor: "#0d6efd",
         tension: 0.4,
       },
@@ -103,41 +103,41 @@ const Dashboard = () => {
   };
 
   const barData = {
-    labels: ["Today", "1a", "2a", "3a", "4a", "5a"],
+    labels: ["1a", "2a", "3a", "4a", "5a"],
     datasets: [
       {
         label: "Running",
-        data: [4, 6, 3, 2, 5, 4],
+        data: [4, 6, 3, 2, 5],
         backgroundColor: "#0d6efd",
       },
       {
         label: "Completed",
-        data: [6, 4, 5, 3, 6, 5],
+        data: [6, 4, 5, 3, 6],
         backgroundColor: "#6c757d",
       },
     ],
   };
 
   const alertsData = {
-    labels: ["Today", "1a", "2a", "3a"],
+    labels: ["1a", "2a", "3a"],
     datasets: [
       {
         label: "Alerts",
-        data: [1, 2, 3, 2],
+        data: [1, 2, 3],
         backgroundColor: "#ffc107",
       },
     ],
   };
 
   const doughnutData = {
-    labels: ["SLA"],
+    labels: ["In SLA", "Out SLA"],
     datasets: [
       {
-        data: [96, 4],
-        backgroundColor: ["#198754", "#e9ecef"],
-        borderWidth: 0,
-      },
-    ],
+        data: [92, 8], // Example values (adjust as needed)
+        backgroundColor: ["#198754", "#dc3545"], // Green, Red
+        borderWidth: 0
+      }
+    ]
   };
 
   return (
@@ -147,9 +147,9 @@ const Dashboard = () => {
         {[
           ["Total Integrations", 84],
           ["Avg L.xtency", "120 ms"],
-          ["SLA Broaches", 5],
-          ["System Error Rate", "1,3 %"],
-          ["Longest Running", "3,4 hrs"],
+          ["SLA Breaches", 5],
+          ["System Error Rate", "1.3 %"],
+          ["Longest Running", "3:4 hrs"],
         ].map(([title, value], idx) => (
           <div className="col-6 col-lg" key={idx}>
             <div className="bg-white p-3 rounded-4 shadow-sm">
@@ -184,23 +184,23 @@ const Dashboard = () => {
               </thead>
               <tbody className="small">
                 <tr>
-                  <td>A</td>
-                  <td>12 min (13 ms)</td>
+                  <td>OMS</td>
+                  <td>12 min ago</td>
                   <td>Transaction Error</td>
                 </tr>
                 <tr>
-                  <td>B</td>
-                  <td>12 min (3.2 ms)</td>
+                  <td>SPA</td>
+                  <td>12 min ago</td>
                   <td>Timeout</td>
                 </tr>
                 <tr>
-                  <td>C</td>
-                  <td>2 min (5.4 ms)</td>
+                  <td>LOYALTY SYSTEM</td>
+                  <td>2 min ago</td>
                   <td>Timeout</td>
                 </tr>
                 <tr>
-                  <td>E</td>
-                  <td>3 min (1.2 ms)</td>
+                  <td>BILLING ENGINE</td>
+                  <td>3 min ago</td>
                   <td>Transaction Error</td>
                 </tr>
               </tbody>
@@ -218,9 +218,9 @@ const Dashboard = () => {
             <ul className="list-group list-group-flush small">
               {["Application Server", "Database", "Kafka", "API Gateway"].map(
                 (item, i) => (
-                  <li className="list-group-item border-0 d-flex justify-content-between" key={i}>
+                  <li className="list-group-item border-0 d-flex gap-2 px-0 " key={i}>
+                    <span className="text-success">●</span >
                     <span>{item}</span>
-                    <span className="text-success">●</span>
                   </li>
                 )
               )}
@@ -258,7 +258,7 @@ const Dashboard = () => {
 
       {/* Bottom Grid */}
       <div className="row g-3">
-        <div className="col-md-2">
+        <div className="col-md-4">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Retry Queue Status</h6>
             <p className="mb-1 small">Retry Queue: 12</p>
@@ -266,7 +266,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-2">
+        <div className="col-md-4">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Recent API Failures</h6>
             <p className="mb-1 small">GET /api/data — 18:43</p>
@@ -274,7 +274,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-2">
+        <div className="col-md-4">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Inflight Transactions</h6>
             <p className="mb-1 small">Completed: 49</p>
@@ -282,7 +282,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-2">
+        {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Maintenance Mode</h6>
             <div className="form-check form-switch mb-2">
@@ -294,9 +294,9 @@ const Dashboard = () => {
               <label className="form-check-label">Disaster Recovery Mode: OFF</label>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="col-md-2">
+        {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Admin Actions</h6>
             <ul className="small ps-3 mb-0">
@@ -305,15 +305,16 @@ const Dashboard = () => {
               <li>Restart Node — 42m</li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
-        <div className="col-md-2">
+        {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Scheduled Jobs</h6>
             <p className="small mb-1">Job Name — 18m 35s</p>
             <p className="small">Job Station — 18m 35s</p>
           </div>
-        </div>
+        </div> */}
+
       </div>
     </div>
   );

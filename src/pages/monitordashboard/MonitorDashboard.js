@@ -148,14 +148,20 @@ export default function MonitorDashboard() {
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h5 className="mb-3 text-secondary">Process Health</h5>
             <div className="row g-3">
-              {[{ label: 'Total Active', value: '3,562' }, { label: 'Suspended', value: '87' }, { label: 'Successful', value: '12' }, { label: 'Failed', value: '176' }].map((item, idx) => (
-                <div key={idx} className="col-6 col-md-3">
-                  <div className="p-4 bg-light rounded-4">
-                    <div className="text-muted">{item.label}</div>
-                    <h3 className="fw-bold">{item.value}</h3>
+              {
+                [
+                  { label: "Total Active", value: "938" },
+                  { label: "Suspended", value: "102" },
+                  { label: "Successful", value: "701" },
+                  { label: "Failed", value: "135" }
+                ].map((item, idx) => (
+                  <div key={idx} className="col-6 col-md-3">
+                    <div className="p-4 bg-light rounded-4">
+                      <div className="text-muted">{item.label}</div>
+                      <h3 className="fw-bold">{item.value}</h3>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
 
@@ -238,15 +244,15 @@ export default function MonitorDashboard() {
 
 
 
-          <div className="bg-white p-3 rounded-4 shadow-sm">
+          {/* <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Alert 1ms</h6>
             <div className="d-flex justify-content-between align-items-center">
               <button className="btn btn-sm btn-primary">Mark as Resolved</button>
               <button className="btn btn-sm btn-outline-secondary">Mute</button>
             </div>
-          </div>
+          </div> */}
 
-          <div className="bg-white p-3 rounded-4 shadow-sm">
+          {/* <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-3">Load Distribution</h6>
             <div className="d-flex justify-content-between border-bottom py-2">
               <span>US-East</span><span className="text-warning">Warning</span><span className="text-danger">Error</span>
@@ -260,7 +266,7 @@ export default function MonitorDashboard() {
             <div className="d-flex justify-content-between border-bottom py-2">
               <span>Error</span><span className="text-success">▲ 4</span><span>1 min ago</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* <div className="col-12">

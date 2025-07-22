@@ -130,8 +130,138 @@
 
 
 
-const QueueManagement = () => (
-  <>
+const QueueManagement = () => {
+  const queueCardsData = [
+    {
+      queueName: "Core.Commands.User",
+      type: "Command",
+      typeColor: "btn-info",
+      messagesTitle: "Messages",
+      messages: 4120,
+      outTitle: "Out",
+      out: 4110,
+      pendingTitle: "Pending",
+      pending: 10,
+      errorTitle: "Error",
+      error: "0.2%",
+      retriesTitle: "Retries",
+      retries: 2,
+      graph: 2,
+      actions: [
+        { label: "Pause", color: "btn-warning" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    },
+    {
+      queueName: "Core.Events.Internal",
+      type: "Event",
+      typeColor: "btn-success",
+      messagesTitle: "Messages",
+      messages: 7290,
+      outTitle: "Out",
+      out: 7280,
+      pendingTitle: "Pending",
+      pending: 15,
+      errorTitle: "Error",
+      error: "0%",
+      retriesTitle: "Retries",
+      retries: 0,
+      graph: 0,
+      actions: [
+        { label: "Pause", color: "btn-warning" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    },
+    {
+      queueName: "Edge.Events.External.Triggered",
+      type: "DLQ",
+      typeColor: "btn-danger",
+      messagesTitle: "Messages",
+      messages: 1160,
+      outTitle: "DL3 Out",
+      out: 850,
+      pendingTitle: "Retries",
+      pending: 22,
+      errorTitle: "Pause",
+      error: "1.1%",
+      retriesTitle: "Purge",
+      retries: 5,
+      graph: 5,
+      actions: [
+        { label: "Pause", color: "btn-warning" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    },
+    {
+      queueName: "Retry.PaymentAuthoriz",
+      type: "Retry",
+      typeColor: "btn-warning",
+      messagesTitle: "Messages",
+      messages: 872,
+      outTitle: "Out",
+      out: 850,
+      pendingTitle: "Rendies",
+      pending: 22,
+      errorTitle: "Pause",
+      error: "1.1%",
+      retriesTitle: "Purge",
+      retries: 22,
+      graph: 22,
+      actions: [
+        { label: "Pause", color: "btn-warning" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    },
+    {
+      queueName: "DLQ.NotificationService",
+      type: "DLQ",
+      typeColor: "btn-danger",
+      messagesTitle: "Messages",
+      messages: 156,
+      outTitle: "Out",
+      out: 10,
+      pendingTitle: "Pending",
+      pending: 146,
+      errorTitle: "Errors",
+      error: "5.3%",
+      retriesTitle: "DL3 Count",
+      retries: 5,
+      graph: 5,
+      actions: [
+        { label: "Pause", color: "btn-warning" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    },
+    {
+      queueName: "Schedule.DailyReconciliation",
+      type: "ST",
+      typeColor: "btn-secondary",
+      messagesTitle: "Messages",
+      messages: 590,
+      outTitle: "Out",
+      out: 590,
+      pendingTitle: "Pending",
+      pending: 0,
+      errorTitle: "Retries",
+      error: "0%",
+      retriesTitle: "Retries",
+      retries: 0,
+      graph: 0,
+      actions: [
+        { label: "Route", color: "btn-success" },
+        { label: "Purge", color: "btn-danger" },
+        { label: "Reprocess", color: "btn-primary" }
+      ]
+    }
+  ];
+
+
+  return (<>
     <div className='main_datatable'>
       <div className='d-flex justify-content-between'>
         <h5 className="fs-3 fw-600 ">Enterprise Queue Management</h5>
@@ -194,8 +324,9 @@ const QueueManagement = () => (
 
           <div className="">
             <button className="btn border border-1 w-100">
-              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
-                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-terminal" viewBox="0 0 16 16">
+                <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9M3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708z" />
+                <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" />
               </svg>
             </button>
           </div>
@@ -637,7 +768,7 @@ const QueueManagement = () => (
         </div>
       </div> */}
       <div className="row">
-        {[...Array(6)].map((_, index) => (
+        {queueCardsData.map((queueData, index) => (
           <div key={index} className="col-12 col-md-6 col-lg-4 mb-3">
             <div className="shadow-sm p-1 bg-white rounded h-100 d-flex flex-column justify-content-between">
               <div>
@@ -646,33 +777,46 @@ const QueueManagement = () => (
                     <div style={{ width: '12px', height: '12px' }} className="bg-primary rounded-circle"></div>
                     <div style={{ width: '12px', height: '12px' }} className="bg-secondary rounded-circle"></div>
                   </div>
-                  <p className="m-0 fs-6 fw-bolder">Core.Commands.User</p>
-                  <button className="btn btn-success btn-sm   p-1">Command</button>
+                  <p className="m-0 fs-6 fw-bolder">{queueData.queueName}</p>
+                  <button className={`btn  btn-sm   p-1 ${queueData.typeColor}`}>{queueData.type}</button>
                 </div>
+
+
+                {/* "messagesTitle": "Messages",
+                "messages": 590,
+                "outTitle": "Out",
+                "out": 590,
+                "pendingTitle": "Pending",
+                "pending": 0,
+                "errorTitle": "Retries",
+                "error": "0%",
+                "retriesTitle": "Retries",
+                "retries": 0,
+                "graph": 0, */}
 
                 <div className="row text-center">
                   <div className="col-4 mb-3">
-                    <h6>4.12K</h6>
-                    <small>Messages</small>
+                    <h6>{queueData.messages}</h6>
+                    <small>{queueData.messagesTitle}</small>
                   </div>
                   <div className="col-4 mb-3">
-                    <h6>4.11K</h6>
-                    <small>Messages</small>
+                    <h6>{queueData.out}</h6>
+                    <small>{queueData.outTitle}</small>
                   </div>
                   <div className="col-4 mb-3">
-                    <h6>10</h6>
-                    <small>Pending</small>
+                    <h6>{queueData.pending}</h6>
+                    <small>{queueData.pendingTitle}</small>
                   </div>
                   <div className="col-4 mb-3">
-                    <h6>0.2%</h6>
-                    <small>Error</small>
+                    <h6>{queueData.error}</h6>
+                    <small>{queueData.errorTitle}</small>
                   </div>
                   <div className="col-4 mb-3">
-                    <h6>2</h6>
-                    <small>Retries</small>
+                    <h6>{queueData.retries}</h6>
+                    <small>{queueData.retriesTitle}</small>
                   </div>
                   <div className="col-4 mb-3">
-                    <h6>2</h6>
+                    <h6>{queueData.graph}</h6>
                     <small>&nbsp;</small>
                   </div>
                 </div>
@@ -690,4 +834,5 @@ const QueueManagement = () => (
 
     </div >
   </>)
+}
 export default QueueManagement;
