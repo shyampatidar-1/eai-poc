@@ -121,9 +121,9 @@ export default function MonitorDashboard() {
       name: 'Actions',
       width: '200px',
       cell: row => (
-        <div className="d-flex gap-2">
+        <div className="">
           <button className="btn btn-sm btn-primary">Reprocess</button>
-          <button className="btn btn-sm btn-outline-secondary">Retry</button>
+          {/* <button className="btn btn-sm btn-outline-secondary">Retry</button> */}
         </div>
       ),
       ignoreRowClick: true,

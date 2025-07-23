@@ -7,7 +7,7 @@ import {
   encryptJSONtoAES,
   encryptStringtoAES,
   toastEmitter,
-  validateRegex,
+
 } from "../../utils/utilities";
 import { setAccessTokenReducer } from "../../hooks/redux/slice/access-token";
 import { setLoggedUserReducer } from "../../hooks/redux/slice/logged-user";
@@ -35,12 +35,8 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const addbuttonClick = useRef();
   const [payload, setPayload] = useState({
-    email: "",
-    password: "",
-    userType: "CLINIC",
-    deviceToken: "",
-    deviceType: "web",
-    // languageType: i18n.language
+    username: "",
+    password: ""
   });
 
   useEffect(() => {
@@ -50,76 +46,70 @@ const Login = () => {
     if (savedRememberMe) {
       setPayload({
         ...payload,
-        email: savedEmail,
+        username: savedEmail,
         password: savedPassword,
-        // languageType: i18n.language,
       });
       setRememberMe(true);
-
     }
-
   }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (payload.email.trim() === "") {
-      return toastEmitter("error", "Email is mandatory!");
+    if (payload.username.trim() === "") {
+      return toastEmitter("error", "Username is mandatory!");
     }
     if (payload.password.trim() === "") {
       return toastEmitter("error", "Password is mandatory!");
     }
-    // if (!validateRegex(payload.email, EmailRegex)) {
-    //   return toastEmitter("error", "Email is invalid!");
-    // }
-    // if (!validateRegex(payload.password, PasswordRegex)) {
-    //   return toastEmitter(
-    //     "error",
-    //     "password should be a combination  8  characters which include altleast one special character , special symbol , capital letter and number"
-    //   );
-    // }
-    dispatch(
-      setAccessTokenReducer(
-        encryptStringtoAES((payload.email + payload.password).trim())
-      )
-    );
-    // setIsLoading (true);
-    // signIn(payload)
-    //   .then(function (response) {
-    //     if (response.data?.status !== 200) {
-    //       toastEmitter("error", response?.data?.message);
-    //     }
-    //     if (response.data?.status === 200) {
-    //       dispatch(
-    //         setAccessTokenReducer(
-    //           encryptStringtoAES(response?.data?.data?.token)
-    //         )
-    //       );
-    //       dispatch(
-    //         setLoggedUserReducer(encryptJSONtoAES(response?.data?.data))
-    //       );
-    //       dispatch(
-    //         setPermissionReducer(
-    //           encryptJSONtoAES(
-    //             response?.data?.data?.adminResponsePayload?.roleResponsePayload
-    //               ?.roleModuleMappingResponseList
-    //           )
-    //         )
-    //       );
-    //       addbuttonClick.current.click();
-    //       setPayload({
-    //         email: "",
-    //         password: "",
-    //         userType: "CLINIC",
-    //         deviceToken: "",
-    //         deviceType: "web",
-    //         languageType: i18n.language
-    //       });
-    //     }
-    //     return setIsLoading(false);
-    //   })
-    //   .catch(function (err) {
-    //     toastEmitter("error", API_RESPONSE?.MESSAGE_503);
-    //     return setIsLoading(false);
-    //   });
+    // dispatch(
+    //   setAccessTokenReducer(
+    //     encryptStringtoAES((payload.email + payload.password).trim())
+    //   )
+    // );
+    setIsLoading(true);
+    signIn(payload)
+      .then(function (response) {
+        console.log("response", response);
+        if (response.data?.status !== 200) {
+          toastEmitter("error", response?.data?.message);
+        }
+        if (response.data?.status === 200) {
+          dispatch(
+            setAccessTokenReducer(
+              encryptStringtoAES(response?.data?.data?.token)
+            )
+          );
+          dispatch(
+            setLoggedUserReducer(encryptJSONtoAES(response?.data?.data))
+          );
+          dispatch(
+            setPermissionReducer(
+              encryptJSONtoAES(
+                response?.data?.data?.adminResponsePayload?.roleResponsePayload
+                  ?.roleModuleMappingResponseList
+              )
+            )
+          );
+          addbuttonClick.current.click();
+          setPayload({
+            username: "",
+            password: ""
+          });
+        }
+        return setIsLoading(false);
+      })
+      .catch(function (err) {
+        toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+        return setIsLoading(false);
+      });
+    if (rememberMe) {
+      localStorage.setItem("email", encryptStringtoAES(payload?.username));
+      localStorage.setItem("password", encryptStringtoAES(payload?.password));
+      localStorage.setItem("rememberMe", "true");
+    } else {
+      localStorage.removeItem("email");
+      localStorage.removeItem("password");
+      localStorage.setItem("rememberMe", "false");
+    }
 
   };
 
@@ -129,30 +119,22 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="login-welcome">
             <h3 className="text-primary fw-bolder my-3  ">Login</h3>
-            {/* <p className="text-dark fw-bolder">
-              New to Medicine?
-              <Link to={ROUTES?.REGISTER} style={{ textDecoration: "none" }}>
-                <span className=" text-primary cursor-pointer">
-                  {" "}
-                  Register
-                </span>
-              </Link>
-            </p> */}
+
           </div>
           <div className="mb-2">
             <INPUTFIELD
               className="border-radius_input"
               type="text"
-              value={payload.email}
-              name="email"
-              placeHolder="Enter your email"
+              value={payload.username}
+              name="username"
+              placeHolder="Enter your user name"
               handleChange={(e) =>
                 setPayload(handleFormInput(e, payload, formError, setFormError))
               }
-              error={formError?.email}
+              error={formError?.username}
               showIcon={true}
               iconsrc={EMAIL_ICON}
-              labelName="Email"
+              labelName="User Name"
             />
             <ErrorMsg error={formError?.email} />
           </div>
@@ -177,7 +159,7 @@ const Login = () => {
             <ErrorMsg error={formError?.password} />
           </div>
           <div className="d-flex justify-content-between align-items-center mt-2 ">
-            {/* <div className="form-check">
+            <div className="form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
@@ -186,9 +168,9 @@ const Login = () => {
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
               <label className="my-0" htmlFor="exampleCheck1">
-                {t("Remember me")}
+                Remember me
               </label>
-            </div> */}
+            </div>
             <label className="my-0">
               <Link to={ROUTES?.FORGOT_PASSWORD}>Forgot password?</Link>
             </label>
@@ -205,13 +187,6 @@ const Login = () => {
           </div>
         </form>
       </div>
-
-      {/* <Modal
-        modalId="login"
-        heading={t("Login Successfully")}
-        modalClick={addbuttonClick}
-        iconsrc={RIGHTARROW_IMG}
-      /> */}
     </>
   );
 };
