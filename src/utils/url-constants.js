@@ -14,7 +14,8 @@ export const API_URL = {
   passwordPolicy: {
     getPasswordPolicy: "password-policy/list",
     addPasswordPolicy: "password-policy/create",
-    deletePasswordPolicy: "password-policy/delete/policyId?policyId=0"
+    updatePasswordPolicy: "password-policy/update",
+    deletePasswordPolicy: "/password-policy/delete/policyId"
   },
   fileUpload: {
     file: "authController/uploadPost",

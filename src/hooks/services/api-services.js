@@ -34,9 +34,13 @@ export async function getPasswordPolicy(payload) {
 }
 
 export async function addPasswordPolicy(payload) {
-  return await axiosMain.post(`${API_URL.passwordPolicy.getPasswordPolicy}`, payload);
+  return await axiosMain.post(`${API_URL.passwordPolicy.addPasswordPolicy}`, payload);
+}
+
+export async function updatePasswordPolicy(payload) {
+  return await axiosMain.post(`${API_URL.passwordPolicy.updatePasswordPolicy}`, payload);
 }
 
 export async function deletePasswordPolicy(payload) {
-  return await axiosMain.post(`${API_URL.passwordPolicy.getPasswordPolicy}`, payload);
+  return await axiosMain.delete(`${API_URL.passwordPolicy.deletePasswordPolicy}?policyId=${payload}`);
 }
