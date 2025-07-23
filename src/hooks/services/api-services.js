@@ -22,3 +22,21 @@ export async function postFileUpload(payload) {
     payload
   );
 }
+
+// audit Log
+export async function getAuditLog(payload) {
+  return await axiosMain.post(`${API_URL.auditLog.getAuditLog}`, payload);
+}
+
+// password policy
+export async function getPasswordPolicy(payload) {
+  return await axiosMain.post(`${API_URL.passwordPolicy.getPasswordPolicy}`, payload);
+}
+
+export async function addPasswordPolicy(payload) {
+  return await axiosMain.post(`${API_URL.passwordPolicy.getPasswordPolicy}`, payload);
+}
+
+export async function deletePasswordPolicy(payload) {
+  return await axiosMain.post(`${API_URL.passwordPolicy.getPasswordPolicy}`, payload);
+}

@@ -33,7 +33,6 @@ const Login = () => {
   const [isPwdVisible, setIsPwdVisible] = useState("password");
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const addbuttonClick = useRef();
   const [payload, setPayload] = useState({
     username: "",
     password: ""
@@ -53,8 +52,7 @@ const Login = () => {
     }
   }, []);
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (payload.username.trim() === "") {
       return toastEmitter("error", "Username is mandatory!");
@@ -63,41 +61,43 @@ const Login = () => {
       return toastEmitter("error", "Password is mandatory!");
     }
     setIsLoading(true);
-    signIn(payload)
-      .then(function (response) {
-        if (response.data?.status !== 200) {
-          toastEmitter("error", response?.data?.message);
-        }
-        if (response.data?.status === 200) {
-          console.log("response", response?.data?.data);
-          dispatch(
-            setAccessTokenReducer(
-              encryptStringtoAES(response?.data?.data?.token)
+    try {
+      const response = await signIn(payload)
+      console.log("RESPONSE ->", response)
+      if (response.data?.status !== 200) {
+        toastEmitter("error", response?.data?.message);
+      }
+      if (response.data?.status === 200) {
+        dispatch(
+          setAccessTokenReducer(
+            encryptStringtoAES(response?.data?.data?.token)
+          )
+        );
+        dispatch(
+          setLoggedUserReducer(encryptJSONtoAES(response?.data?.data))
+        );
+        dispatch(
+          setPermissionReducer(
+            encryptJSONtoAES(
+              response?.data?.data?.adminResponsePayload?.roleResponsePayload
+                ?.roleModuleMappingResponseList
             )
-          );
-          dispatch(
-            setLoggedUserReducer(encryptJSONtoAES(response?.data?.data))
-          );
-          dispatch(
-            setPermissionReducer(
-              encryptJSONtoAES(
-                response?.data?.data?.adminResponsePayload?.roleResponsePayload
-                  ?.roleModuleMappingResponseList
-              )
-            )
-          );
-          addbuttonClick.current.click();
-          setPayload({
-            username: "",
-            password: ""
-          });
-        }
-        return setIsLoading(false);
-      })
-      .catch(function (err) {
-        toastEmitter("error", API_RESPONSE?.MESSAGE_503);
-        return setIsLoading(false);
-      });
+          )
+        );
+
+        setPayload({
+          username: "",
+          password: ""
+        });
+      }
+    } catch (error) {
+      console.log("CATCH")
+      toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+    }
+    finally {
+      setIsLoading(false);
+    }
+
     if (rememberMe) {
       localStorage.setItem("email", encryptStringtoAES(payload?.username));
       localStorage.setItem("password", encryptStringtoAES(payload?.password));

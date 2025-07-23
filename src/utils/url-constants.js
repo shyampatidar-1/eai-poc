@@ -8,6 +8,14 @@ export const API_URL = {
     forgotPassword: "authController/forgotPassword",
     ResetPassword: "authController/changeUserPassword",
   },
+  auditLog: {
+    getAuditLog: ""
+  },
+  passwordPolicy: {
+    getPasswordPolicy: "password-policy/list",
+    addPasswordPolicy: "password-policy/create",
+    deletePasswordPolicy: "password-policy/delete/policyId?policyId=0"
+  },
   fileUpload: {
     file: "authController/uploadPost",
   },
