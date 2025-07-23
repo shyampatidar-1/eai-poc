@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import TableHeading from "../../components/comman/table-heading";
+import { toastEmitter } from "../../utils/utilities";
 
 
 const PasswordPolicy = () => {
@@ -47,12 +48,83 @@ const PasswordPolicy = () => {
       passwordHistory: 5,
     },
   ];
+
+  const [payload, setPayload] = useState({
+    PasswordPolicyName: "",
+    minimumLength: "",
+    requireUppercase: "",
+    requireLowercase: "",
+    requireSpecialchar: "",
+    requireNumber: "",
+    passwordExpireInDays: "",
+    passwordExpireWarningInDays: "",
+    maxInvalidLogin: "",
+    lockoutDuration: "",
+    passwordInHistory: ""
+  });
+
   const modalRef = useRef(null);
 
   const handleAdd = () => {
     const modal = new window.bootstrap.Modal(modalRef.current);
     modal.show();
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value)
+    let parsedValue = value;
+    if (value === "true" || value === "false") {
+      parsedValue = JSON.parse(value);
+    }
+    if (["minimumLength", "passwordExpireInDays", "passwordExpireWarningInDays", "maxInvalidLogin", "lockoutDuration", "passwordInHistory"].includes(name)) {
+      parsedValue = Number(value);
+    }
+    setPayload((prev) => ({
+      ...prev,
+      [name]: parsedValue,
+    }));
+  }
+
+  const handleSubmit = () => {
+
+    if (payload.PasswordPolicyName.trim() === "") {
+      return toastEmitter("error", "Policy name field is mandatory!");
+    }
+    if (isNaN(payload.minimumLength) || payload.minimumLength === "") {
+      return toastEmitter("error", "Minimum length field is mandatory!");
+    }
+    if (payload.requireUppercase === "Select" || payload.requireUppercase === "") {
+      return toastEmitter("error", "Uppercase field is mandatory!");
+    }
+    if (payload.requireLowercase === "Select" || payload.requireLowercase === "") {
+      return toastEmitter("error", "Lowercase field is mandatory!");
+    }
+    if (payload.requireSpecialchar === "Select" || payload.requireSpecialchar === "") {
+      return toastEmitter("error", "Specialchar field is mandatory!");
+    }
+    if (payload.requireNumber === "Select" || payload.requireNumber === "") {
+      return toastEmitter("error", "Number field is mandatory!");
+    }
+    if (payload.passwordExpireInDays === "") {
+      return toastEmitter("error", "expire (in days) field is mandatory!");
+    }
+    if (payload.passwordExpireWarningInDays === "") {
+      return toastEmitter("error", "Password expiration warning (in days) field is mandatory!");
+    }
+    if (payload.maxInvalidLogin === "") {
+      return toastEmitter("error", "Maximum invalid login attempt aield is mandatory!");
+    }
+    if (payload.lockoutDuration === "") {
+      return toastEmitter("error", "Lockout duration (in minutes) field is mandatory!");
+    }
+    if (payload.passwordInHistory === "") {
+      return toastEmitter("error", "Password in history field is mandatory!");
+    }
+
+
+    console.log("PAYLOAD ->", payload)
+  }
   return (
     <>
       {/* <div className="container mt-5"> */}
@@ -120,36 +192,36 @@ const PasswordPolicy = () => {
 
                   <div className="">
                     <label className="form-label">Policy Name</label>
-                    <input type="text" className="form-control" />
+                    <input type="text" className="form-control" name="PasswordPolicyName" value={payload.PasswordPolicyName} onChange={handleChange} />
                   </div>
-
+                        
                   <div className="row">
                     <div className="col-md-6 ">
                       <label className="form-label">Minimum Length</label>
-                      <select className="form-select">
-                        <option>Select</option>
+                      <select className="form-select" name="minimumLength" value={payload.minimumLength} onChange={handleChange}>
+                        <option >Select</option>
                         {[...Array(21).keys()].slice(1).map(n => <option key={n}>{n}</option>)}
                       </select>
                     </div>
                     <div className="col-md-6 ">
                       <label className="form-label">Require Uppercase</label>
-                      <select className="form-select">
+                      <select className="form-select" name="requireUppercase" value={payload.requireUppercase} onChange={handleChange}>
                         <option>Select</option>
                         <option>true</option>
                         <option>false</option>
                       </select>
                     </div>
                     <div className="col-md-6 ">
-                      <label className="form-label">Require Lowercase</label>
-                      <select className="form-select">
+                      <label className="form-label" >Require Lowercase</label>
+                      <select className="form-select" name="requireLowercase" value={payload.requireLowercase} onChange={handleChange}>
                         <option>Select</option>
-                        <option>true</option>
-                        <option>false</option>
+                        <option >true</option>
+                        <option >false</option>
                       </select>
                     </div>
                     <div className="col-md-6 ">
                       <label className="form-label">Require SpecialChar</label>
-                      <select className="form-select">
+                      <select className="form-select" name="requireSpecialchar" value={payload.requireSpecialchar} onChange={handleChange}>
                         <option>Select</option>
                         <option>true</option>
                         <option>false</option>
@@ -157,7 +229,7 @@ const PasswordPolicy = () => {
                     </div>
                     <div className="col-md-6 ">
                       <label className="form-label">Require Number</label>
-                      <select className="form-select">
+                      <select className="form-select" name="requireNumber" value={payload.requireNumber} onChange={handleChange}>
                         <option>Select</option>
                         <option>true</option>
                         <option>false</option>
@@ -165,13 +237,13 @@ const PasswordPolicy = () => {
                     </div>
                     <div className="col-md-6 ">
                       <label className="form-label">Expire (in Days)</label>
-                      <input type="number" className="form-control" />
+                      <input type="number" className="form-control" name="passwordExpireInDays" min={1} value={payload.passwordExpireInDays} onChange={handleChange} />
                     </div>
                   </div>
 
                   <div className="">
                     <label className="form-label">Password Expiration Warning (in Days)</label>
-                    <input type="number" className="form-control" />
+                    <input type="number" className="form-control" name="passwordExpireWarningInDays" min={1} value={payload.passwordExpireWarningInDays} onChange={handleChange} />
                   </div>
 
                   <h6 className="mt-3"><strong>History Requirement</strong></h6>
@@ -179,15 +251,15 @@ const PasswordPolicy = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <label className="form-label">Maximum Invalid Login Attempt</label>
-                      <input type="number" className="form-control" />
+                      <input type="number" className="form-control" min={1} name="maxInvalidLogin" value={payload.maxInvalidLogin} onChange={handleChange} />
                     </div>
                     <div className="col-md-6">
                       <label className="form-label">Lockout Duration (in Minutes)</label>
-                      <input type="number" className="form-control" />
+                      <input type="number" className="form-control" min={1} name="lockoutDuration" value={payload.lockoutDuration} onChange={handleChange} />
                     </div>
                     <div className="col-md-6">
                       <label className="form-label">Password in History</label>
-                      <input type="number" className="form-control" />
+                      <input type="number" className="form-control" min={1} name="passwordInHistory" value={payload.passwordInHistory} onChange={handleChange} />
                     </div>
                   </div>
                 </form>
@@ -195,7 +267,7 @@ const PasswordPolicy = () => {
 
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save Policy</button>
+                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save Policy</button>
               </div>
             </div>
           </div>

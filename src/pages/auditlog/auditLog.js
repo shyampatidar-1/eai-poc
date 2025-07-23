@@ -2,8 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import TableLayout from '../../components/layout/table-layout';
 
 const AuditLog = () => {
-  const [rowData, setRowData] = useState([]);
-  const [pending, setPending] = useState(true);
+  const [rowData, setRowData] = useState([
+    { timestamp: '2025-07-18 10:30 AM', action: 'Login', description: 'User logged in', user: 'admin', ip: '192.168.1.1' },
+    { timestamp: '2025-07-18 11:00 AM', action: 'Update', description: 'Policy updated', user: 'superadmin', ip: '192.168.1.2' },
+  ]);
+  const [pending, setPending] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
@@ -11,11 +14,36 @@ const AuditLog = () => {
   const [sortDirection, setSortDirection] = useState('');
 
   const [filterValues, setFilterValues] = useState({
-    action: '',
-    user: '',
+    user: "",
+    action: "",
+    description: "",
+    ipaddress: "",
+    fromDate: "",
+    toDate: "",
   });
 
+
+
+  const handleReset = () => {
+    setFilterValues({
+      user: "",
+      action: "",
+      description: "",
+      ipaddress: "",
+      fromDate: "",
+      toDate: "",
+    })
+  }
+
   const filterModalRef = useRef();
+
+  const handleChange = (e) => {
+    console.log('handle change')
+    const { name, value } = e.target
+    setFilterValues((prevData) => ({
+      ...prevData, [name]: value
+    }))
+  }
 
   const tableColumnsRole = [
     {
@@ -45,39 +73,11 @@ const AuditLog = () => {
       name: 'IP Address',
       selector: row => row.ip,
     },
+
+
   ];
 
-  useEffect(() => {
-    setPending(true);
 
-    setTimeout(() => {
-      // let data = [];
-
-      // Uncomment to test with mock data
-
-      let data = [
-        { timestamp: '2025-07-18 10:30 AM', action: 'Login', description: 'User logged in', user: 'admin', ip: '192.168.1.1' },
-        { timestamp: '2025-07-18 11:00 AM', action: 'Update', description: 'Policy updated', user: 'superadmin', ip: '192.168.1.2' },
-      ];
-
-
-      if (filterValues.action) {
-        data = data.filter(item =>
-          item.action.toLowerCase().includes(filterValues.action.toLowerCase())
-        );
-      }
-
-      if (filterValues.user) {
-        data = data.filter(item =>
-          item.user.toLowerCase().includes(filterValues.user.toLowerCase())
-        );
-      }
-
-      setRowData(data);
-      setTotalRows(data.length);
-      setPending(false);
-    }, 500);
-  }, [page, pageSize, sortColumn, sortDirection, filterValues]);
 
   const handleExport = () => {
     alert('Export button clicked — add export logic here');
@@ -88,10 +88,11 @@ const AuditLog = () => {
     modal.show();
   };
 
-  const applyFilter = () => {
-    setPage(1);
-    const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
-    modal.hide();
+  const handleApplyFilter = () => {
+    // setPage(1);
+    // const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
+    // modal.hide();
+    console.log("PAYLAOD ->", filterValues)
   };
 
   return (
@@ -135,42 +136,95 @@ const AuditLog = () => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="filterModalLabel">Filter Logs</h5>
+              <h5 className="modal-title" id="filterModalLabel">Apply Filter</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">
-              <div className="">
-                <label htmlFor="filterAction" className="form-label">Action</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="filterAction"
-                  value={filterValues.action}
-                  onChange={e =>
-                    setFilterValues(prev => ({ ...prev, action: e.target.value }))
-                  }
-                />
-              </div>
+
               <div className="">
                 <label htmlFor="filterUser" className="form-label">User</label>
                 <input
+                  name="user"
                   type="text"
                   className="form-control"
                   id="filterUser"
                   value={filterValues.user}
-                  onChange={e =>
-                    setFilterValues(prev => ({ ...prev, user: e.target.value }))
-                  }
+                  onChange={handleChange}
                 />
               </div>
+
+              <div className="">
+                <label htmlFor="filterAction" className="form-label">Action</label>
+                <input
+                  name="action"
+                  type="text"
+                  className="form-control"
+                  id="filterAction"
+                  value={filterValues.action}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="filterDescription" className="form-label">Description</label>
+                <input
+                  name="description"
+                  type="text"
+                  className="form-control"
+                  id="filterDescription"
+                  value={filterValues.description}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="filterIpAddress" className="form-label">IP Address</label>
+                <input
+                  name="ipaddress"
+                  type="text"
+                  className="form-control"
+                  id="filterIpAddress"
+                  value={filterValues.ipaddress}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="filterFromDate" className="form-label">From Date</label>
+                <input
+                  name="fromDate"
+                  type="date"
+                  className="form-control"
+                  id="filterFromDate"
+                  value={filterValues.fromDate}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="">
+                <label htmlFor="filterToDate" className="form-label">To Date</label>
+                <input
+                  name="toDate"
+                  type="date"
+                  className="form-control"
+                  id="filterToDate"
+                  value={filterValues.toDate}
+                  onChange={handleChange}
+                />
+              </div>
+
+
             </div>
+
+
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                Close
+              <button type="button" className="btn btn-primary w-100" onClick={handleApplyFilter}>
+                Apply Filter
               </button>
-              <button type="button" className="btn btn-primary" onClick={applyFilter}>
-                Apply
-              </button>
+              {/* data-bs-dismiss="modal" */}
+              <button type="button" className="btn btn-secondary w-100" onClick={handleReset}>
+                Reset Filter              </button>
+
             </div>
           </div>
         </div>

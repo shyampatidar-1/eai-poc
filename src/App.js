@@ -22,6 +22,7 @@ import Role from './pages/role-management/role';
 import Staff from './pages/role-management/staff';
 import AddStaff from './pages/role-management/add-staff';
 import AddRole from './pages/role-management/add-role';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -55,6 +56,7 @@ function App() {
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <ToastContainer />
     </>
   );
 }
