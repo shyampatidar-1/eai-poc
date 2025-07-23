@@ -34,6 +34,7 @@ const AddRole = () => {
     allModuleSelected: false,
   });
 
+  console.log("payload>>>", payload);
   const staticModules = [
     {
       id: 1,

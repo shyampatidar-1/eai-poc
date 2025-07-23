@@ -112,18 +112,103 @@
 
 // export default CreateIntegration;
 
+// import React, { useEffect, useRef } from 'react';
+// import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
+// import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+
+// import 'bpmn-js/dist/assets/diagram-js.css';
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+// import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+
+
+// const CreateIntegration = () => {
+//   const canvasRef = useRef(null);
+//   const panelRef = useRef(null);
+
+//   useEffect(() => {
+//     const modeler = new BpmnJS({
+//       container: canvasRef.current,
+//       propertiesPanel: {
+//         parent: panelRef.current,
+//       },
+
+
+//       additionalModules: [
+//         require('bpmn-js-properties-panel'),
+//         require('bpmn-js-properties-panel/lib/provider/camunda'),
+//       ],
+
+//       moddleExtensions: {
+//         camunda: camundaModdleDescriptor,
+//       },
+//     });
+
+// //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
+// // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+// //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+// //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+// //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+// //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+// //   id="Definitions_1"
+// //   targetNamespace="http://bpmn.io/schema/bpmn">
+// //   <bpmn:process id="Process_1" isExecutable="true">
+// //     <bpmn:startEvent id="StartEvent_1"/>
+// //   </bpmn:process>
+// //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+// //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+// //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+// //         <dc:Bounds x="100" y="100" width="36" height="36"/>
+// //       </bpmndi:BPMNShape>
+// //     </bpmndi:BPMNPlane>
+// //   </bpmndi:BPMNDiagram>
+// // </bpmn:definitions>`;
+//  const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
+//       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+//         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+//         xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+//         xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+//         id="Definitions_1"
+//         targetNamespace="http://bpmn.io/schema/bpmn">
+
+//         <bpmn:process id="Process_1" isExecutable="true" />
+
+//         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+//           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+//         </bpmndi:BPMNDiagram>
+//       </bpmn:definitions>`
+//     modeler.importXML(xml).catch(console.error);
+
+//     return () => {
+//       modeler.destroy();
+//     };
+//   }, []);
+
+//   return (
+//     <div style={{ display: 'flex', height: '100vh' }}>
+//       <div ref={canvasRef} style={{ flex: 1 }} />
+//       <div ref={panelRef} style={{ width: '300px', borderLeft: '1px solid #ccc' }} />
+//     </div>
+//   );
+// };
+
+
+// export default CreateIntegration
+
+
+
 import React, { useEffect, useRef } from 'react';
 import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
 import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
-
 
 const CreateIntegration = () => {
   const canvasRef = useRef(null);
   const panelRef = useRef(null);
+  const modelerRef = useRef(null);
 
   useEffect(() => {
     const modeler = new BpmnJS({
@@ -131,40 +216,51 @@ const CreateIntegration = () => {
       propertiesPanel: {
         parent: panelRef.current,
       },
-
-
       additionalModules: [
         require('bpmn-js-properties-panel'),
         require('bpmn-js-properties-panel/lib/provider/camunda'),
       ],
-
-
-
-
       moddleExtensions: {
         camunda: camundaModdleDescriptor,
       },
     });
 
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-  id="Definitions_1"
-  targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1"/>
-  </bpmn:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="100" y="100" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</bpmn:definitions>`;
+    modelerRef.current = modeler;
+
+    //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+    //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+    //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+    //   id="Definitions_1"
+    //   targetNamespace="http://bpmn.io/schema/bpmn">
+    //   <bpmn:process id="Process_1" isExecutable="true">
+    //     <bpmn:startEvent id="StartEvent_1"/>
+    //   </bpmn:process>
+    //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+    //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+    //         <dc:Bounds x="100" y="100" width="36" height="36"/>
+    //       </bpmndi:BPMNShape>
+    //     </bpmndi:BPMNPlane>
+    //   </bpmndi:BPMNDiagram>
+    // </bpmn:definitions>`;
+    const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
+      <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+        id="Definitions_1"
+        targetNamespace="http://bpmn.io/schema/bpmn">
+
+        <bpmn:process id="Process_1" isExecutable="true" />
+
+        <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+          <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+        </bpmndi:BPMNDiagram>
+      </bpmn:definitions>`
 
     modeler.importXML(xml).catch(console.error);
 
@@ -173,13 +269,89 @@ const CreateIntegration = () => {
     };
   }, []);
 
+  const createElement = async (type) => {
+    const modeler = modelerRef.current;
+    const elementFactory = modeler.get('elementFactory');
+    const modeling = modeler.get('modeling');
+    const canvas = modeler.get('canvas');
+
+    const rootElement = canvas.getRootElement();
+
+    const shape = elementFactory.createShape({ type });
+
+    // Create random position to avoid overlapping
+    const x = Math.floor(Math.random() * 400 + 100);
+    const y = Math.floor(Math.random() * 300 + 100);
+
+    modeling.createShape(shape, { x, y }, rootElement);
+  };
+
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div ref={canvasRef} style={{ flex: 1 }} />
-      <div ref={panelRef} style={{ width: '300px', borderLeft: '1px solid #ccc' }} />
+    <div className="d-flex flex-column vh-100">
+      {/* Top Bar */}
+      {/* <div className="d-flex justify-content-between align-items-center px-4 py-2 bg-primary text-white">
+        <div className="fw-bold">Enterprise AA/Integration</div>
+        <div className="d-flex align-items-center gap-3">
+          <select className="form-select form-select-sm w-auto">
+            <option>Version: 1.2</option>
+          </select>
+          <button className="btn btn-light btn-sm">Validate</button>
+          <button className="btn btn-light btn-sm">Fit</button>
+          <button className="btn btn-success btn-sm">Deploy</button>
+        </div>
+      </div> */}
+
+      {/* Main Content */}
+      <div className="d-flex flex-grow-1">
+        {/* Left Sidebar */}
+        <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
+          <h6 className="text-muted">Process Modeller</h6>
+
+          <div className="mb-4">
+            <div className="fw-bold mb-2">BPMN Elements</div>
+            <div className="d-flex flex-wrap gap-2">
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent')}>Start</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent')}>End</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task')}>Task</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway')}>Gateway</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:SubProcess')}>Sub-process</button>
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <div className="fw-bold mb-2">App Connectors</div>
+            <div className="d-flex flex-wrap gap-2">
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:ServiceTask')}>REST</button>
+              <button className="btn btn-outline-primary btn-sm">FTP</button>
+              <button className="btn btn-outline-primary btn-sm">SAP</button>
+              <button className="btn btn-outline-primary btn-sm">Salesforce</button>
+            </div>
+          </div>
+
+          <div>
+            <div className="fw-bold mb-2">Data Enrichers</div>
+            <div className="d-flex flex-wrap gap-2">
+              <button className="btn btn-outline-warning btn-sm">Script</button>
+              <button className="btn btn-outline-warning btn-sm">Mapper</button>
+              <button className="btn btn-outline-warning btn-sm">Transformer</button>
+            </div>
+          </div>
+        </div>
+
+        {/* BPMN Canvas */}
+
+        <div className="flex-grow-1 position-relative" ref={canvasRef} />
+
+        {/* Properties Panel */}
+        <div
+          ref={panelRef}
+          className="bg-white border-start p-3"
+          style={{ width: '300px', overflowY: 'auto' }}
+        />
+      </div>
     </div>
   );
 };
 
+export default CreateIntegration;
 
-export default CreateIntegration

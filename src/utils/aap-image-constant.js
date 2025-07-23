@@ -182,5 +182,4 @@ export const GREYPLUSICON_ICON =
 export const GREYEYE_ICONIMG =
   "./assets/common/role-icons/blur_roleviewicon.svg";
 export const BLUEEYE_ICONIMG = "./assets/common/role-icons/roleviewicon.svg";
-
 export const ACCESS_IMAGE_PERMISSION = "./assets/common/Accessimage.svg";

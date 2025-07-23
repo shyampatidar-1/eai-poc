@@ -52,6 +52,8 @@ const Login = () => {
       setRememberMe(true);
     }
   }, []);
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (payload.username.trim() === "") {
@@ -60,19 +62,14 @@ const Login = () => {
     if (payload.password.trim() === "") {
       return toastEmitter("error", "Password is mandatory!");
     }
-    // dispatch(
-    //   setAccessTokenReducer(
-    //     encryptStringtoAES((payload.email + payload.password).trim())
-    //   )
-    // );
     setIsLoading(true);
     signIn(payload)
       .then(function (response) {
-        console.log("response", response);
         if (response.data?.status !== 200) {
           toastEmitter("error", response?.data?.message);
         }
         if (response.data?.status === 200) {
+          console.log("response", response?.data?.data);
           dispatch(
             setAccessTokenReducer(
               encryptStringtoAES(response?.data?.data?.token)

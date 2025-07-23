@@ -15,10 +15,6 @@ export async function forgotPassword(payload) {
 export async function resetPassword(payload) {
   return await axiosMain?.post(`${API_URL?.auth?.ResetPassword}`, payload);
 }
-
-export async function getAllUpcomingAppointmentListByDate(clinicId, date, languageType) {
-  return await axiosMain?.get(`${API_URL?.dashboard?.getUpcomingAppointmentListByDate}?clinicId=${clinicId}&date=${date}&languageType=${languageType}`);
-}
 //  single file upload
 export async function postFileUpload(payload) {
   return await axios?.post(
