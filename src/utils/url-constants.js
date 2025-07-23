@@ -9,7 +9,7 @@ export const API_URL = {
     ResetPassword: "authController/changeUserPassword",
   },
   auditLog: {
-    getAuditLog: ""
+    getAuditLog: "auditlog/list"
   },
   passwordPolicy: {
     getPasswordPolicy: "password-policy/list",
