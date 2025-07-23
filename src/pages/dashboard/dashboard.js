@@ -91,7 +91,7 @@ import "chart.js/auto";
 
 const Dashboard = () => {
   const lineChartData = {
-    labels: ["1 day", "2 day", "4 days"],
+    labels: ["1 day", "2 day", "3 days"],
     datasets: [
       {
         label: "Processes",
@@ -103,7 +103,7 @@ const Dashboard = () => {
   };
 
   const barData = {
-    labels: ["1a", "2a", "3a", "4a", "5a"],
+    labels: ["FTP", "ORACLE", "OMS", "REST", "Salesforce"],
     datasets: [
       {
         label: "Running",
@@ -119,7 +119,7 @@ const Dashboard = () => {
   };
 
   const alertsData = {
-    labels: ["1a", "2a", "3a"],
+    labels: ["FTP", "ORACLE", "OMS"],
     datasets: [
       {
         label: "Alerts",
@@ -133,7 +133,7 @@ const Dashboard = () => {
     labels: ["In SLA", "Out SLA"],
     datasets: [
       {
-        data: [92, 8], // Example values (adjust as needed)
+        data: [96, 4], // Example values (adjust as needed)
         backgroundColor: ["#198754", "#dc3545"], // Green, Red
         borderWidth: 0
       }
@@ -171,7 +171,7 @@ const Dashboard = () => {
         </div>
 
         {/* Top Failing */}
-        <div className="col-md-4">
+        <div className="col-md-5">
           <div className="bg-white p-3 rounded-4 shadow-sm h-100">
             <h6 className="text-secondary mb-3">Top Failing Integrations</h6>
             <table className="table table-sm table-borderless mb-0">
@@ -189,17 +189,17 @@ const Dashboard = () => {
                   <td>Transaction Error</td>
                 </tr>
                 <tr>
-                  <td>SPA</td>
+                  <td>SAP</td>
                   <td>12 min ago</td>
                   <td>Timeout</td>
                 </tr>
                 <tr>
-                  <td>LOYALTY SYSTEM</td>
+                  <td>FTP</td>
                   <td>2 min ago</td>
                   <td>Timeout</td>
                 </tr>
                 <tr>
-                  <td>BILLING ENGINE</td>
+                  <td>REST</td>
                   <td>3 min ago</td>
                   <td>Transaction Error</td>
                 </tr>
@@ -209,7 +209,7 @@ const Dashboard = () => {
         </div>
 
         {/* Node Health */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <div className="bg-white p-3 rounded-4 shadow-sm h-100">
             <div className="d-flex justify-content-between align-items-center mb-2">
               <h6 className="text-secondary mb-0">Node Health</h6>
