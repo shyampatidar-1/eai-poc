@@ -34,13 +34,10 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const addbuttonClick = useRef();
+
   const [payload, setPayload] = useState({
     email: "",
     password: "",
-    userType: "CLINIC",
-    deviceToken: "",
-    deviceType: "web",
-    // languageType: i18n.language
   });
 
   useEffect(() => {
@@ -59,9 +56,14 @@ const Login = () => {
     }
 
   }, []);
+
   const handleSubmit = (e) => {
+    console.log("PAYLOAD ->", payload)
+
     e.preventDefault();
+
     if (payload.email.trim() === "") {
+
       return toastEmitter("error", "Email is mandatory!");
     }
     if (payload.password.trim() === "") {
