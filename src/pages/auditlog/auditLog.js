@@ -13,22 +13,6 @@ const AuditLog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("id");
   const [sortDirection, setSortDirection] = useState("desc");
-
-  const payload = {
-    pageIndex: page || 0,
-    pageSize: pageSize || DEFAULT_PAGE_LENGTH,
-    sortBy: sortColumn || "id",
-    searchBy: "",
-    sortingOrder: sortDirection || "desc",
-    fromDate: "",
-    toDate: "",
-    userName: "",
-    moduleName: "",
-    description: "",
-    action: "",
-    ipAddress: "192.168.56.1",
-  };
-
   const [filterValues, setFilterValues] = useState({
     user: "",
     action: "",
@@ -38,6 +22,23 @@ const AuditLog = () => {
     toDate: "",
   });
 
+  const payload = {
+      pageIndex: page || 0,
+  pageSize: pageSize || DEFAULT_PAGE_LENGTH,
+  sortBy: sortColumn || "id",
+  searchBy: searchTerm,
+  sortingOrder: sortDirection || "desc",
+  fromDate: filterValues.fromDate,
+  toDate: filterValues.toDate,
+  userName: filterValues.user,
+  moduleName: "", // Add if needed
+  description: filterValues.description,
+  action: filterValues.action,
+  ipAddress: filterValues.ipaddress,
+  };
+
+
+   console.log("filterValues",filterValues)
   const handleReset = () => {
     setFilterValues({
       user: "",
@@ -100,11 +101,12 @@ const AuditLog = () => {
     modal.show();
   };
 
-  const handleApplyFilter = () => {
-    // setPage(1);
-    // const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
-    // modal.hide();
-  };
+const handleApplyFilter = () => {
+  setPage(0); // optional: reset to first page
+  const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
+  modal.hide();
+  fetchAuditLogData(); // fetch data with new filters
+};
 
   const fetchAuditLogData = async () => {
     try {
@@ -142,9 +144,9 @@ const AuditLog = () => {
           >
             Filter
           </button>
-          <button className="btn btn-outline-secondary" onClick={handleExport}>
+          {/* <button className="btn btn-outline-secondary" onClick={handleExport}>
             Export
-          </button>
+          </button> */}
         </div>
       </div>
 
