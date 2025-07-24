@@ -18,9 +18,7 @@ const Staff = () => {
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_LENGTH);
   const [sortColumn, setSortColumn] = useState("id");
   const [sortDirection, setSortDirection] = useState("desc");
-
   const [rowData, setRowData] = useState([]);
-
   const handleAdd = () => {
     navigate(`${ROUTES.STAFF}/add`, {
       state: { formType: "add" },
@@ -38,7 +36,7 @@ const Staff = () => {
     });
   };
 
-  const handleRoleStatus = async (id, status) => {
+  const handleStaffStatus = async (id, status) => {
     try {
       const response = await staffStatus(id, status);
       if (response.status !== 200) {
@@ -84,7 +82,7 @@ const Staff = () => {
   `}
           onClick={(e) => {
             // if (permissionAccess?.moduleAction !== 0) {
-            handleRoleStatus(row?.adminId, row?.status === 1 ? 2 : 1);
+            handleStaffStatus(row?.adminId, row?.status === 1 ? 2 : 1);
             // }
           }}
         >
@@ -126,11 +124,13 @@ const Staff = () => {
   };
 
   const fetchStaffData = async () => {
+    setPending(true);
     try {
       const response = await staffList(payload);
 
       if (response.status !== 200) {
         toastEmitter("error", response?.data?.message);
+        setPending(false);
       } else {
         // Safe fallback with null-item filtering
         const rawList = response?.data?.data?.content || [];
@@ -138,9 +138,11 @@ const Staff = () => {
 
         setRowData(rawList);
         setTotalRows(totalElements); // or totalElements if you want original count
+        setPending(false);
       }
     } catch (err) {
       toastEmitter("error", "Something went wrong. Please try again later.");
+      setPending(false);
     } finally {
       setPending(false);
     }
@@ -152,33 +154,33 @@ const Staff = () => {
 
   return (
     <div className="main_datatable">
-      <div className="tab-pane fade show active">
-        <TableHeading
-          title="Staff"
-          searchValue={searchTerm}
-          setSearchValue={setSearchTerm}
-          data="Staff"
-          showbutton={true}
-          addButtonClick={handleAdd}
-        />
 
-        <div className="table-wrapper">
-          <TableLayout
-            _tblColumns={tableColumnsStaff}
-            _rowData={rowData}
-            pending={pending}
-            pagination={true}
-            selectableRows={false}
-            setPending={setPending}
-            _totalRows={totalRows}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-            setPage={setPage}
-            setSortColumn={setSortColumn}
-            setSortDirection={setSortDirection}
-          />
-        </div>
+      <TableHeading
+        title="Staff"
+        searchValue={searchTerm}
+        setSearchValue={setSearchTerm}
+        data="Staff"
+        showbutton={true}
+        addButtonClick={handleAdd}
+      />
+
+      <div className="table-wrapper">
+        <TableLayout
+          _tblColumns={tableColumnsStaff}
+          _rowData={rowData}
+          pending={pending}
+          pagination={true}
+          selectableRows={false}
+          setPending={setPending}
+          _totalRows={totalRows}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+          setPage={setPage}
+          setSortColumn={setSortColumn}
+          setSortDirection={setSortDirection}
+        />
       </div>
+
     </div>
   );
 };

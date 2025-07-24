@@ -5,10 +5,10 @@ import BreadCrum from "../../components/comman/breadcrum";
 import Input from "../../components/comman/input";
 import Button from "../../components/comman/button";
 import { ROUTES } from "../../hooks/routes/routes-constant";
-import { handleFormInput } from "../../utils/form-utils";
+import { handleFormInput, handleFormNumericInput } from "../../utils/form-utils";
 import DropDown from "../../components/comman/dropdown";
 import INPUTFIELD from "../../components/comman/input";
-import { addStaff, getStaffById, staffList, updateStaff } from "../../hooks/services/api-services";
+import { addStaff, getAllRole, getStaffById, staffList, updateStaff } from "../../hooks/services/api-services";
 import { API_RESPONSE } from "../../utils/app-constants";
 import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
 import { useSelector } from "react-redux";
@@ -19,7 +19,6 @@ const AddStaff = () => {
   const [isPwdVisible, setIsPwdVisible] = useState("password");
   const { value } = useSelector((state) => state?.loggedUser);
   const userData = decryptAEStoJSON(value);
-  console.log("userData>>>", userData?.userDetails?.userId);
   const [payload, setPayload] = useState({
     adminId: 0,
     userName: "",
@@ -103,6 +102,7 @@ const AddStaff = () => {
         toastEmitter("error", response?.data?.message);
       }
       if (response.data?.status === 200) {
+        toastEmitter("success", response?.data?.message);
         navigate(ROUTES.STAFF);
       }
     } catch (error) {
@@ -127,7 +127,7 @@ const AddStaff = () => {
       parentRoleId: 0,
     }
     try {
-      const response = await staffList(rolePayload);
+      const response = await getAllRole(rolePayload);
       if (response?.data?.status !== 200) {
         toastEmitter("error", response?.data?.message);
         setRoleList([]);
@@ -151,14 +151,15 @@ const AddStaff = () => {
 
   return (
     <div className="main_datatable my-lg-3 mt-1">
+      <BreadCrum
+        firstData="Staff"
+        iconshow1={true}
+        secondData={`${pageAction} Staff`}
+        onFirstDataClick={handleDataBack}
+      />
       <form onSubmit={handleSubmit}>
         <div className="add_doctor card p-3 border border-radius_input mb-3">
-          <BreadCrum
-            firstData="Role Management"
-            iconshow1={true}
-            secondData={`${pageAction} Staff`}
-            onFirstDataClick={handleDataBack}
-          />
+
 
           <div className="row">
             <div className="col-md-6 mb-2">
@@ -187,7 +188,7 @@ const AddStaff = () => {
               />
             </div> */}
             <div className="col-md-6 mb-2">
-              <DropDown
+              {/* <DropDown
                 labelName="Select Role"
                 name="roleId"
                 options={rolelist}
@@ -196,7 +197,39 @@ const AddStaff = () => {
                 showastrict={true}
                 className="border-radius_input"
                 disabled={checkFormType === "view"}
-              />
+              /> */}
+
+              <label htmlFor="">
+                Role Name <span className="text-danger">*</span>
+              </label>
+              <select
+                class="form-select"
+                disabled={checkFormType === "view"}
+                name="roleId"
+                value={payload.roleId || ""}
+                onChange={(e) =>
+                  setPayload(
+                    handleFormNumericInput(e, payload)
+                  )
+                }
+              >
+                <option value="0" className="font-primary">
+                  Select Role
+                </option>
+                {rolelist !== undefined &&
+                  rolelist &&
+                  rolelist
+                    ?.sort((a, b) =>
+                      a?.roleName?.localeCompare(b?.roleName)
+                    )
+                    ?.map((item) => (
+                      <option key={item?.roleId} value={item?.roleId}>
+                        {item?.roleName}
+                      </option>
+                    ))}
+              </select>
+
+
             </div>
 
             {checkFormType === "add" && (
@@ -244,8 +277,8 @@ const AddStaff = () => {
             </button>
           )}
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
 

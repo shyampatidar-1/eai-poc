@@ -148,28 +148,12 @@ import { } from "react-icons/md";
 import { useEffect, useState } from 'react';
 import { ROUTES } from '../hooks/routes/routes-constant';
 import { MdDashboard, MdIntegrationInstructions, MdOutlineManageAccounts, MdSecurity, MdOutlinePolicy, MdOutlineTrackChanges, MdOutlineSupervisorAccount, MdOutlineEventNote } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { decryptAEStoJSON } from '../utils/utilities';
 
 
 
-const menuItems = [
-  { path: ROUTES?.DASHBOARD, label: 'Dashboard', icon: <MdDashboard className="fs-5" /> },
-  { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className="fs-5" /> },
-  { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className="fs-5" /> },
-  { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className="fs-5" /> },
-  { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className="fs-5" /> },
-  { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className="fs-5" /> },
-  {
-    label: 'Role Management',
-    path: ROUTES?.ROLE,
-    icon: <MdOutlineManageAccounts className="fs-5" />,
-    children: [
-      { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className="fs-5" /> },
-      { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className="fs-5" /> },
-    ],
-  },
-  { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className="fs-5" /> },
-  { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className="fs-5" /> },
-];
+
 
 
 
@@ -179,6 +163,29 @@ const Sidebar = () => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const location = useLocation();
 
+  const { value } = useSelector((state) => state?.loggedUser);
+  const userData = decryptAEStoJSON(value);
+  console.log("userData>>>", userData?.roleList?.permissions);
+
+  const menuItems = [
+    { path: ROUTES?.DASHBOARD, label: 'Dashboard', moduelCode: "dashboard", icon: <MdDashboard className="fs-5" /> },
+    { path: ROUTES?.MONITORDASHBOARD, label: 'Monitor Dashboard', icon: <MdOutlineTrackChanges className="fs-5" /> },
+    { path: ROUTES?.CREATEINT, label: 'Create Integration', icon: <MdIntegrationInstructions className="fs-5" /> },
+    { path: ROUTES?.CONNECTORES, label: 'Connector Manager', icon: <RiGitMergeLine className="fs-5" /> },
+    { path: ROUTES?.QUEUE, label: 'Queues', icon: <BiTask className="fs-5" /> },
+    { path: ROUTES?.MESSAGETRACKER, label: 'Message Tracker', icon: <FaEnvelope className="fs-5" /> },
+    {
+      label: 'Role Management',
+      path: ROUTES?.ROLE,
+      icon: <MdOutlineManageAccounts className="fs-5" />,
+      children: [
+        { path: ROUTES?.ROLE, label: 'Role', icon: <MdSecurity className="fs-5" /> },
+        { path: ROUTES?.STAFF, label: 'Staff', icon: <MdOutlineSupervisorAccount className="fs-5" /> },
+      ],
+    },
+    { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', icon: <MdOutlinePolicy className="fs-5" /> },
+    { path: ROUTES?.AUDITLOG, label: 'Audit log', icon: <MdOutlineEventNote className="fs-5" /> },
+  ];
   useEffect(() => {
     menuItems.forEach((item, index) => {
       if (item.children) {

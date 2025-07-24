@@ -22,7 +22,13 @@ const AuditLog = () => {
     sortingOrder: sortDirection || "desc",
     fromDate: "",
     toDate: "",
-  }
+    userName: "",
+    moduleName: "",
+    description: "",
+    action: "",
+    ipAddress: "192.168.56.1",
+  };
+
   const [filterValues, setFilterValues] = useState({
     user: "",
     action: "",
