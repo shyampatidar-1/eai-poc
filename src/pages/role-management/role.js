@@ -29,7 +29,7 @@ const Role = () => {
   // const rawPermission = useSelector((state) => state?.loggedUser?.value);
   const { value } = useSelector((state) => state?.loggedUser);
   const userData = decryptAEStoJSON(value);
-  console.log("userData>>>", userData?.roleList[0]?.roleName);
+  // permission code
   const [permissionAccess, setPermissionAccess] = useState();
   const rawPermission = useSelector((state) => state?.permission?.value);
   const permissions = decryptAEStoJSON(rawPermission);
@@ -38,7 +38,7 @@ const Role = () => {
       permissions && permissions?.filter((v) => v.moduleName === "Role");
     setPermissionAccess(RoleAccessFilterData?.[0]);
   }, []);
-  console.log("permissionAccess>>>", permissionAccess);
+  // permission code
   const payload = {
     pageIndex: page || 0,
     pageSize: pageSize || DEFAULT_PAGE_LENGTH,
@@ -146,10 +146,10 @@ const Role = () => {
               : "bg-gray-normal color-gray-bold"
 
             }
-             ${!permissionAccess?.isModuleChecked ? "disabled-style" : ""}
+             ${!permissionAccess?.isDeleteChecked ? "disabled-style" : ""}
   `}
           onClick={(e) => {
-            if (!permissionAccess?.isModuleChecked) {
+            if (!permissionAccess?.isDeleteChecked) {
               handleRoleStatus(row?.roleId, row?.status === 1 ? 2 : 1);
             }
           }}
@@ -165,44 +165,6 @@ const Role = () => {
         </div>
       ),
     },
-    // {
-    //   name: "Action",
-    //   width: "120px",
-    //   compact: true,
-    //   cell: (row) => (
-    //     <div className="row-actions">
-    //       {userData?.roleList?.roleName !== row?.roleName &&
-    //         permissionAccess?.updateAction === 1 && (
-    //           <Link
-    //             to={`${pageUrlConstant}edit?page=${btoa(row.id).replaceAll(
-    //               "=",
-    //               ""
-    //             )}`}
-    //           >
-    //             <span
-    //               className="cursor-pointer d-inline-flex align-items-center justify-content-center action-icon edit-icon"
-    //             >
-    //               <i className="os-icon os-icon-ui-49"></i>
-    //             </span>
-    //           </Link>
-    //          )}
-    //       {permissionAccess?.viewAction === 1 && (
-    //         <Link
-    //           to={`${pageUrlConstant}view?page=${btoa(row.id).replaceAll(
-    //             "=",
-    //             ""
-    //           )}`}
-    //         >
-    //           <span
-    //             className="cursor-pointer d-inline-flex align-items-center justify-content-center action-icon view-icon"
-    //           >
-    //             <i className="os-icon os-icon-eye"></i>
-    //           </span>
-    //         </Link>
-    //        )} 
-    //     </div>
-    //   ),
-    // },
     {
       name: "Action",
       width: "150px",

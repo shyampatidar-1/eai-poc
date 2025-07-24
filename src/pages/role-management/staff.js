@@ -6,8 +6,9 @@ import TableHeading from "../../components/comman/table-heading";
 import TableLayout from "../../components/layout/table-layout";
 import { ROLE_EDIT_ICON, ROLE_VIEW_ICON } from "../../utils/aap-image-constant";
 import { staffList, staffStatus } from "../../hooks/services/api-services";
-import { toastEmitter } from "../../utils/utilities";
+import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
 import { API_RESPONSE, DEFAULT_PAGE_LENGTH } from "../../utils/app-constants";
+import { useSelector } from "react-redux";
 
 const Staff = () => {
   const navigate = useNavigate();
@@ -50,6 +51,17 @@ const Staff = () => {
     }
   };
 
+  // permission code
+  const [permissionAccess, setPermissionAccess] = useState();
+  const rawPermission = useSelector((state) => state?.permission?.value);
+  const permissions = decryptAEStoJSON(rawPermission);
+  useEffect(() => {
+    const RoleAccessFilterData =
+      permissions && permissions?.filter((v) => v.moduleName === "Staff");
+    setPermissionAccess(RoleAccessFilterData?.[0]);
+  }, []);
+  // permission code
+
   const tableColumnsStaff = [
     {
       name: "Admin Name",
@@ -62,11 +74,37 @@ const Staff = () => {
       selector: (row) => row.roleName,
       sortable: true,
     },
-    // {
-    //   name: "Status",
-    //   selector: row => row.status,
-    //   sortable: true,
-    // },
+
+    //   {
+    //     code: "status",
+    //     sortable: true,
+    //     name: "Status",
+    //     selector: (row) => row?.status,
+    //     cell: (row) => (
+    //       <div
+    //         className={`d-flex align-items-center gap-1 px-2 py-1 rounded-4 cursor-pointer
+    //   ${row.status === 1
+    //             ? "bg-green-normal color-green-bold"
+    //             : "bg-gray-normal color-gray-bold"
+    //           }
+    // `}
+    //         onClick={(e) => {
+    //           // if (permissionAccess?.moduleAction !== 0) {
+    //           handleStaffStatus(row?.adminId, row?.status === 1 ? 2 : 1);
+    //           // }
+    //         }}
+    //       >
+    //         <div
+    //           className={`rounded-circle ${row?.status === 1 ? "bg-green-bold" : "bg-gray-bold"
+    //             }`}
+    //           style={{ width: "10px", height: "10px" }}
+    //         ></div>
+    //         <p className="m-0 fs-14 fw-normal">
+    //           {row?.status === 1 ? "Active" : "Inactive"}
+    //         </p>
+    //       </div>
+    //     ),
+    //   },
     {
       code: "status",
       sortable: true,
@@ -75,15 +113,16 @@ const Staff = () => {
       cell: (row) => (
         <div
           className={`d-flex align-items-center gap-1 px-2 py-1 rounded-4 cursor-pointer
-    ${row.status === 1
+          ${row.status === 1
               ? "bg-green-normal color-green-bold"
               : "bg-gray-normal color-gray-bold"
             }
+             ${!permissionAccess?.isDeleteChecked ? "disabled-style" : ""}
   `}
           onClick={(e) => {
-            // if (permissionAccess?.moduleAction !== 0) {
-            handleStaffStatus(row?.adminId, row?.status === 1 ? 2 : 1);
-            // }
+            if (!permissionAccess?.isDeleteChecked) {
+              handleStaffStatus(row?.adminId, row?.status === 1 ? 2 : 1);
+            }
           }}
         >
           <div
@@ -97,21 +136,52 @@ const Staff = () => {
         </div>
       ),
     },
+    // {
+    //   name: "Action",
+    //   width: "150px",
+    //   cell: (row) => (
+    //     <div className="d-flex justify-content-between align-items-center">
+    //       <div className="me-2 cursor-pointer">
+    //         <img src={ROLE_EDIT_ICON} alt="Edit" onClick={() => handleEdit(row?.adminId)} />
+    //       </div>
+
+    //       <div className="me-2 cursor-pointer" onClick={() => handleView(row?.adminId)}>
+    //         <img src={ROLE_VIEW_ICON} alt="View" />
+    //       </div>
+    //     </div>
+    //   ),
+    // },
     {
       name: "Action",
       width: "150px",
-      cell: (row) => (
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="me-2 cursor-pointer">
-            <img src={ROLE_EDIT_ICON} alt="Edit" onClick={() => handleEdit(row?.adminId)} />
+      cell: (row) => {
+        const canEdit = permissionAccess?.isUpdateChecked;
+        const canView = permissionAccess?.isViewChecked;
+        return (
+          <div className="d-flex justify-content-between align-items-center">
+            <div className={`me-2 cursor-pointer ${!canEdit ? "disabled-style" : ""
+              } `}
+              onClick={() => {
+                if (canEdit) handleEdit(row?.adminId);
+              }}
+              style={!canEdit ? { pointerEvents: "none", opacity: 0.6 } : {}}>
+              <img src={ROLE_EDIT_ICON} alt="Edit" />
+            </div>
+            <div
+              className={`me-2 cursor-pointer ${!canView ? "disabled-style" : ""
+                }`}
+              onClick={() => {
+                if (canView) handleView(row?.adminId);
+              }}
+              style={!canView ? { pointerEvents: "none", opacity: 0.6 } : {}}
+            >
+              <img src={ROLE_VIEW_ICON} alt="View" />
+            </div>
           </div>
+        )
 
-          <div className="me-2 cursor-pointer" onClick={() => handleView(row?.adminId)}>
-            <img src={ROLE_VIEW_ICON} alt="View" />
-          </div>
-        </div>
-      ),
-    },
+      },
+    }
     // Add action buttons or more fields if needed
   ];
   const payload = {
@@ -152,6 +222,8 @@ const Staff = () => {
     fetchStaffData();
   }, [page, pageSize, searchTerm, sortColumn, sortDirection]);
 
+
+
   return (
     <div className="main_datatable">
 
@@ -160,7 +232,7 @@ const Staff = () => {
         searchValue={searchTerm}
         setSearchValue={setSearchTerm}
         data="Staff"
-        showbutton={true}
+        showbutton={permissionAccess?.isCreateChecked}
         addButtonClick={handleAdd}
       />
 
