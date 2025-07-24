@@ -44,3 +44,24 @@ export async function updatePasswordPolicy(payload) {
 export async function deletePasswordPolicy(payload) {
   return await axiosMain.delete(`${API_URL.passwordPolicy.deletePasswordPolicy}?policyId=${payload}`);
 }
+
+// Role Api 
+export async function addRole(payload) {
+  return await axiosMain.post(`${API_URL.adminRole.addUpdateRole}`, payload);
+}
+export async function UpdateRole(payload) {
+  return await axiosMain.post(`${API_URL.adminRole.addUpdateRole}`, payload);
+}
+export async function getAllRole(payload) {
+  return await axiosMain.post(`${API_URL.adminRole.RoleList}`, payload);
+}
+export async function getByIdRole(payload) {
+  return await axiosMain.get(`${API_URL.adminRole.getbyRoleId}?roleId=${payload}`);
+}
+export async function getRoleStatusActiveinactive(id,status) {
+  return await axiosMain.get(`${API_URL.adminRole.RoleStatus}?roleId=${id}&status=${status}`);
+}
+// getAllModule
+export async function getAllModule() {
+  return await axiosMain?.get(`${API_URL?.module?.getAllModule}?status=1`);
+}
