@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import TableHeading from "../../components/comman/table-heading";
-import { toastEmitter } from "../../utils/utilities";
+import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
 import { addPasswordPolicy, deletePasswordPolicy, getPasswordPolicy, updatePasswordPolicy } from "../../hooks/services/api-services";
 import { API_RESPONSE } from "../../utils/app-constants";
 import { TableWithNoData } from "../../components/snippets/template-blocks";
 import Spinner from 'react-bootstrap/Spinner';
+import { useSelector } from "react-redux";
 
 const PasswordPolicy = () => {
   const [isEdit, setIsEdit] = useState("add");
@@ -17,50 +18,7 @@ const PasswordPolicy = () => {
     "searchBy": "",
     "sortingOrder": ""
   })
-  // const policies = [
-  //   {
-  //     id: 1,
-  //     name: "Policy 16072025",
-  //     minLength: 8,
-  //     uppercase: true,
-  //     lowercase: true,
-  //     specialChar: true,
-  //     number: true,
-  //     expireDays: 5,
-  //     warningDays: 1,
-  //     maxInvalidAttempts: 5,
-  //     lockoutDuration: "5 mins",
-  //     passwordHistory: 5,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "FinalTest",
-  //     minLength: 8,
-  //     uppercase: true,
-  //     lowercase: true,
-  //     specialChar: true,
-  //     number: true,
-  //     expireDays: 60,
-  //     warningDays: 10,
-  //     maxInvalidAttempts: 3,
-  //     lockoutDuration: "7 mins",
-  //     passwordHistory: 2,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "policy-007",
-  //     minLength: 8,
-  //     uppercase: true,
-  //     lowercase: true,
-  //     specialChar: true,
-  //     number: true,
-  //     expireDays: 90,
-  //     warningDays: 10,
-  //     maxInvalidAttempts: 5,
-  //     lockoutDuration: "3 mins",
-  //     passwordHistory: 5,
-  //   },
-  // ];
+ 
 
   const [payload, setPayload] = useState({
     policyId: 0,
@@ -78,21 +36,20 @@ const PasswordPolicy = () => {
     createdAt: new Date().toISOString(),
   });
 
-  // const data = {
-  //   policyId: 0,
-  //   minimumLength: 0,
-  //   requireUppercase: true,
-  //   requireLowercase: true,
-  //   requireNumber: true,
-  //   requireSpecialchar: true,
-  //   passwordExpireInDays: 0,
-  //   passwordExpireWarningInDays: "string",
-  //   maxInvalidLogin: 0,
-  //   lockoutDuration: "string",
-  //   passwordInHistory: "string",
-  //   createdAt: "2025-07-23T10:43:52.634Z",
-  //   passwordPolicyName: "string",
-  // };
+ // permission code start
+  const { value } = useSelector((state) => state?.loggedUser);
+   const userData = decryptAEStoJSON(value);
+   console.log("userData>>>", userData?.roleList[0]?.roleName);
+   const [permissionAccess, setPermissionAccess] = useState();
+   const rawPermission = useSelector((state) => state?.permission?.value);
+   const permissions = decryptAEStoJSON(rawPermission);
+    console.log("permissions",permissions)
+   useEffect(() => {
+     const RoleAccessFilterData =
+       permissions && permissions?.filter((v) => v.moduleName === "Password Policy");
+     setPermissionAccess(RoleAccessFilterData?.[0]);
+   }, []);
+   //permission code end
 
   const modalRef = useRef(null);
   const modalInstanceRef = useRef(null);
@@ -272,7 +229,9 @@ const PasswordPolicy = () => {
   useEffect(() => {
     passwordPolicyList()
   }, [])
-
+// Define permission conditions before rendering cards
+const canEdit = permissionAccess?.isUpdateChecked === true;
+const canView = permissionAccess?.isViewChecked === true;
 
   return (
     <>
@@ -286,8 +245,10 @@ const PasswordPolicy = () => {
           addButtonClick={() => { handleOpen("add") }}
         />
         <div className="row">
+          
           {policies.length > 0 ?
             (policies?.map((policy, index) => (
+              
               <div className="col-md-4 mb-4" key={policy.policyId}>
                 <div className="card shadow-sm">
                   <div className="card-body">
@@ -352,7 +313,8 @@ const PasswordPolicy = () => {
                         {policy.passwordInHistory}
                       </li>
                     </ul>
-                    <div className="d-flex justify-content-between">
+                    {/* <div className="d-flex justify-content-between">
+                      
                       <button
                         className="btn btn-sm btn-primary"
                         onClick={() => { handleClickEdit(index) }}
@@ -360,7 +322,28 @@ const PasswordPolicy = () => {
                         Edit
                       </button>
                       <button className="btn btn-sm btn-danger" onClick={() => { handleDelete(policy.policyId) }}>Delete</button>
-                    </div>
+                    </div> */}
+                      <div className="d-flex justify-content-between">
+              <button
+                className={`btn btn-sm btn-primary me-2 ${!canEdit ? "disabled-style" : ""}`}
+                onClick={() => {
+                  if (canEdit) handleClickEdit(index);
+                }}
+                style={!canEdit ? { pointerEvents: "none", opacity: 0.6 } : {}}
+              >
+                Edit
+              </button>
+
+              <button
+                className={`btn btn-sm btn-danger ${!canView ? "disabled-style" : ""}`}
+                onClick={() => {
+                  if (canView) handleDelete(policy.policyId);
+                }}
+                style={!canView ? { pointerEvents: "none", opacity: 0.6 } : {}}
+              >
+                Delete
+              </button>
+            </div>
                   </div>
                 </div>
               </div>
