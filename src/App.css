@@ -577,10 +577,31 @@ body {
   font-size: var(--font14);
 }
 
-/* .card {
-  min-height: 100px;
+.bg-green-normal {
+  background-color: var(--successColorLight);
 }
 
-h6 {
-  font-size: 0.9rem;
-} */
+.color-green-bold {
+  color: var(--successColor);
+}
+
+.bg-gray-normal {
+  background-color: var(--btnSecondaryBackground);
+}
+
+.color-gray-bold {
+  color: #3f3748;
+}
+
+.bg-green-bold {
+  background-color: var(--successColor);
+}
+
+.bg-gray-bold {
+  background-color: #3f3748;
+}
+
+.bg-half-white:hover .bg-green-normal,
+.bg-half-white:hover .bg-red-normal {
+  transform: translateX(30%) translateY(0);
+}

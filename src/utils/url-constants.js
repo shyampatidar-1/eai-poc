@@ -24,6 +24,7 @@ export const API_URL = {
     getbyStaffId: 'admin/view',
     staffStatus: 'admin/manage-status',
   },
+
   fileUpload: {
     file: "authController/uploadPost",
   },

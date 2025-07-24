@@ -13,15 +13,7 @@ const AuditLog = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("id");
   const [sortDirection, setSortDirection] = useState("desc");
-  // const [payload, setPayload] = useState({
-  //   pageIndex: page || 0,
-  //   pageSize: pageSize || DEFAULT_PAGE_LENGTH,
-  //   sortBy: sortColumn || "id",
-  //   searchBy: "",
-  //   sortingOrder: sortDirection || "desc",
-  //   fromDate: "",
-  //   toDate: "",
-  // });
+
   const payload = {
     pageIndex: page || 0,
     pageSize: pageSize || DEFAULT_PAGE_LENGTH,
@@ -31,7 +23,6 @@ const AuditLog = () => {
     fromDate: "",
     toDate: "",
   }
-  console.log("page>>", page)
   const [filterValues, setFilterValues] = useState({
     user: "",
     action: "",

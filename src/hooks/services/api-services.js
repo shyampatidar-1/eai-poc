@@ -44,3 +44,21 @@ export async function updatePasswordPolicy(payload) {
 export async function deletePasswordPolicy(payload) {
   return await axiosMain.delete(`${API_URL.passwordPolicy.deletePasswordPolicy}?policyId=${payload}`);
 }
+
+
+// admi staff
+export async function addStaff(payload) {
+  return await axiosMain.post(`${API_URL.adminStaff.addStaff}`, payload);
+}
+export async function updateStaff(payload) {
+  return await axiosMain.post(`${API_URL.adminStaff.updateStaff}`, payload);
+}
+export async function staffList(payload) {
+  return await axiosMain.post(`${API_URL.adminStaff.staffList}`, payload);
+}
+export async function getStaffById(id) {
+  return await axiosMain.get(`${API_URL.adminStaff.getbyStaffId}?adminId=${id}`);
+}
+export async function staffStatus(id, status) {
+  return await axiosMain.get(`${API_URL.adminStaff.staffStatus}?adminId=${id}&status=${status}`);
+}

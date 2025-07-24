@@ -8,21 +8,30 @@ import { ROUTES } from "../../hooks/routes/routes-constant";
 import { handleFormInput } from "../../utils/form-utils";
 import DropDown from "../../components/comman/dropdown";
 import INPUTFIELD from "../../components/comman/input";
+import { addStaff, getStaffById, staffList, updateStaff } from "../../hooks/services/api-services";
+import { API_RESPONSE } from "../../utils/app-constants";
+import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
+import { useSelector } from "react-redux";
+import { Spinner } from "react-bootstrap";
 
 const AddStaff = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPwdVisible, setIsPwdVisible] = useState("password");
+  const { value } = useSelector((state) => state?.loggedUser);
+  const userData = decryptAEStoJSON(value);
+  console.log("userData>>>", userData?.userDetails?.userId);
   const [payload, setPayload] = useState({
-    id: 0,
+    adminId: 0,
     userName: "",
-    email: "",
-    roleId: 0,
     password: "",
+    roleId: 0,
   });
 
   const location = useLocation();
   const navigate = useNavigate();
   const checkFormType = location?.state?.formType || "add";
+  const staffId = location?.state?.staffId;
+  console.log("staffId>>>", staffId);
 
   const pageAction =
     checkFormType === "add"
@@ -33,40 +42,113 @@ const AddStaff = () => {
 
   const handleDataBack = () => {
     setPayload({
-      id: 0,
+      adminId: 0,
       userName: "",
-      email: "",
-      roleId: 0,
-      clinicId: 0,
       password: "",
-      mobileNo: "",
-      profile: "",
+      roleId: 0,
     });
     navigate(ROUTES.STAFF);
   };
-  const rolelist = [
+  const roleliste = [
     { label: "Admin", value: 1 },
     { label: "Receptionist", value: 2 },
     { label: "Therapist", value: 3 },
   ];
-
 
   const handleSelectRole = (e) => {
     const selectedValue = parseInt(e.target.value);
     setPayload((prev) => ({ ...prev, roleId: selectedValue }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      console.log("Submitted payload:", payload);
-      setIsLoading(false);
-      navigate(ROUTES.STAFF, {
-        state: { activeTab: "staff" },
-      });
-    }, 1000);
+  // get staff bu id
+  const fetchStaffById = async (staffId) => {
+    try {
+      const response = await getStaffById(staffId);
+      if (response.status !== 200) {
+        toastEmitter("error", response?.data?.message);
+      } else {
+        let rowData = response?.data?.data;
+        setPayload({
+          adminId: rowData?.adminId,
+          userName: rowData?.userName,
+          roleId: rowData?.roleId,
+        });
+      }
+    } catch (err) {
+      toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+    }
   };
+  useEffect(() => {
+    if (staffId) {
+      fetchStaffById(staffId);
+    }
+  }, [staffId]);
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (payload.userName.trim() === "") {
+      return toastEmitter("error", "Username is mandatory!");
+    }
+    if (checkFormType === "add") {
+      if (payload.password.trim() === "") {
+        return toastEmitter("error", "Password is mandatory!");
+      }
+    }
+    setIsLoading(true);
+    try {
+      const response = await (checkFormType === "add" ? addStaff(payload) : updateStaff(payload));
+      console.log("RESPONSE ->", response);
+      if (response.data?.status !== 200) {
+        toastEmitter("error", response?.data?.message);
+      }
+      if (response.data?.status === 200) {
+        navigate(ROUTES.STAFF);
+      }
+    } catch (error) {
+      toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // role list
+
+  // role list fetch
+  const [rolelist, setRoleList] = useState([]);
+  const fetchRoleData = async () => {
+    const rolePayload = {
+      pageIndex: 0,
+      pageSize: 0,
+      searchBy: "",
+      sortingOrder: "desc",
+      sortBy: "",
+      status: 0,
+      parentRoleId: 0,
+    }
+    try {
+      const response = await staffList(rolePayload);
+      if (response?.data?.status !== 200) {
+        toastEmitter("error", response?.data?.message);
+        setRoleList([]);
+      } else {
+        setRoleList(response?.data?.data);
+      }
+    } catch (err) {
+      // if (isFirstRender.current) {
+      toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+      // }
+    } finally {
+
+      // isFirstRender.current = false; // Toast ek baar dikhane ke baad disable kar diya
+    }
+  };
+
+  useEffect(() => {
+    fetchRoleData();
+  }, []);
+
+
   return (
     <div className="main_datatable my-lg-3 mt-1">
       <form onSubmit={handleSubmit}>
@@ -117,7 +199,6 @@ const AddStaff = () => {
               />
             </div>
 
-
             {checkFormType === "add" && (
               <div className="col-md-6 mb-2">
                 <INPUTFIELD
@@ -158,7 +239,7 @@ const AddStaff = () => {
               className="px-4 py-2 rounded border-0 text-white btn-primary mb-2"
               disabled={isLoading}
             >
-              {isLoading && <i className="fa fa-spinner fa-spin me-2"></i>}
+              {isLoading && <Spinner animation="border" size="sm" className='me-2' />}
               {pageAction} Staff
             </button>
           )}
