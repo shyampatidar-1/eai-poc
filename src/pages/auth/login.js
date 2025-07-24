@@ -78,8 +78,7 @@ const Login = () => {
         dispatch(
           setPermissionReducer(
             encryptJSONtoAES(
-              response?.data?.data?.adminResponsePayload?.roleResponsePayload
-                ?.roleModuleMappingResponseList
+              response?.data?.data?.roleList[0]?.permissions
             )
           )
         );
@@ -152,7 +151,7 @@ const Login = () => {
                 setIsPwdVisible(isPwdVisible === "password" ? "text" : "password")
               }
             />
-            <ErrorMsg error={formError?.password} />
+            {/* <ErrorMsg error={formError?.password} /> */}
           </div>
           <div className="d-flex justify-content-between align-items-center mt-2 ">
             <div className="form-check">

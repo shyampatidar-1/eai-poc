@@ -605,3 +605,9 @@ body {
 .bg-half-white:hover .bg-red-normal {
   transform: translateX(30%) translateY(0);
 }
+
+.disabled-style {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

@@ -17,41 +17,40 @@ import { ROLE_EDIT_ICON, ROLE_VIEW_ICON } from "../../utils/aap-image-constant";
 const Role = () => {
   const isFirstRender = useRef(true);
   const [pending, setPending] = useState(false);
-const navigate=useNavigate()
+  const navigate = useNavigate()
   const [rowData, setRowData] = useState([]);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_LENGTH);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("roleId");
   const [sortDirection, setSortDirection] = useState("desc");
-  const [permissionAccess, setPermissionAccess] = useState();
   const [totalRows, setTotalRows] = useState(0);
   const pageUrlConstant = `${ROUTES?.ROLE_MANAGEMENT_ROLE}/`;
   // const rawPermission = useSelector((state) => state?.loggedUser?.value);
-  const rawPermission = useSelector((state) => state?.permission?.value);
-
-  const permissions = decryptAEStoJSON(rawPermission);
   const { value } = useSelector((state) => state?.loggedUser);
   const userData = decryptAEStoJSON(value);
+  console.log("userData>>>", userData?.roleList[0]?.roleName);
+  const [permissionAccess, setPermissionAccess] = useState();
+  const rawPermission = useSelector((state) => state?.permission?.value);
+  const permissions = decryptAEStoJSON(rawPermission);
   useEffect(() => {
     const RoleAccessFilterData =
-      permissions && permissions?.filter((v) => v.moduleName === "Roles");
+      permissions && permissions?.filter((v) => v.moduleName === "Role");
     setPermissionAccess(RoleAccessFilterData?.[0]);
   }, []);
-  const getLoggedUser = getCurrentUser();
-
+  console.log("permissionAccess>>>", permissionAccess);
   const payload = {
     pageIndex: page || 0,
     pageSize: pageSize || DEFAULT_PAGE_LENGTH,
     searchBy: searchTerm,
-   sortingOrder: sortDirection || "desc",
+    sortingOrder: sortDirection || "desc",
     sortBy: "roleId",
     status: 0,
     parentRoleId: 0,
 
-}
-  const handleRoleStatus = async ( id,status) => {
-    
+  }
+  const handleRoleStatus = async (id, status) => {
+
     try {
       const response = await getRoleStatusActiveinactive(id, status);
       if (response.status !== 200) {
@@ -96,23 +95,23 @@ const navigate=useNavigate()
     fetchData();
   }, [page, pageSize, searchTerm, sortColumn, sortDirection]);
 
- 
-   const handleAdd = () => {
-        navigate(`${ROUTES.ROLE}/add`, {
-            state: { formType: "add" },
-        });
-    };
-    const handleEdit = (roleId) => {
-        navigate(`${ROUTES.ROLE}/edit`, {
-            state: { formType: "edit",roleId: roleId },
-        });
-    };
-     const handleView = (roleId) => {
+
+  const handleAdd = () => {
+    navigate(`${ROUTES.ROLE}/add`, {
+      state: { formType: "add" },
+    });
+  };
+  const handleEdit = (roleId) => {
+    navigate(`${ROUTES.ROLE}/edit`, {
+      state: { formType: "edit", roleId: roleId },
+    });
+  };
+  const handleView = (roleId) => {
     navigate(`${ROUTES.ROLE}/view`, {
       state: { formType: "view", roleId: roleId },
     });
   };
- 
+
   const tblColumns = [
     {
       code: "S.No",
@@ -131,10 +130,10 @@ const navigate=useNavigate()
       sortable: true,
     },
 
- 
 
 
-     {
+
+    {
       code: "status",
       sortable: true,
       name: "Status",
@@ -145,12 +144,14 @@ const navigate=useNavigate()
     ${row.status === 1
               ? "bg-green-normal color-green-bold"
               : "bg-gray-normal color-gray-bold"
+
             }
+             ${!permissionAccess?.isModuleChecked ? "disabled-style" : ""}
   `}
           onClick={(e) => {
-            // if (permissionAccess?.moduleAction !== 0) {
-            handleRoleStatus(row?.roleId, row?.status === 1 ? 2 : 1);
-            // }
+            if (!permissionAccess?.isModuleChecked) {
+              handleRoleStatus(row?.roleId, row?.status === 1 ? 2 : 1);
+            }
           }}
         >
           <div
@@ -202,54 +203,83 @@ const navigate=useNavigate()
     //     </div>
     //   ),
     // },
-     {
-          name: "Action",
-          width: "150px",
-          cell: (row) =>
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="me-2 cursor-pointer">
-                <img src={ROLE_EDIT_ICON} alt="Edit" onClick={()=>handleEdit(row?.roleId)} />
-              </div>
-    
-              <div className='me-2 cursor-pointer' onClick={ ()=>handleView(row?.roleId)}>
+    {
+      name: "Action",
+      width: "150px",
+      cell: (row) => {
+        const canEdit =
+          userData?.roleList[0]?.roleName !== row?.roleName &&
+          permissionAccess?.isUpdateChecked;
+        console.log("canEdit>>>wwqe", canEdit);
+        const canView = permissionAccess?.isViewChecked;
+        return (
+          <div className="d-flex justify-content-between align-items-center">
+            <div className={`me-2 cursor-pointer ${!canEdit ? "disabled-style" : ""
+              } `}
+              onClick={() => {
+                if (canEdit) handleEdit(row?.roleId);
+              }}
+              style={!canEdit ? { pointerEvents: "none", opacity: 0.6 } : {}}>
+              <img src={ROLE_EDIT_ICON} alt="Edit" />
+            </div>
+            {/* // <div className="me-2 cursor-pointer " >
+              //   <img src={ROLE_EDIT_ICON} alt="Edit" onClick={() => handleEdit(row?.roleId)} />
+              // </div> */}
+
+            {/* {!permissionAccess?.isViewChecked &&
+              <div className='me-2 cursor-pointer' onClick={() => handleView(row?.roleId)}>
                 <img src={ROLE_VIEW_ICON} alt="View" />
               </div>
+            } */}
+            <div
+              className={`me-2 cursor-pointer ${!canView ? "disabled-style" : ""
+                }`}
+              onClick={() => {
+                if (canView) handleView(row?.roleId);
+              }}
+              style={!canView ? { pointerEvents: "none", opacity: 0.6 } : {}}
+            >
+              <img src={ROLE_VIEW_ICON} alt="View" />
             </div>
-    
-        },
+          </div>
+        )
+
+      },
+    }
   ];
 
-    return (
-        <div className="main_datatable">
-            <div className="">
-                <TableHeading
-                    title="Role"
-                    searchValue={searchTerm}
-                    setSearchValue={setSearchTerm}
-                    data="Role"
-                    showbutton={true}
-                    addButtonClick={handleAdd}
-                />
+  return (
+    <div className="main_datatable">
+      <div className="">
+        <TableHeading
+          title="Role"
+          searchValue={searchTerm}
+          setSearchValue={setSearchTerm}
+          data="Role"
+          // showbutton={true}
+          showbutton={permissionAccess?.isCreateChecked}
+          addButtonClick={handleAdd}
+        />
 
-                <div className="table-wrapper">
-                    <TableLayout
-                        _tblColumns={tblColumns}
-                        _rowData={rowData}
-                        pending={pending}
-                        pagination={true}
-                        selectableRows={false}
-                        setPending={setPending}
-                        _totalRows={totalRows}
-                        pageSize={pageSize}
-                        setPageSize={setPageSize}
-                        setPage={setPage}
-                        setSortColumn={setSortColumn}
-                        setSortDirection={setSortDirection}
-                    />
-                </div>
-            </div>
+        <div className="table-wrapper">
+          <TableLayout
+            _tblColumns={tblColumns}
+            _rowData={rowData}
+            pending={pending}
+            pagination={true}
+            selectableRows={false}
+            setPending={setPending}
+            _totalRows={totalRows}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            setPage={setPage}
+            setSortColumn={setSortColumn}
+            setSortDirection={setSortDirection}
+          />
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Role;
