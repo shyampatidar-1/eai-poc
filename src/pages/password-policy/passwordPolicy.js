@@ -4,6 +4,7 @@ import { toastEmitter } from "../../utils/utilities";
 import { addPasswordPolicy, deletePasswordPolicy, getPasswordPolicy, updatePasswordPolicy } from "../../hooks/services/api-services";
 import { API_RESPONSE } from "../../utils/app-constants";
 import { TableWithNoData } from "../../components/snippets/template-blocks";
+import Spinner from 'react-bootstrap/Spinner';
 
 const PasswordPolicy = () => {
   const [isEdit, setIsEdit] = useState("add");
@@ -200,7 +201,7 @@ const PasswordPolicy = () => {
       return toastEmitter("error", "Password in history field is mandatory!");
     }
 
-
+    setIsLoading(true)
     try {
       const response = await (isEdit === "add" ? addPasswordPolicy(payload) : updatePasswordPolicy(payload));
       if (response.data?.status !== 200) {
@@ -608,7 +609,7 @@ const PasswordPolicy = () => {
                 >
                   {" "}
                   {isLoading && (
-                    <i className={`fa fa-spinner fa-spin me-2 `}></i>
+                    <Spinner animation="border" size="sm" className='me-2' />
                   )}
                   {isEdit === "add" ? "Add" : "Edit"} Policy
                 </button>

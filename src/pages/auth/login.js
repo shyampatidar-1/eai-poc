@@ -91,7 +91,6 @@ const Login = () => {
         });
       }
     } catch (error) {
-      console.log("CATCH")
       toastEmitter("error", API_RESPONSE?.MESSAGE_503);
     }
     finally {
@@ -115,7 +114,8 @@ const Login = () => {
       <div className="login-container">
         <form onSubmit={handleSubmit}>
           <div className="login-welcome">
-            <h3 className="text-primary fw-bolder my-3  ">Login</h3>
+            <h3 className="text-primary fw-bolder my-3  ">Login
+            </h3>
 
           </div>
           <div className="mb-2">
