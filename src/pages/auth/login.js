@@ -63,7 +63,6 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await signIn(payload)
-      console.log("RESPONSE ->", response)
       if (response.data?.status !== 200) {
         toastEmitter("error", response?.data?.message);
       }

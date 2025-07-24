@@ -98,7 +98,6 @@ const AuditLog = () => {
     // setPage(1);
     // const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
     // modal.hide();
-    console.log("PAYLAOD ->", filterValues);
   };
 
   const fetchAuditLogData = async () => {

@@ -111,7 +111,6 @@ const PasswordPolicy = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     let parsedValue = value;
     if (value === "true" || value === "false") {
       parsedValue = JSON.parse(value);
@@ -148,7 +147,6 @@ const PasswordPolicy = () => {
   }
 
   const handleSubmit = async () => {
-    console.log("PAYLOAD ->", payload)
     if (payload.passwordPolicyName.trim() === "") {
       return toastEmitter("error", "Policy name field is mandatory!");
     }
@@ -215,7 +213,6 @@ const PasswordPolicy = () => {
         passwordPolicyList()
       }
     } catch (error) {
-      console.log("CATCH");
       toastEmitter("error", API_RESPONSE?.MESSAGE_503);
     } finally {
       setIsLoading(false);
@@ -223,46 +220,18 @@ const PasswordPolicy = () => {
 
 
 
-    // try {
-    //   const response = await addPasswordPolicy(updatedPayload);
-    //   console.log('RESPONSE ->', response)
-    //   if (response.data.status === 200) {
-    //     setPayload({
-    //       PasswordPolicyName: "",
-    //       minimumLength: "",
-    //       requireUppercase: "",
-    //       requireLowercase: "",
-    //       requireSpecialchar: "",
-    //       requireNumber: "",
-    //       passwordExpireInDays: "",
-    //       passwordExpireWarningInDays: "",
-    //       maxInvalidLogin: "",
-    //       lockoutDuration: "",
-    //       passwordInHistory: ""
-    //     })
-    //   }
-    // } catch (error) {
-
-    // }
-
-    // addPasswordPolicy(updatedPayload).then(response => {
-    //   console.log("RESPONSE ->", response)
-    // }).catch(error => {
-    //   console.log("ERROR ->", error)
-    // })
+    
   };
 
   const passwordPolicyList = async () => {
     // setIsLoading(true);
     try {
       const response = await getPasswordPolicy(tablePayload)
-      // console.log("RESPONSE ->", response);
       if (response.data?.status !== 200) {
         // toastEmitter("error", response?.data?.message);
         setPolicies([])
       }
       if (response.data?.status === 200) {
-        console.log("response policy ->", response?.data?.data?.content)
         setPolicies(response?.data?.data?.content)
       }
     } catch (error) {
@@ -304,7 +273,6 @@ const PasswordPolicy = () => {
     passwordPolicyList()
   }, [])
 
-  console.log("POLICIES ->", policies)
 
   return (
     <>
