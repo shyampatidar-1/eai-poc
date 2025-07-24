@@ -185,15 +185,7 @@ const AddRole = () => {
       );
     }
 
-    // if (
-    //   !NoLeadingSpaceRegex.test(payload?.roleDescription) ||
-    //   payload?.roleDescription.trim() === ""
-    // ) {
-    //   return toastEmitter(
-    //     "error",
-    //     "Description is mandatory (No leading spaces, cannot be empty)"
-    //   );
-    // }
+   
 
     const selectedModules = payload.privilegesReqPojo.filter(
       (module) =>
@@ -534,20 +526,20 @@ const AddRole = () => {
                                         name={permissiondata.moduleName + index}
                                         className="form-check-input d-none"
                                         checked={
-                                          permissiondata.isModuleChecked ===
+                                          permissiondata.isDeleteChecked ===
                                           true
                                         }
                                         onChange={(e) =>
                                           handlePermissionChange(
                                             index,
-                                            "isModuleChecked",
+                                            "isDeleteChecked",
                                             e.target.checked
                                           )
                                         }
                                       />
                                       <img
                                         src={
-                                          permissiondata.isModuleChecked ===
+                                          permissiondata.isDeleteChecked ===
                                           true
                                             ? BLUESTATUS
                                             : GREYSTATUS

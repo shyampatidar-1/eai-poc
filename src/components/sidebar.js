@@ -150,9 +150,8 @@ const Sidebar = () => {
 
   const permission = useSelector((state) => state?.permission?.value);
   const modulePermission = decryptAEStoJSON(permission);
-  console.log("modulePermission>>>", modulePermission.map(item => item));
 
-  const allowedModuleCodes = modulePermission?.map(item => item?.moduleCode);
+  const allowedModuleCodes =modulePermission&& modulePermission?.map(item => item?.moduleCode);
 
 
   const menuItems = [
