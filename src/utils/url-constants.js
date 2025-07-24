@@ -25,6 +25,15 @@ export const API_URL = {
     staffStatus: 'admin/manage-status',
   },
 
+  adminRole: {
+    addUpdateRole: 'role/add-or-update',
+    RoleList: 'role/list',
+    getbyRoleId: 'role/view',
+    RoleStatus: 'role/manage-status'
+  },
+  module: {
+    getAllModule: "module/list",
+  },
   fileUpload: {
     file: "authController/uploadPost",
   },
