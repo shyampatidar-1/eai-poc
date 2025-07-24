@@ -33,7 +33,6 @@ const navigate=useNavigate()
   const permissions = decryptAEStoJSON(rawPermission);
   const { value } = useSelector((state) => state?.loggedUser);
   const userData = decryptAEStoJSON(value);
-  console.log("userData>>>", userData);
   useEffect(() => {
     const RoleAccessFilterData =
       permissions && permissions?.filter((v) => v.moduleName === "Roles");
@@ -51,9 +50,8 @@ const navigate=useNavigate()
     parentRoleId: 0,
 
 }
-  const handleRoleStatus = async (e, id) => {
-    var toggleVal = e.target.checked;
-    const status = toggleVal ? 1 : 0;
+  const handleRoleStatus = async ( id,status) => {
+    
     try {
       const response = await getRoleStatusActiveinactive(id, status);
       if (response.status !== 200) {
@@ -82,7 +80,7 @@ const navigate=useNavigate()
           // toastEmitter("success", response?.data?.message);
         }
         setRowData(response?.data?.data?.content);
-        setTotalRows(response?.data?.data?.totalElement);
+        setTotalRows(response?.data?.data?.totalElements);
       }
     } catch (err) {
       if (isFirstRender.current) {
@@ -98,10 +96,7 @@ const navigate=useNavigate()
     fetchData();
   }, [page, pageSize, searchTerm, sortColumn, sortDirection]);
 
-  const metaData = [
-    { name: "role management", url: pageUrlConstant },
-    { name: "Roles", url: null },
-  ];
+ 
    const handleAdd = () => {
         navigate(`${ROUTES.ROLE}/add`, {
             state: { formType: "add" },
@@ -136,31 +131,37 @@ const navigate=useNavigate()
       sortable: true,
     },
 
- {
+ 
+
+
+     {
       code: "status",
-      name: "Status",
-      width: "160px",
       sortable: true,
-      omit: false,
-      selector: (row, index) => (
-        <>
-          <div className="custom-control custom-switch">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id={index}
-              disabled={permissionAccess?.moduleAction === 0}
-              defaultChecked={row?.status === 1}
-              onChange={(e) => handleRoleStatus(e, row?.id)}
-            />
-            <label
-              className="custom-control-label"
-              htmlFor={index}
-              data-on-label="Active"
-              data-off-label="Inactive"
-            />
-          </div>
-        </>
+      name: "Status",
+      selector: (row) => row?.status,
+      cell: (row) => (
+        <div
+          className={`d-flex align-items-center gap-1 px-2 py-1 rounded-4 cursor-pointer
+    ${row.status === 1
+              ? "bg-green-normal color-green-bold"
+              : "bg-gray-normal color-gray-bold"
+            }
+  `}
+          onClick={(e) => {
+            // if (permissionAccess?.moduleAction !== 0) {
+            handleRoleStatus(row?.roleId, row?.status === 1 ? 2 : 1);
+            // }
+          }}
+        >
+          <div
+            className={`rounded-circle ${row?.status === 1 ? "bg-green-bold" : "bg-gray-bold"
+              }`}
+            style={{ width: "10px", height: "10px" }}
+          ></div>
+          <p className="m-0 fs-14 fw-normal">
+            {row?.status === 1 ? "Active" : "Inactive"}
+          </p>
+        </div>
       ),
     },
     // {

@@ -20,7 +20,14 @@ import {
   GREYSTATUS,
 } from "../../utils/aap-image-constant";
 import { handleFormInput } from "../../utils/form-utils";
-import { addRole, getAllModule, getByIdRole, UpdateRole } from "../../hooks/services/api-services";
+import {
+  addRole,
+  getAllModule,
+  getByIdRole,
+  UpdateRole,
+} from "../../hooks/services/api-services";
+import { Spinner } from "react-bootstrap";
+import BreadCrum from "../../components/comman/breadcrum";
 const AddRole = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -32,13 +39,11 @@ const AddRole = () => {
     parentRoleId: 0,
     authoriseNumberOfPerson: 0,
     privilegesReqPojo: [],
-    allModuleSelected: false,
   });
-   console.log("payload add role",payload)
   const urlParams = useQuery();
   const location = useLocation();
-   const formType = location?.state?.formType
-    console.log("formType",formType)
+  const formType = location?.state?.formType;
+  const roleId = location?.state?.roleId;
   const metaData = [
     { name: "role management", url: pageUrlConstant },
     { name: "Roles", url: pageUrlConstant },
@@ -61,60 +66,54 @@ const AddRole = () => {
     }
   };
 
-const fetchRoleById = async (roleId) => {
-  setIsLoading(true);
-  try {
-    const roleResponse = await getByIdRole(roleId);
-    const moduleResponse = await getAllModule();
+  const fetchRoleById = async (roleId) => {
+    setIsLoading(true);
+    try {
+      const roleResponse = await getByIdRole(roleId);
+      const moduleResponse = await getAllModule();
 
-    if (roleResponse?.status === 200 && moduleResponse?.status === 200) {
-      let roleData = roleResponse?.data?.data || {};
-       console.log("roleData",roleData)
-      let allModules = moduleResponse?.data?.data || [];
+      if (roleResponse?.status === 200 && moduleResponse?.status === 200) {
+        let roleData = roleResponse?.data?.data || {};
 
-      // Create map of selected modules from role
-      const selectedModuleMap = {};
-      (roleData?.roleModuleMappingResponseList || []).forEach((mod) => {
-        selectedModuleMap[mod?.moduleId] = mod;
-      });
-
-      // Merge module list with existing permission
-      const mergedModulePermissions = allModules?.map((module) => {
-        const selected = selectedModuleMap[module?.id] || {};
-
-        return {
-          moduleId: module.id,
-          moduleName: module.moduleName,
-          parentModuleName: module.parentModuleName || "",
-          moduleCode: module.moduleCode || "",
-          isModuleChecked: selected?.isModuleChecked ?? false,
-          isCreateChecked: selected?.isCreateChecked ?? false,
-          isUpdateChecked: selected?.isUpdateChecked ?? false,
-          isDeleteChecked: selected?.isDeleteChecked ?? false,
-          isViewChecked: selected?.isViewChecked ?? false,
-          isDownloadChecked: selected?.isDownloadChecked ?? false, // if needed
-        };
-      });
-
-      setModulePermission(mergedModulePermissions);
-      setPayload((prevPayload) => ({
-        ...prevPayload,
-        roleId: roleData?.roleId || roleId,
-        roleName: roleData?.roleName || "",
-        parentRoleId: roleData?.parentRoleId,
-        authoriseNumberOfPerson: roleData?.authoriseNumberOfPerson,
-        privilegesReqPojo: mergedModulePermissions,
-      }));
-    } else {
-      toastEmitter("error", roleResponse?.data?.message);
+        let allModules = moduleResponse?.data?.data || [];
+        // Create map of selected modules from role
+        const selectedModuleMap = {};
+        (roleData?.moduleResponcePojo || []).forEach((mod) => {
+          selectedModuleMap[mod?.moduleId] = mod;
+        });
+        // Merge module list with existing permission
+        const mergedModulePermissions = allModules?.map((module) => {
+          const selected = selectedModuleMap[module?.moduleId] || {};
+          return {
+            moduleId: module.moduleId,
+            moduleName: module.moduleName,
+            parentModuleName: module.parentModuleName || "",
+            moduleCode: module.moduleCode || "",
+            isModuleChecked: selected?.isModuleChecked ?? false,
+            isCreateChecked: selected?.isCreateChecked ?? false,
+            isUpdateChecked: selected?.isUpdateChecked ?? false,
+            isDeleteChecked: selected?.isDeleteChecked ?? false,
+            isViewChecked: selected?.isViewChecked ?? false,
+          };
+        });
+        setModulePermission(mergedModulePermissions);
+        setPayload((prevPayload) => ({
+          ...prevPayload,
+          roleId: roleData?.roleId || roleId,
+          roleName: roleData?.roleName || "",
+          parentRoleId: roleData?.parentRoleId,
+          authoriseNumberOfPerson: roleData?.authoriseNumberOfPerson,
+          privilegesReqPojo: mergedModulePermissions,
+        }));
+      } else {
+        toastEmitter("error", roleResponse?.data?.message);
+      }
+    } catch (err) {
+      toastEmitter("error", API_RESPONSE.MESSAGE_503);
+    } finally {
+      setIsLoading(false);
     }
-  } catch (err) {
-    toastEmitter("error", API_RESPONSE.MESSAGE_503);
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   const navigateBack = () => {
     navigate(`${ROUTES.ROLE}`);
@@ -123,12 +122,10 @@ const fetchRoleById = async (roleId) => {
     getAdminPermissionModule();
   }, []);
   useEffect(() => {
-    const pageIdParam = urlParams.get("page");
-    if (pageIdParam) {
-      const pageId = atob(pageIdParam);
-      fetchRoleById(pageId);
+    if (roleId) {
+      fetchRoleById(roleId);
     }
-  }, [urlParams]); // Ensure it triggers when urlParams change
+  }, [roleId]);
 
   const handlePermissionChange = (moduleIndex, permissionType, value) => {
     const newPermission = modulePermission?.map((existingPermission, index) => {
@@ -160,11 +157,11 @@ const fetchRoleById = async (roleId) => {
       if (moduleIndex === index) {
         return {
           ...existingPermission,
-        isCreateChecked: value ? true : false,
-      isViewChecked: value ?  true : false,
-      isUpdateChecked: value ?  true : false,
-      isDeleteChecked: value ?  true : false, //  Added deleteAction
-      isModuleChecked: value ?  true : false,
+          isCreateChecked: value ? true : false,
+          isViewChecked: value ? true : false,
+          isUpdateChecked: value ? true : false,
+          isDeleteChecked: value ? true : false, //  Added deleteAction
+          isModuleChecked: value ? true : false,
         };
       }
       return existingPermission;
@@ -175,19 +172,18 @@ const fetchRoleById = async (roleId) => {
   };
 
   const handleSubmit = async (e) => {
-   
     e.preventDefault();
 
-    // if (
-    //   !NoLeadingSpaceRegex.test(payload?.roleName) ||
-    //   payload?.roleName?.trim() === "" ||
-    //   !alphanumericHypenRegex.test(payload?.roleName)
-    // ) {
-    //   return toastEmitter(
-    //     "error",
-    //     "Please enter a valid Role Name (No leading spaces, cannot be empty, only alphanumeric & hyphen allowed)."
-    //   );
-    // }
+    if (
+      !NoLeadingSpaceRegex.test(payload?.roleName) ||
+      payload?.roleName?.trim() === "" ||
+      !alphanumericHypenRegex.test(payload?.roleName)
+    ) {
+      return toastEmitter(
+        "error",
+        "Please enter a valid Role Name (No leading spaces, cannot be empty, only alphanumeric & hyphen allowed)."
+      );
+    }
 
     // if (
     //   !NoLeadingSpaceRegex.test(payload?.roleDescription) ||
@@ -201,14 +197,13 @@ const fetchRoleById = async (roleId) => {
 
     const selectedModules = payload.privilegesReqPojo.filter(
       (module) =>
-        module.isCreateChecked === true||
+        module.isCreateChecked === true ||
         module.isViewChecked === true ||
         module.isUpdateChecked === true ||
-        module.isDeleteChecked===true||
+        module.isDeleteChecked === true ||
         module.isModuleChecked === true
     );
 
-    console.log("selectedModulesselectedModules????", selectedModules);
     if (selectedModules.length === 0) {
       return toastEmitter(
         "error",
@@ -221,7 +216,6 @@ const fetchRoleById = async (roleId) => {
       privilegesReqPojo: selectedModules,
     };
     setIsLoading(true);
- console.log("updatedPayload add role",updatedPayload)
     try {
       let response;
       if (formType === "add") {
@@ -250,10 +244,10 @@ const fetchRoleById = async (roleId) => {
     const updatedPermissions = modulePermission.map((permission) => ({
       ...permission,
       isCreateChecked: value ? true : false,
-      isViewChecked: value ?  true : false,
-      isUpdateChecked: value ?  true : false,
-      isDeleteChecked: value ?  true : false, //  Added deleteAction
-      isModuleChecked: value ?  true : false,
+      isViewChecked: value ? true : false,
+      isUpdateChecked: value ? true : false,
+      isDeleteChecked: value ? true : false, //  Added deleteAction
+      isModuleChecked: value ? true : false,
     }));
 
     setModulePermission(updatedPermissions);
@@ -277,393 +271,339 @@ const fetchRoleById = async (roleId) => {
   );
   const handleDataBack = () => {
     setPayload({
-    roleId: 0,
-    roleName: "",
-    parentRoleId: 0,
-    authoriseNumberOfPerson: 0,
-    privilegesReqPojo: [],
-    allModuleSelected: false,
+      roleId: 0,
+      roleName: "",
+      parentRoleId: 0,
+      authoriseNumberOfPerson: 0,
+      privilegesReqPojo: [],
     });
     navigate(ROUTES.ROLE);
   };
+    const pageAction =
+    formType === "add"
+      ? "Add"
+      : formType === "edit"
+        ? "Edit"
+        : "View";
   return (
     <>
-      <>
-       
-        <div className="content-i">
-          <div className="content-box">
-            <div className="element-wrapper">
-              <h6 className="element-header">{`${
-                formType === "add"
-                  ? "Add New"
-                  : formType === "edit"
-                  ? "Edit"
-                  : "View"
-              } Roles`}</h6>
+      <div className="main_datatable my-lg-3 mt-1">
+        <BreadCrum
+          firstData="Role"
+          iconshow1={true}
+          secondData={`${pageAction} Role`}
+          onFirstDataClick={handleDataBack}
+        />
+        <div className="add_doctor card p-3 border border-radius_input mb-3">
+          <form onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="">
+                    {" "}
+                    Role Name <span className="text-danger">*</span>
+                  </label>
+                  <input
+                    name="roleName"
+                    disabled={formType === "view"}
+                    value={payload?.roleName}
+                    onChange={(e) =>
+                      setPayload(
+                        handleFormInput(e, payload, setisFormeditDisable)
+                      )
+                    }
+                    className="form-control"
+                    placeholder="Enter Role name"
+                    type="text"
+                  />
+                </div>
+              </div>
 
-              <>
-                <div className="element-box">
-                  <form onSubmit={handleSubmit}>
-                    <div className="row">
-                      <div className="col-sm-12">
-                        <div className="form-group">
-                          <label htmlFor="">
-                            {" "}
-                            Role Name <span className="text-danger">*</span>
-                          </label>
-                          <input
-                            name="roleName"
-                            disabled={formType === "view"}
-                            value={payload?.roleName}
-                            onChange={(e) =>
-                              setPayload(
-                                handleFormInput(
-                                  e,
-                                  payload,
-                                  setisFormeditDisable
-                                )
-                              )
-                            }
-                            className="form-control"
-                            placeholder="Enter Role name"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-
-                   
-
-                      <div className="col-sm-12">
-                        <label className="form-label">
-                          Role Access Setup{" "}
-                          <span className="text-danger">*</span>
-                        </label>
-                        <div className="table-responsive">
-                          <table className="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                {/* <th scope="col" className="text-center">
+              <div className="col-sm-12">
+                <label className="form-label">
+                  Role Access Setup <span className="text-danger">*</span>
+                </label>
+                <div className="table-responsive">
+                  <table className="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        {/* <th scope="col" className="text-center">
                                   Select All
                                 </th> */}
-                                <th
-                                  scope="col"
-                                  className="text-start  d-flex align-items-start justify-content-start"
-                                >
+                        <th
+                          scope="col"
+                          className="d-flex align-items-start justify-content-start"
+                        >
+                          <input
+                            type="checkbox"
+                            disabled={formType === "view"}
+                            className="mr-2 mt-1"
+                            checked={isAllModulesSelected}
+                            onChange={(e) =>
+                              handleSelectAllModules(e.target.checked)
+                            }
+                          />
+                          <span className="ms-1"> Select All</span>
+                        </th>
+                        <th scope="col" className="text-center">
+                          Permissions
+                        </th>
+                        <th scope="col" className="text-center">
+                          Add
+                        </th>
+                        <th scope="col" className="text-center">
+                          View
+                        </th>
+                        <th scope="col" className="text-center">
+                          Edit
+                        </th>
+                        <th scope="col" className="text-center">
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {modulePermission?.length > 0 &&
+                        modulePermission?.map((permissiondata, index) => {
+                          const hitSelectAll = {
+                            isCreateChecked: permissiondata?.isCreateChecked,
+                            isViewChecked: permissiondata?.isViewChecked,
+                            isUpdateChecked: permissiondata?.isUpdateChecked,
+                            isModuleChecked: permissiondata?.isModuleChecked,
+                          };
+                          const checkSelect = Object.values(hitSelectAll).every(
+                            (value) => value === true
+                          );
+
+                          return (
+                            <>
+                              <tr className="text-center">
+                                <td className="text-start">
                                   <input
+                                    id={permissiondata.moduleName + index}
                                     type="checkbox"
+                                    checked={
+                                      permissiondata.moduleName ===
+                                        "Dashboard" &&
+                                      permissiondata?.isViewChecked === true
+                                        ? true
+                                        : checkSelect
+                                    }
                                     disabled={formType === "view"}
-                                    className="mr-3"
-                                    checked={isAllModulesSelected}
                                     onChange={(e) =>
-                                      handleSelectAllModules(e.target.checked)
+                                      handleAllActionSelect(
+                                        index,
+                                        e.target.checked
+                                      )
                                     }
                                   />
-                                  <span> Select All</span>
-                                </th>
-                                <th scope="col" className="text-center">
-                                  Permissions
-                                </th>
-                                <th scope="col" className="text-center">
-                                  Add
-                                </th>
-                                <th scope="col" className="text-center">
-                                  View
-                                </th>
-                                <th scope="col" className="text-center">
-                                  Edit
-                                </th>
-                                <th scope="col" className="text-center">
-                                  Status
-                                </th>
+                                </td>
+                                <td>{permissiondata.moduleName}</td>
+                                <td>
+                                  {permissiondata.moduleName !==
+                                    "Dashboard" && (
+                                    <label>
+                                      <input
+                                        disabled={formType === "view"}
+                                        id={permissiondata.moduleName + index}
+                                        type="checkbox"
+                                        name={permissiondata.moduleName + index}
+                                        className="form-check-input d-none"
+                                        checked={
+                                          permissiondata.isCreateChecked ===
+                                          true
+                                        }
+                                        onChange={(e) =>
+                                          handlePermissionChange(
+                                            index,
+                                            "isCreateChecked",
+                                            e.target.checked
+                                          )
+                                        }
+                                      />
+                                      <img
+                                        src={
+                                          permissiondata.isCreateChecked ===
+                                          true
+                                            ? BLUEPLUSICON_ICON
+                                            : GREYPLUSICON_ICON
+                                        } // Blue plus icon when active, grey plus when inactive
+                                        alt="add-action"
+                                        className="roleicons"
+                                        style={{
+                                          opacity:
+                                            formType === "view" ? 0.5 : 1,
+                                          pointerEvents:
+                                            formType === "view"
+                                              ? "none"
+                                              : "auto",
+                                        }}
+                                      />
+                                    </label>
+                                  )}
+                                </td>
+
+                                <td>
+                                  <label>
+                                    <input
+                                      disabled={formType === "view"}
+                                      id={permissiondata.moduleName + index}
+                                      type="checkbox"
+                                      name={permissiondata.moduleName + index}
+                                      className="form-check-input d-none"
+                                      checked={
+                                        permissiondata.isViewChecked === true
+                                      }
+                                      onChange={(e) =>
+                                        handlePermissionChange(
+                                          index,
+                                          "isViewChecked",
+                                          e.target.checked
+                                        )
+                                      }
+                                    />
+
+                                    <img
+                                      src={
+                                        permissiondata.isViewChecked === true
+                                          ? BLUEEYE_ICONIMG
+                                          : GREYEYE_ICONIMG
+                                      }
+                                      alt="view-action"
+                                      className="roleicons"
+                                      style={{
+                                        opacity: formType === "view" ? 0.5 : 1,
+                                        pointerEvents:
+                                          formType === "view" ? "none" : "auto",
+                                      }}
+                                    />
+                                  </label>
+                                </td>
+                                <td>
+                                  {permissiondata.moduleName !==
+                                    "Dashboard" && (
+                                    <label>
+                                      <input
+                                        disabled={formType === "view"}
+                                        id={permissiondata.moduleName + index}
+                                        className="form-check-input  d-none"
+                                        type="checkbox"
+                                        checked={
+                                          permissiondata.isUpdateChecked ===
+                                          true
+                                        }
+                                        name={permissiondata.moduleName + index}
+                                        onChange={(e) =>
+                                          handlePermissionChange(
+                                            index,
+                                            "isUpdateChecked",
+                                            e.target.checked
+                                          )
+                                        }
+                                      />
+                                      <img
+                                        src={
+                                          permissiondata.isUpdateChecked ===
+                                          true
+                                            ? BLUEEDIT_ICON
+                                            : GREYEDIT_ICON
+                                        }
+                                        alt="edit-action"
+                                        className="roleicons"
+                                        style={{
+                                          opacity:
+                                            formType === "view" ? 0.5 : 1,
+                                          pointerEvents:
+                                            formType === "view"
+                                              ? "none"
+                                              : "auto",
+                                        }}
+                                      />
+                                    </label>
+                                  )}
+                                </td>
+
+                                <td>
+                                  {permissiondata.moduleName !==
+                                    "Dashboard" && (
+                                    <label>
+                                      <input
+                                        disabled={formType === "view"}
+                                        id={permissiondata.moduleName + index}
+                                        type="checkbox"
+                                        name={permissiondata.moduleName + index}
+                                        className="form-check-input d-none"
+                                        checked={
+                                          permissiondata.isModuleChecked ===
+                                          true
+                                        }
+                                        onChange={(e) =>
+                                          handlePermissionChange(
+                                            index,
+                                            "isModuleChecked",
+                                            e.target.checked
+                                          )
+                                        }
+                                      />
+                                      <img
+                                        src={
+                                          permissiondata.isModuleChecked ===
+                                          true
+                                            ? BLUESTATUS
+                                            : GREYSTATUS
+                                        } // Change based on the status
+                                        alt="status-action"
+                                        className="roleicons"
+                                        style={{
+                                          opacity:
+                                            formType === "view" ? 0.5 : 1,
+                                          pointerEvents:
+                                            formType === "view"
+                                              ? "none"
+                                              : "auto",
+                                        }}
+                                      />
+                                    </label>
+                                  )}
+                                </td>
                               </tr>
-                            </thead>
-                            <tbody>
-                              {modulePermission?.length > 0 &&
-                                modulePermission?.map(
-                                  (permissiondata, index) => {
-                                    const hitSelectAll = {
-                                      isCreateChecked: permissiondata?.isCreateChecked,
-                                      isViewChecked: permissiondata?.isViewChecked,
-                                      isUpdateChecked:
-                                        permissiondata?.isUpdateChecked,
-                                      isModuleChecked:
-                                        permissiondata?.isModuleChecked,
-                                    };
-                                    const checkSelect = Object.values(
-                                      hitSelectAll
-                                    ).every((value) => value === true);
-
-                                    return (
-                                      <>
-                                        <tr className="text-center">
-                                          <td>
-                                            <input
-                                              id={
-                                                permissiondata.moduleName +
-                                                index
-                                              }
-                                              type="checkbox"
-                                              checked={
-                                                permissiondata.moduleName ===
-                                                  "Dashboard" &&
-                                                permissiondata?.isViewChecked === true
-                                                  ? true
-                                                  : checkSelect
-                                              }
-                                              disabled={formType === "view"}
-                                              onChange={(e) =>
-                                                handleAllActionSelect(
-                                                  index,
-                                                  e.target.checked
-                                                )
-                                              }
-                                            />
-                                          </td>
-                                          <td>{permissiondata.moduleName}</td>
-                                          <td>
-                                            {permissiondata.moduleName !==
-                                              "Dashboard" && (
-                                              <label>
-                                                <input
-                                                  disabled={formType === "view"}
-                                                  id={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  type="checkbox"
-                                                  name={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  className="form-check-input d-none"
-                                                  checked={
-                                                    permissiondata.isCreateChecked ===
-                                                    true
-                                                  }
-                                                  onChange={(e) =>
-                                                    handlePermissionChange(
-                                                      index,
-                                                      "isCreateChecked",
-                                                      e.target.checked
-                                                    )
-                                                  }
-                                                />
-                                                <img
-                                                  src={
-                                                    permissiondata.isCreateChecked ===
-                                                    true
-                                                      ? BLUEPLUSICON_ICON
-                                                      : GREYPLUSICON_ICON
-                                                  } // Blue plus icon when active, grey plus when inactive
-                                                  alt="add-action"
-                                                  className="roleicons"
-                                                  style={{
-                                                    opacity:
-                                                      formType === "view"
-                                                        ? 0.5
-                                                        : 1,
-                                                    pointerEvents:
-                                                      formType === "view"
-                                                        ? "none"
-                                                        : "auto",
-                                                  }}
-                                                />
-                                              </label>
-                                            )}
-                                          </td>
-
-                                          <td>
-                                            <label>
-                                              <input
-                                                disabled={formType === "view"}
-                                                id={
-                                                  permissiondata.moduleName +
-                                                  index
-                                                }
-                                                type="checkbox"
-                                                name={
-                                                  permissiondata.moduleName +
-                                                  index
-                                                }
-                                                className="form-check-input d-none"
-                                                checked={
-                                                  permissiondata.isViewChecked ===
-                                                  true
-                                                }
-                                                onChange={(e) =>
-                                                  handlePermissionChange(
-                                                    index,
-                                                    "isViewChecked",
-                                                    e.target.checked
-                                                  )
-                                                }
-                                              />
-
-                                              <img
-                                                src={
-                                                  permissiondata.isViewChecked ===
-                                                  true
-                                                    ? BLUEEYE_ICONIMG
-                                                    : GREYEYE_ICONIMG
-                                                }
-                                                alt="view-action"
-                                                className="roleicons"
-                                                style={{
-                                                  opacity:
-                                                    formType === "view"
-                                                      ? 0.5
-                                                      : 1,
-                                                  pointerEvents:
-                                                    formType === "view"
-                                                      ? "none"
-                                                      : "auto",
-                                                }}
-                                              />
-                                            </label>
-                                          </td>
-                                          <td>
-                                            {permissiondata.moduleName !==
-                                              "Dashboard" && (
-                                              <label>
-                                                <input
-                                                  disabled={formType === "view"}
-                                                  id={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  className="form-check-input  d-none"
-                                                  type="checkbox"
-                                                  checked={
-                                                    permissiondata.isUpdateChecked ===
-                                                    true
-                                                  }
-                                                  name={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  onChange={(e) =>
-                                                    handlePermissionChange(
-                                                      index,
-                                                      "isUpdateChecked",
-                                                      e.target.checked
-                                                    )
-                                                  }
-                                                />
-                                                <img
-                                                  src={
-                                                    permissiondata.isUpdateChecked ===
-                                                    true
-                                                      ? BLUEEDIT_ICON
-                                                      : GREYEDIT_ICON
-                                                  }
-                                                  alt="edit-action"
-                                                  className="roleicons"
-                                                  style={{
-                                                    opacity:
-                                                      formType === "view"
-                                                        ? 0.5
-                                                        : 1,
-                                                    pointerEvents:
-                                                      formType === "view"
-                                                        ? "none"
-                                                        : "auto",
-                                                  }}
-                                                />
-                                              </label>
-                                            )}
-                                          </td>
-
-                                          <td>
-                                            {permissiondata.moduleName !==
-                                              "Dashboard" && (
-                                              <label>
-                                                <input
-                                                  disabled={formType === "view"}
-                                                  id={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  type="checkbox"
-                                                  name={
-                                                    permissiondata.moduleName +
-                                                    index
-                                                  }
-                                                  className="form-check-input d-none"
-                                                  checked={
-                                                    permissiondata.isModuleChecked ===
-                                                    true
-                                                  }
-                                                  onChange={(e) =>
-                                                    handlePermissionChange(
-                                                      index,
-                                                      "isModuleChecked",
-                                                      e.target.checked
-                                                    )
-                                                  }
-                                                />
-                                                <img
-                                                  src={
-                                                    permissiondata.isModuleChecked ===
-                                                    true
-                                                      ? BLUESTATUS
-                                                      : GREYSTATUS
-                                                  } // Change based on the status
-                                                  alt="status-action"
-                                                  className="roleicons"
-                                                  style={{
-                                                    opacity:
-                                                      formType === "view"
-                                                        ? 0.5
-                                                        : 1,
-                                                    pointerEvents:
-                                                      formType === "view"
-                                                        ? "none"
-                                                        : "auto",
-                                                  }}
-                                                />
-                                              </label>
-                                            )}
-                                          </td>
-                                        </tr>
-                                      </>
-                                    );
-                                  }
-                                )}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="text-center form-buttons-w">
-                      {formType !== "view" && (
-                        <button
-                          className="btn btn-success"
-                          type="submit"
-                          disabled={
-                            formType === "view" ||
-                            (formType === "edit" && !isFormeditDisable) ||
-                            isLoading
-                          }
-                        >
-                          {isLoading && (
-                            <i className="fa fa-circle-o-notch fa-spin mr-2"></i>
-                          )}
-                          {formType === "add" ? "Save" : "Update"}
-                        </button>
-                      )}
-
-                      <button className="btn btn-grey" onClick={()=>handleDataBack()}>
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
+                            </>
+                          );
+                        })}
+                    </tbody>
+                  </table>
                 </div>
-              </>
+              </div>
             </div>
-          </div>
+
+            <div className="d-flex flex-wrap justify-content-center">
+              <button
+                type="button"
+                className="px-4 py-2 rounded border-0 cancelbtn  me-3"
+                onClick={() => handleDataBack()}
+              >
+                Cancel
+              </button>
+              {formType !== "view" && (
+                <button
+                  className="px-4 py-2 rounded border-0 text-white btn-primary "
+                  type="submit"
+                  disabled={
+                    formType === "view" ||
+                    (formType === "edit" && !isFormeditDisable) ||
+                    isLoading
+                  }
+                >
+                  {isLoading && (
+                    <Spinner animation="border" size="sm" className="me-2" />
+                  )}
+                  {formType === "add" ? "Save" : "Update"}
+                </button>
+              )}
+            </div>
+          </form>
         </div>
-      </>
+      </div>
     </>
   );
 };
