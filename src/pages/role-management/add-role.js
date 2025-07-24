@@ -134,6 +134,10 @@ const AddRole = () => {
           ...existingPermission,
           [permissionType]: value ? true : false,
         };
+  // Automatically set 'isViewChecked' to true when any other permission is checked
+      if (permissionType === "isCreateChecked" || permissionType === "isUpdateChecked" || permissionType === "isDeleteChecked") {
+        updatedPermission.isViewChecked = true; // set isViewChecked true by default
+      }
 
         return updatedPermission;
       }
@@ -158,7 +162,8 @@ const AddRole = () => {
         return {
           ...existingPermission,
           isCreateChecked: value ? true : false,
-          isViewChecked: value ? true : false,
+          // isViewChecked: value ? true : false,
+            isViewChecked: true, // Make sure 'isViewChecked' is true
           isUpdateChecked: value ? true : false,
           isDeleteChecked: value ? true : false, //  Added deleteAction
           isModuleChecked: value ? true : false,
