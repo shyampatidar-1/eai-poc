@@ -17,6 +17,13 @@ export const API_URL = {
     updatePasswordPolicy: "password-policy/update",
     deletePasswordPolicy: "/password-policy/delete/policyId"
   },
+  adminStaff: {
+    addStaff: 'admin/add',
+    updateStaff: 'admin/update',
+    staffList: 'admin/list',
+    getbyStaffId: 'admin/view',
+    staffStatus: 'admin/manage-status',
+  },
   fileUpload: {
     file: "authController/uploadPost",
   },

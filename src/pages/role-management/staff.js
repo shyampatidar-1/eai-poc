@@ -4,6 +4,7 @@ import { ROUTES } from '../../hooks/routes/routes-constant';
 
 import TableHeading from '../../components/comman/table-heading';
 import TableLayout from '../../components/layout/table-layout';
+import { ROLE_EDIT_ICON, ROLE_VIEW_ICON } from '../../utils/aap-image-constant';
 
 const Staff = () => {
   const navigate = useNavigate();
@@ -45,7 +46,16 @@ const Staff = () => {
       state: { formType: "add" },
     });
   };
-
+  const handleEdit = () => {
+    navigate(`${ROUTES.STAFF}/edit`, {
+      state: { formType: "edit" },
+    });
+  };
+  const handleView = () => {
+    navigate(`${ROUTES.STAFF}/view`, {
+      state: { formType: "view" },
+    });
+  };
   const tableColumnsStaff = [
     {
       name: "Staff Name",
@@ -66,6 +76,21 @@ const Staff = () => {
       name: "Status",
       selector: row => row.status,
       sortable: true,
+    },
+    {
+      name: "Action",
+      width: "150px",
+      cell: (row) =>
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="me-2 cursor-pointer">
+            <img src={ROLE_EDIT_ICON} alt="Edit" onClick={handleEdit} />
+          </div>
+
+          <div className='me-2 cursor-pointer' onClick={handleView}>
+            <img src={ROLE_VIEW_ICON} alt="View" />
+          </div>
+        </div>
+
     },
     // Add action buttons or more fields if needed
   ];

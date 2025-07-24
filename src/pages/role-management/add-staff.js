@@ -7,6 +7,7 @@ import Button from "../../components/comman/button";
 import { ROUTES } from "../../hooks/routes/routes-constant";
 import { handleFormInput } from "../../utils/form-utils";
 import DropDown from "../../components/comman/dropdown";
+import INPUTFIELD from "../../components/comman/input";
 
 const AddStaff = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,18 +17,12 @@ const AddStaff = () => {
     userName: "",
     email: "",
     roleId: 0,
-    clinicId: 0,
     password: "",
-    mobileNo: "",
-    profile: "",
-    languageType: "",
   });
 
   const location = useLocation();
   const navigate = useNavigate();
-
   const checkFormType = location?.state?.formType || "add";
-  const activeTab = location?.state?.activeTab || "staff";
 
   const pageAction =
     checkFormType === "add"
@@ -47,9 +42,7 @@ const AddStaff = () => {
       mobileNo: "",
       profile: "",
     });
-    navigate(ROUTES.STAFF, {
-      state: { activeTab },
-    });
+    navigate(ROUTES.STAFF);
   };
   const rolelist = [
     { label: "Admin", value: 1 },
@@ -57,32 +50,19 @@ const AddStaff = () => {
     { label: "Therapist", value: 3 },
   ];
 
-  // ✅ Handle Role Selection
-  // const handleSelectRole = (selected) => {
-  //   setPayload({ ...payload, roleId: selected?.value || 0 });
-  // };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   setTimeout(() => {
-  //     console.log("Submitted payload:", payload);
-  //     setIsLoading(false);
-  //     navigate(ROUTES.ROLE_MANAGEMENT, {
-  //       state: { activeTab: "staff" },
-  //     });
-  //   }, 1000);
-  // };
+
   const handleSelectRole = (e) => {
     const selectedValue = parseInt(e.target.value);
     setPayload((prev) => ({ ...prev, roleId: selectedValue }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
     setTimeout(() => {
       console.log("Submitted payload:", payload);
       setIsLoading(false);
-      navigate(ROUTES.ROLE_MANAGEMENT, {
+      navigate(ROUTES.STAFF, {
         state: { activeTab: "staff" },
       });
     }, 1000);
@@ -100,20 +80,20 @@ const AddStaff = () => {
 
           <div className="row">
             <div className="col-md-6 mb-2">
-              <Input
+              <INPUTFIELD
                 className="border-radius_input"
                 type="text"
                 value={payload.userName}
                 disabled={checkFormType === "view"}
                 name="userName"
-                placeHolder="Enter staff"
+                placeHolder="Enter user name"
                 handleChange={(e) => setPayload(handleFormInput(e, payload))}
                 labelName="Staff Name"
               />
             </div>
 
-            <div className="col-md-6 mb-2">
-              <Input
+            {/* <div className="col-md-6 mb-2">
+              <INPUTFIELD
                 className="border-radius_input"
                 type="email"
                 value={payload.email}
@@ -123,7 +103,7 @@ const AddStaff = () => {
                 handleChange={(e) => setPayload(handleFormInput(e, payload))}
                 labelName="Staff Email"
               />
-            </div>
+            </div> */}
             <div className="col-md-6 mb-2">
               <DropDown
                 labelName="Select Role"
@@ -133,14 +113,14 @@ const AddStaff = () => {
                 handleSelect={handleSelectRole}
                 showastrict={true}
                 className="border-radius_input"
-              // disabled={checkfromType === "view"}
+                disabled={checkFormType === "view"}
               />
             </div>
 
 
             {checkFormType === "add" && (
               <div className="col-md-6 mb-2">
-                <Input
+                <INPUTFIELD
                   className="border-radius_input"
                   type={isPwdVisible}
                   value={payload.password}
@@ -167,7 +147,7 @@ const AddStaff = () => {
         <div className="d-flex flex-wrap justify-content-center">
           <Button
             type="button"
-            className="px-5 py-2 rounded border-0 cancelbtn mb-2 me-2"
+            className="px-4 py-2 rounded border-0 cancelbtn mb-2 me-3"
             label="Cancel"
             onClick={handleDataBack}
           />

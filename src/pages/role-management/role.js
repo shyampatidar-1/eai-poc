@@ -44,6 +44,11 @@ const Role = () => {
             state: { formType: "edit" },
         });
     };
+    const handleView = () => {
+        navigate(`${ROUTES.ROLE}/view`, {
+            state: { formType: "view" },
+        });
+    };
 
     const tableColumnsRole = [
         {
@@ -98,7 +103,7 @@ const Role = () => {
                         <img src={ROLE_EDIT_ICON} alt="Edit" onClick={handleEdit} />
                     </div>
 
-                    <div className='me-2 cursor-pointer' onClick={handleEdit}>
+                    <div className='me-2 cursor-pointer' onClick={handleView}>
                         <img src={ROLE_VIEW_ICON} alt="View" />
                     </div>
                 </div>

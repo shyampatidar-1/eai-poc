@@ -37,7 +37,7 @@ body {
   --dashboardIconbgColor: #1673ff;
   --overlayBackgroundColor: #0099ffa3;
   --btnPrimaryBackground: #09f;
-  --btnSecondaryBackground: #e4e4e4;
+  --btnSecondaryBackground: #b2afaf;
   --btnSecondaryColor: #808080;
   --borderTopLogoutColor: #97c1ff;
   --lightPinkColor: #ffe5e5;
@@ -572,6 +572,10 @@ body {
   transform: translateX(0);
 }
 
+.cancelbtn {
+  background-color: var(--btnSecondaryBackground);
+  font-size: var(--font14);
+}
 
 /* .card {
   min-height: 100px;
