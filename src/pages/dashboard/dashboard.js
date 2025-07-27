@@ -146,10 +146,10 @@ const Dashboard = () => {
       <div className="row g-3 mb-3">
         {[
           ["Total Integrations", 84],
-          ["Avg L.xtency", "120 ms"],
+          ["Avg Latency", "120 ms"],
           ["SLA Breaches", 5],
           ["System Error Rate", "1.3 %"],
-          ["Longest Running", "3:4 hrs"],
+          ["Longest Running", "3.4 hrs"],
         ].map(([title, value], idx) => (
           <div className="col-6 col-lg" key={idx}>
             <div className="bg-white p-3 rounded-4 shadow-sm">
@@ -261,8 +261,8 @@ const Dashboard = () => {
         <div className="col-md-4">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Retry Queue Status</h6>
-            <p className="mb-1 small">Retry Queue: 12</p>
-            <p className="small">Recent API Failures: OT21</p>
+            <p className="mb-1 small">Retry Queue: Oms</p>
+            <p className="small">Recent API Failures: Middleware</p>
           </div>
         </div>
 

@@ -149,7 +149,7 @@ const Role = () => {
              ${!permissionAccess?.isDeleteChecked ? "disabled-style" : ""}
   `}
           onClick={(e) => {
-            if (!permissionAccess?.isDeleteChecked) {
+            if (permissionAccess?.isDeleteChecked === true) {
               handleRoleStatus(row?.roleId, row?.status === 1 ? 2 : 1);
             }
           }}

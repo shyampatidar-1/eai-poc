@@ -53,6 +53,7 @@ const Staff = () => {
 
   // permission code
   const [permissionAccess, setPermissionAccess] = useState();
+  console.log("permissionAccess>>>", permissionAccess?.isDeleteChecked);
   const rawPermission = useSelector((state) => state?.permission?.value);
   const permissions = decryptAEStoJSON(rawPermission);
   useEffect(() => {
@@ -120,7 +121,7 @@ const Staff = () => {
              ${!permissionAccess?.isDeleteChecked ? "disabled-style" : ""}
   `}
           onClick={(e) => {
-            if (!permissionAccess?.isDeleteChecked) {
+            if (permissionAccess?.isDeleteChecked === true) {
               handleStaffStatus(row?.adminId, row?.status === 1 ? 2 : 1);
             }
           }}

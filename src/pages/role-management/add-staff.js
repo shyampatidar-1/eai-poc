@@ -8,7 +8,7 @@ import { ROUTES } from "../../hooks/routes/routes-constant";
 import { handleFormInput, handleFormNumericInput } from "../../utils/form-utils";
 import DropDown from "../../components/comman/dropdown";
 import INPUTFIELD from "../../components/comman/input";
-import { addStaff, getAllRole, getStaffById, staffList, updateStaff } from "../../hooks/services/api-services";
+import { addStaff, getAllRole, getPasswordPolicy, getStaffById, staffList, updateStaff } from "../../hooks/services/api-services";
 import { API_RESPONSE } from "../../utils/app-constants";
 import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
 import { useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const AddStaff = () => {
     userName: "",
     password: "",
     roleId: 0,
+    policyId: 0
   });
 
   const location = useLocation();
@@ -45,6 +46,7 @@ const AddStaff = () => {
       userName: "",
       password: "",
       roleId: 0,
+      policyId: 0
     });
     navigate(ROUTES.STAFF);
   };
@@ -54,10 +56,7 @@ const AddStaff = () => {
     { label: "Therapist", value: 3 },
   ];
 
-  const handleSelectRole = (e) => {
-    const selectedValue = parseInt(e.target.value);
-    setPayload((prev) => ({ ...prev, roleId: selectedValue }));
-  };
+
 
   // get staff bu id
   const fetchStaffById = async (staffId) => {
@@ -71,6 +70,7 @@ const AddStaff = () => {
           adminId: rowData?.adminId,
           userName: rowData?.userName,
           roleId: rowData?.roleId,
+          policyId: rowData?.policyId
         });
       }
     } catch (err) {
@@ -144,11 +144,39 @@ const AddStaff = () => {
     }
   };
 
+
+  // passwod policy list
+  const [policies, setPolicies] = useState([]);
+  const passwordPolicyList = async () => {
+    // setIsLoading(true);
+    const tablePayload = {
+      pageIndex: 0,
+      pageSize: 0,
+      sortBy: "",
+      searchBy: "",
+      sortingOrder: "",
+    };
+    try {
+      const response = await getPasswordPolicy(tablePayload)
+      if (response.data?.status !== 200) {
+        // toastEmitter("error", response?.data?.message);
+        setPolicies([])
+      }
+      if (response.data?.status === 200) {
+        setPolicies(response?.data?.data)
+      }
+    } catch (error) {
+      toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+    }
+    finally {
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     fetchRoleData();
+    passwordPolicyList()
   }, []);
-
-
   return (
     <div className="main_datatable my-lg-3 mt-1">
       <BreadCrum
@@ -188,16 +216,6 @@ const AddStaff = () => {
               />
             </div> */}
             <div className="col-md-6 mb-2">
-              {/* <DropDown
-                labelName="Select Role"
-                name="roleId"
-                options={rolelist}
-                value={payload.roleId}
-                handleSelect={handleSelectRole}
-                showastrict={true}
-                className="border-radius_input"
-                disabled={checkFormType === "view"}
-              /> */}
 
               <label htmlFor="">
                 Role Name <span className="text-danger">*</span>
@@ -225,6 +243,40 @@ const AddStaff = () => {
                     ?.map((item) => (
                       <option key={item?.roleId} value={item?.roleId}>
                         {item?.roleName}
+                      </option>
+                    ))}
+              </select>
+
+
+            </div>
+            <div className="col-md-6 mb-2">
+
+              <label htmlFor="">
+                Password Policy <span className="text-danger">*</span>
+              </label>
+              <select
+                class="form-select"
+                disabled={checkFormType === "view"}
+                name="policyId"
+                value={payload.policyId || ""}
+                onChange={(e) =>
+                  setPayload(
+                    handleFormNumericInput(e, payload)
+                  )
+                }
+              >
+                <option value="0" className="font-primary">
+                  Select Password Policy
+                </option>
+                {policies !== undefined &&
+                  policies &&
+                  policies
+                    ?.sort((a, b) =>
+                      a?.passwordPolicyName?.localeCompare(b?.passwordPolicyName)
+                    )
+                    ?.map((item) => (
+                      <option key={item?.policyId} value={item?.policyId}>
+                        {item?.passwordPolicyName}
                       </option>
                     ))}
               </select>

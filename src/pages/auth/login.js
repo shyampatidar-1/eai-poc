@@ -82,6 +82,7 @@ const Login = () => {
             )
           )
         );
+        toastEmitter("success", response?.data?.message);
 
         setPayload({
           username: "",

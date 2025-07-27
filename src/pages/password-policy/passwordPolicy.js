@@ -1,24 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import TableHeading from "../../components/comman/table-heading";
 import { decryptAEStoJSON, toastEmitter } from "../../utils/utilities";
-import { addPasswordPolicy, deletePasswordPolicy, getPasswordPolicy, updatePasswordPolicy } from "../../hooks/services/api-services";
+import {
+  addPasswordPolicy,
+  deletePasswordPolicy,
+  getPasswordPolicy,
+  updatePasswordPolicy,
+} from "../../hooks/services/api-services";
 import { API_RESPONSE } from "../../utils/app-constants";
 import { TableWithNoData } from "../../components/snippets/template-blocks";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 import { useSelector } from "react-redux";
 
 const PasswordPolicy = () => {
   const [isEdit, setIsEdit] = useState("add");
   const [isLoading, setIsLoading] = useState(false);
-  const [policies, setPolicies] = useState([])
-  const [tablePayload, setTablePayload] = useState({
-    "pageIndex": 0,
-    "pageSize": 10,
-    "sortBy": "",
-    "searchBy": "",
-    "sortingOrder": ""
-  })
- 
+  const [policies, setPolicies] = useState([]);
+  const tablePayload = {
+    pageIndex: 0,
+    pageSize: 0,
+    sortBy: "",
+    searchBy: "",
+    sortingOrder: "",
+  };
 
   const [payload, setPayload] = useState({
     policyId: 0,
@@ -36,26 +40,27 @@ const PasswordPolicy = () => {
     createdAt: new Date().toISOString(),
   });
 
- // permission code start
+  // permission code start
   const { value } = useSelector((state) => state?.loggedUser);
-   const userData = decryptAEStoJSON(value);
-   console.log("userData>>>", userData?.roleList[0]?.roleName);
-   const [permissionAccess, setPermissionAccess] = useState();
-   const rawPermission = useSelector((state) => state?.permission?.value);
-   const permissions = decryptAEStoJSON(rawPermission);
-    console.log("permissions",permissions)
-   useEffect(() => {
-     const RoleAccessFilterData =
-       permissions && permissions?.filter((v) => v.moduleName === "Password Policy");
-     setPermissionAccess(RoleAccessFilterData?.[0]);
-   }, []);
-   //permission code end
+  const userData = decryptAEStoJSON(value);
+  console.log("userData>>>", userData?.roleList[0]?.roleName);
+  const [permissionAccess, setPermissionAccess] = useState();
+  const rawPermission = useSelector((state) => state?.permission?.value);
+  const permissions = decryptAEStoJSON(rawPermission);
+  console.log("permissions", permissions);
+  useEffect(() => {
+    const RoleAccessFilterData =
+      permissions &&
+      permissions?.filter((v) => v.moduleName === "Password Policy");
+    setPermissionAccess(RoleAccessFilterData?.[0]);
+  }, []);
+  //permission code end
 
   const modalRef = useRef(null);
   const modalInstanceRef = useRef(null);
 
   const handleOpen = (addedit) => {
-    setIsEdit(addedit)
+    setIsEdit(addedit);
     modalInstanceRef.current = new window.bootstrap.Modal(modalRef.current);
     modalInstanceRef.current.show();
   };
@@ -100,8 +105,8 @@ const PasswordPolicy = () => {
       lockoutDuration: "",
       passwordInHistory: "",
       createdAt: new Date().toISOString(),
-    })
-  }
+    });
+  };
 
   const handleSubmit = async () => {
     if (payload.passwordPolicyName.trim() === "") {
@@ -156,49 +161,44 @@ const PasswordPolicy = () => {
       return toastEmitter("error", "Password in history field is mandatory!");
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const response = await (isEdit === "add" ? addPasswordPolicy(payload) : updatePasswordPolicy(payload));
+      const response = await (isEdit === "add"
+        ? addPasswordPolicy(payload)
+        : updatePasswordPolicy(payload));
       if (response.data?.status !== 200) {
         toastEmitter("error", response?.data?.message);
       }
       if (response.data?.status === 200) {
-
         toastEmitter("success", response?.data?.message);
-        handleClearPayload()
-        handleClose()
-        passwordPolicyList()
+        handleClearPayload();
+        handleClose();
+        passwordPolicyList();
       }
     } catch (error) {
       toastEmitter("error", API_RESPONSE?.MESSAGE_503);
     } finally {
       setIsLoading(false);
     }
-
-
-
-    
   };
 
   const passwordPolicyList = async () => {
     // setIsLoading(true);
     try {
-      const response = await getPasswordPolicy(tablePayload)
+      const response = await getPasswordPolicy(tablePayload);
       if (response.data?.status !== 200) {
         // toastEmitter("error", response?.data?.message);
-        setPolicies([])
+        setPolicies([]);
       }
       if (response.data?.status === 200) {
-        setPolicies(response?.data?.data?.content)
+        setPolicies(response?.data?.data);
       }
     } catch (error) {
       toastEmitter("error", API_RESPONSE?.MESSAGE_503);
+    } finally {
+      setIsLoading(false);
     }
-    finally {
-      setIsLoading(false)
-    }
-
-  }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -208,30 +208,25 @@ const PasswordPolicy = () => {
         toastEmitter("error", response?.data?.message);
       }
       if (response.data?.status === 200) {
-        passwordPolicyList()
+        passwordPolicyList();
         toastEmitter("success", response?.data?.message);
-
       }
-
     } catch (error) {
       toastEmitter("error", API_RESPONSE?.MESSAGE_503);
     }
-  }
+  };
 
   const handleClickEdit = (index) => {
-
-    setPayload(policies.filter((policy, i) => i === index)[0])
-    handleOpen("edit")
-  }
-
-
+    setPayload(policies.filter((policy, i) => i === index)[0]);
+    handleOpen("edit");
+  };
 
   useEffect(() => {
-    passwordPolicyList()
-  }, [])
-// Define permission conditions before rendering cards
-const canEdit = permissionAccess?.isUpdateChecked === true;
-const canView = permissionAccess?.isViewChecked === true;
+    passwordPolicyList();
+  }, []);
+  // Define permission conditions before rendering cards
+  const canEdit = permissionAccess?.isUpdateChecked === true;
+  const canView = permissionAccess?.isViewChecked === true;
 
   return (
     <>
@@ -242,13 +237,13 @@ const canView = permissionAccess?.isViewChecked === true;
           showsearchinput={false}
           data="Policy"
           showbutton={true}
-          addButtonClick={() => { handleOpen("add") }}
+          addButtonClick={() => {
+            handleOpen("add");
+          }}
         />
         <div className="row">
-          
-          {policies.length > 0 ?
-            (policies?.map((policy, index) => (
-              
+          {policies && policies.length > 0 ? (
+            policies?.map((policy, index) => (
               <div className="col-md-4 mb-4" key={policy.policyId}>
                 <div className="card shadow-sm">
                   <div className="card-body">
@@ -300,16 +295,19 @@ const canView = permissionAccess?.isViewChecked === true;
                           Max Invalid Attempts:
                         </strong>{" "}
                         {policy.maxInvalidLogin}
-
                       </li>
                       <li>
                         {" "}
-                        <strong className="fw-500">Lockout Duration:</strong>{" "}
+                        <strong className="fw-500">
+                          Lockout Duration:
+                        </strong>{" "}
                         {policy.lockoutDuration}
                       </li>
                       <li>
                         {" "}
-                        <strong className="fw-500">Password History:</strong>{" "}
+                        <strong className="fw-500">
+                          Password History:
+                        </strong>{" "}
                         {policy.passwordInHistory}
                       </li>
                     </ul>
@@ -323,43 +321,51 @@ const canView = permissionAccess?.isViewChecked === true;
                       </button>
                       <button className="btn btn-sm btn-danger" onClick={() => { handleDelete(policy.policyId) }}>Delete</button>
                     </div> */}
-                      <div className="d-flex justify-content-between">
-              <button
-                className={`btn btn-sm btn-primary me-2 ${!canEdit ? "disabled-style" : ""}`}
-                onClick={() => {
-                  if (canEdit) handleClickEdit(index);
-                }}
-                style={!canEdit ? { pointerEvents: "none", opacity: 0.6 } : {}}
-              >
-                Edit
-              </button>
+                    <div className="d-flex justify-content-between">
+                      <button
+                        className={`btn btn-sm btn-primary me-2 ${!canEdit ? "disabled-style" : ""
+                          }`}
+                        onClick={() => {
+                          if (canEdit) handleClickEdit(index);
+                        }}
+                        style={
+                          !canEdit
+                            ? { pointerEvents: "none", opacity: 0.6 }
+                            : {}
+                        }
+                      >
+                        Edit
+                      </button>
 
-              <button
-                className={`btn btn-sm btn-danger ${!canView ? "disabled-style" : ""}`}
-                onClick={() => {
-                  if (canView) handleDelete(policy.policyId);
-                }}
-                style={!canView ? { pointerEvents: "none", opacity: 0.6 } : {}}
-              >
-                Delete
-              </button>
-            </div>
+                      <button
+                        className={`btn btn-sm btn-danger ${!canView ? "disabled-style" : ""
+                          }`}
+                        onClick={() => {
+                          if (canView) handleDelete(policy.policyId);
+                        }}
+                        style={
+                          !canView
+                            ? { pointerEvents: "none", opacity: 0.6 }
+                            : {}
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            )))
-            :
-            (
-              <div className="d-flex justify-content-center align-items-center" style={{ height: "300px" }}>
-                <div className="text-center">
-                  < TableWithNoData />
-
-
-                </div>
+            ))
+          ) : (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "300px" }}
+            >
+              <div className="text-center">
+                <TableWithNoData />
               </div>
-            )
-          }
-
+            </div>
+          )}
         </div>
 
         {/* <div className="modal fade" id="passwordPolicyModal" tabIndex="-1" aria-labelledby="passwordPolicyModalLabel" aria-hidden="true"> */}
@@ -548,7 +554,7 @@ const canView = permissionAccess?.isViewChecked === true;
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                   onClick={() => {
-                    handleClearPayload()
+                    handleClearPayload();
                   }}
                 >
                   Close
@@ -560,7 +566,7 @@ const canView = permissionAccess?.isViewChecked === true;
                 >
                   {" "}
                   {isLoading && (
-                    <Spinner animation="border" size="sm" className='me-2' />
+                    <Spinner animation="border" size="sm" className="me-2" />
                   )}
                   {isEdit === "add" ? "Add" : "Edit"} Policy
                 </button>

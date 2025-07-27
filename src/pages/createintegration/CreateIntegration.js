@@ -197,6 +197,165 @@
 
 
 
+// import React, { useEffect, useRef } from 'react';
+// import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
+// import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+
+// import 'bpmn-js/dist/assets/diagram-js.css';
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+// import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+
+// const CreateIntegration = () => {
+//   const canvasRef = useRef(null);
+//   const panelRef = useRef(null);
+//   const modelerRef = useRef(null);
+
+//   useEffect(() => {
+//     const modeler = new BpmnJS({
+//       container: canvasRef.current,
+//       propertiesPanel: {
+//         parent: panelRef.current,
+//       },
+//       additionalModules: [
+//         require('bpmn-js-properties-panel'),
+//         require('bpmn-js-properties-panel/lib/provider/camunda'),
+//       ],
+//       moddleExtensions: {
+//         camunda: camundaModdleDescriptor,
+//       },
+//     });
+
+//     modelerRef.current = modeler;
+
+//     //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
+//     // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//     //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+//     //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+//     //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+//     //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+//     //   id="Definitions_1"
+//     //   targetNamespace="http://bpmn.io/schema/bpmn">
+//     //   <bpmn:process id="Process_1" isExecutable="true">
+//     //     <bpmn:startEvent id="StartEvent_1"/>
+//     //   </bpmn:process>
+//     //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+//     //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+//     //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+//     //         <dc:Bounds x="100" y="100" width="36" height="36"/>
+//     //       </bpmndi:BPMNShape>
+//     //     </bpmndi:BPMNPlane>
+//     //   </bpmndi:BPMNDiagram>
+//     // </bpmn:definitions>`;
+//     const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
+//       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+//         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+//         xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+//         xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+//         id="Definitions_1"
+//         targetNamespace="http://bpmn.io/schema/bpmn">
+
+//         <bpmn:process id="Process_1" isExecutable="true" />
+
+//         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+//           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+//         </bpmndi:BPMNDiagram>
+//       </bpmn:definitions>`
+
+//     modeler.importXML(xml).catch(console.error);
+
+//     return () => {
+//       modeler.destroy();
+//     };
+//   }, []);
+
+//   const createElement = async (type) => {
+//     const modeler = modelerRef.current;
+//     const elementFactory = modeler.get('elementFactory');
+//     const modeling = modeler.get('modeling');
+//     const canvas = modeler.get('canvas');
+
+//     const rootElement = canvas.getRootElement();
+
+//     const shape = elementFactory.createShape({ type });
+
+//     // Create random position to avoid overlapping
+//     const x = Math.floor(Math.random() * 400 + 100);
+//     const y = Math.floor(Math.random() * 300 + 100);
+
+//     modeling.createShape(shape, { x, y }, rootElement);
+//   };
+
+//   return (
+//     <div className="d-flex flex-column vh-100">
+//       {/* Top Bar */}
+//       {/* <div className="d-flex justify-content-between align-items-center px-4 py-2 bg-primary text-white">
+//         <div className="fw-bold">Enterprise AA/Integration</div>
+//         <div className="d-flex align-items-center gap-3">
+//           <select className="form-select form-select-sm w-auto">
+//             <option>Version: 1.2</option>
+//           </select>
+//           <button className="btn btn-light btn-sm">Validate</button>
+//           <button className="btn btn-light btn-sm">Fit</button>
+//           <button className="btn btn-success btn-sm">Deploy</button>
+//         </div>
+//       </div> */}
+
+//       {/* Main Content */}
+//       <div className="d-flex flex-grow-1">
+//         {/* Left Sidebar */}
+//         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
+//           <h6 className="text-muted">Process Modeller</h6>
+
+//           <div className="mb-4">
+//             <div className="fw-bold mb-2">BPMN Elements</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent')}>Start</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent')}>End</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task')}>Task</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway')}>Gateway</button>
+//               <button className="btn btn-outline-secondary btn-sm" >Sub-process</button>
+//             </div>
+//           </div>
+
+//           <div className="mb-4">
+//             <div className="fw-bold mb-2">App Connectors</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               <button className="btn btn-outline-primary btn-sm" >REST</button>
+//               <button className="btn btn-outline-primary btn-sm">FTP</button>
+//               <button className="btn btn-outline-primary btn-sm">SAP</button>
+//               <button className="btn btn-outline-primary btn-sm">Salesforce</button>
+//             </div>
+//           </div>
+
+//           <div>
+//             <div className="fw-bold mb-2">Data Enrichers</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               <button className="btn btn-outline-warning btn-sm">Script</button>
+//               <button className="btn btn-outline-warning btn-sm">Mapper</button>
+//               <button className="btn btn-outline-warning btn-sm">Transformer</button>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* BPMN Canvas */}
+
+//         <div className="flex-grow-1 position-relative" ref={canvasRef} />
+
+//         {/* Properties Panel */}
+//         <div
+//           ref={panelRef}
+//           className="bg-white border-start p-3"
+//           style={{ width: '300px', overflowY: 'auto' }}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CreateIntegration;
+
+
 import React, { useEffect, useRef } from 'react';
 import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
@@ -227,26 +386,7 @@ const CreateIntegration = () => {
 
     modelerRef.current = modeler;
 
-    //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-    // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-    //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-    //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-    //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-    //   id="Definitions_1"
-    //   targetNamespace="http://bpmn.io/schema/bpmn">
-    //   <bpmn:process id="Process_1" isExecutable="true">
-    //     <bpmn:startEvent id="StartEvent_1"/>
-    //   </bpmn:process>
-    //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-    //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-    //         <dc:Bounds x="100" y="100" width="36" height="36"/>
-    //       </bpmndi:BPMNShape>
-    //     </bpmndi:BPMNPlane>
-    //   </bpmndi:BPMNDiagram>
-    // </bpmn:definitions>`;
-    const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
@@ -260,7 +400,7 @@ const CreateIntegration = () => {
         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
         </bpmndi:BPMNDiagram>
-      </bpmn:definitions>`
+      </bpmn:definitions>`;
 
     modeler.importXML(xml).catch(console.error);
 
@@ -269,7 +409,39 @@ const CreateIntegration = () => {
     };
   }, []);
 
-  const createElement = async (type) => {
+  // const createElement = async (type) => {
+  //   const modeler = modelerRef.current;
+  //   const elementFactory = modeler.get('elementFactory');
+  //   const modeling = modeler.get('modeling');
+  //   const canvas = modeler.get('canvas');
+
+  //   const rootElement = canvas.getRootElement();
+
+  //   // Create a shape of the given BPMN type
+  //   const shape = elementFactory.createShape({ type });
+
+  //   // Random position to avoid overlap
+  //   const x = Math.floor(Math.random() * 400 + 100);
+  //   const y = Math.floor(Math.random() * 300 + 100);
+
+  //   // Add shape to the diagram
+  //   modeling.createShape(shape, { x, y }, rootElement);
+
+  //   // Set default label based on type
+  //   let label = '';
+  //   if (type === 'bpmn:StartEvent') label = 'Start';
+  //   else if (type === 'bpmn:EndEvent') label = 'End';
+  //   else if (type === 'bpmn:Task') label = 'Task';
+  //   else if (type === 'bpmn:ExclusiveGateway') label = 'Gateway';
+
+  //   if (label) {
+  //     setTimeout(() => {
+  //       modeling.updateLabel(shape, label);
+  //     }, 0);
+  //   }
+  // };
+
+  const createElement = async (type, label = '') => {
     const modeler = modelerRef.current;
     const elementFactory = modeler.get('elementFactory');
     const modeling = modeler.get('modeling');
@@ -279,52 +451,44 @@ const CreateIntegration = () => {
 
     const shape = elementFactory.createShape({ type });
 
-    // Create random position to avoid overlapping
     const x = Math.floor(Math.random() * 400 + 100);
     const y = Math.floor(Math.random() * 300 + 100);
 
     modeling.createShape(shape, { x, y }, rootElement);
+
+    if (label) {
+      setTimeout(() => {
+        modeling.updateLabel(shape, label);
+      }, 0);
+    }
   };
 
   return (
     <div className="d-flex flex-column vh-100">
-      {/* Top Bar */}
-      {/* <div className="d-flex justify-content-between align-items-center px-4 py-2 bg-primary text-white">
-        <div className="fw-bold">Enterprise AA/Integration</div>
-        <div className="d-flex align-items-center gap-3">
-          <select className="form-select form-select-sm w-auto">
-            <option>Version: 1.2</option>
-          </select>
-          <button className="btn btn-light btn-sm">Validate</button>
-          <button className="btn btn-light btn-sm">Fit</button>
-          <button className="btn btn-success btn-sm">Deploy</button>
-        </div>
-      </div> */}
-
-      {/* Main Content */}
       <div className="d-flex flex-grow-1">
         {/* Left Sidebar */}
         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
-          <h6 className="text-muted">Process Modeller</h6>
+          {/* <h6 className="text-muted">Process Modeller</h6> */}
 
           <div className="mb-4">
-            <div className="fw-bold mb-2">BPMN Elements</div>
+            <div className="fw-bold mb-2">Process Modeller</div>
             <div className="d-flex flex-wrap gap-2">
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent')}>Start</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent')}>End</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task')}>Task</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway')}>Gateway</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:SubProcess')}>Sub-process</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent', 'Start')}>Start</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent', 'End')}>End</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task', 'Task')}>Task</button>
+              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway', 'Gateway')}>Gateway</button>
+              {/* <button className="btn btn-outline-secondary btn-sm">Sub-process</button> */}
             </div>
           </div>
 
           <div className="mb-4">
             <div className="fw-bold mb-2">App Connectors</div>
             <div className="d-flex flex-wrap gap-2">
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:ServiceTask')}>REST</button>
-              <button className="btn btn-outline-primary btn-sm">FTP</button>
-              <button className="btn btn-outline-primary btn-sm">SAP</button>
-              <button className="btn btn-outline-primary btn-sm">Salesforce</button>
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'REST')}>REST</button>
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'FTP')}>FTP</button>
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'SAP')}>SAP</button>
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'Salesforce')}>Salesforce</button>
+              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:DataStoreReference', 'Database')}>Database</button>
             </div>
           </div>
 
@@ -339,7 +503,6 @@ const CreateIntegration = () => {
         </div>
 
         {/* BPMN Canvas */}
-
         <div className="flex-grow-1 position-relative" ref={canvasRef} />
 
         {/* Properties Panel */}
@@ -354,4 +517,172 @@ const CreateIntegration = () => {
 };
 
 export default CreateIntegration;
+
+// import React, { useEffect, useRef } from 'react';
+// import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
+// import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+// import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
+
+// import 'bpmn-js/dist/assets/diagram-js.css';
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+// import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+
+// const CreateIntegration = () => {
+//   const canvasRef = useRef(null);
+//   const panelRef = useRef(null);
+//   const modelerRef = useRef(null);
+
+//   useEffect(() => {
+//     // ✅ Inline Custom Properties Provider
+//     function CustomPropertiesProvider(propertiesPanel) {
+//       console.log('✅ CustomPropertiesProvider initialized');
+//       propertiesPanel.registerProvider(500, this);
+//     }
+
+//     CustomPropertiesProvider.$inject = ['propertiesPanel'];
+
+//     CustomPropertiesProvider.prototype.getGroups = function (element) {
+//       console.log('🧩 getGroups called for:', element);
+
+//       return function (groups) {
+//         const generalGroup = groups.find(group => group.id === 'general');
+//         if (generalGroup) {
+//           const bo = element.businessObject;
+//           console.log('👀 connectorType =', bo.connectorType);
+//           if (bo && bo.connectorType === 'REST') {
+//             console.log('✅ Injecting REST props...');
+//             generalGroup.entries.push(
+//               entryFactory.textField({
+//                 id: 'restUrl',
+//                 label: 'REST URL',
+//                 modelProperty: 'restUrl',
+//               }),
+//               entryFactory.selectBox({
+//                 id: 'restMethod',
+//                 label: 'HTTP Method',
+//                 modelProperty: 'restMethod',
+//                 selectOptions: [
+//                   { name: 'GET', value: 'GET' },
+//                   { name: 'POST', value: 'POST' },
+//                   { name: 'PUT', value: 'PUT' },
+//                   { name: 'DELETE', value: 'DELETE' },
+//                 ],
+//               })
+//             );
+//           }
+//         }
+//         return groups;
+//       };
+//     };
+
+//     const modeler = new BpmnJS({
+//       container: canvasRef.current,
+//       propertiesPanel: {
+//         parent: panelRef.current,
+//       },
+//       additionalModules: [
+//         require('bpmn-js-properties-panel'),
+//         require('bpmn-js-properties-panel/lib/provider/camunda'),
+//         {
+//           __init__: ['customPropertiesProvider'],
+//           customPropertiesProvider: ['type', CustomPropertiesProvider],
+//         },
+//       ],
+//       moddleExtensions: {
+//         camunda: camundaModdleDescriptor,
+//       },
+//     });
+
+//     modelerRef.current = modeler;
+
+//     const xml = `<?xml version="1.0" encoding="UTF-8"?>
+//       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+//         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+//         xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+//         xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+//         id="Definitions_1"
+//         targetNamespace="http://bpmn.io/schema/bpmn">
+//         <bpmn:process id="Process_1" isExecutable="true" />
+//         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+//           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+//         </bpmndi:BPMNDiagram>
+//       </bpmn:definitions>`;
+
+//     modeler.importXML(xml).catch(console.error);
+
+//     return () => {
+//       modeler.destroy();
+//     };
+//   }, []);
+
+//   const createElement = async (type, label = '', customProps = {}) => {
+//     const modeler = modelerRef.current;
+//     const elementFactory = modeler.get('elementFactory');
+//     const modeling = modeler.get('modeling');
+//     const canvas = modeler.get('canvas');
+//     const selection = modeler.get('selection');
+//     const moddle = modeler.get('moddle');
+
+//     const rootElement = canvas.getRootElement();
+//     const idSuffix = Date.now();
+
+//     const businessObject = moddle.create(type, {
+//       id: `${type.replace(':', '_')}_${idSuffix}`,
+//       name: label,
+//     });
+
+//     // ✅ Set custom properties
+//     Object.entries(customProps).forEach(([key, value]) => {
+//       businessObject[key] = value;
+//     });
+
+//     const shape = elementFactory.createShape({
+//       type,
+//       businessObject,
+//     });
+
+//     const x = Math.floor(Math.random() * 400 + 100);
+//     const y = Math.floor(Math.random() * 300 + 100);
+
+//     modeling.createShape(shape, { x, y }, rootElement);
+//     selection.select(shape);
+
+//     console.log('Final BusinessObject:', businessObject);
+//   };
+
+//   return (
+//     <div className="d-flex flex-column vh-100">
+//       <div className="d-flex flex-grow-1">
+//         {/* Left Sidebar */}
+//         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
+//           <h6 className="text-muted">App Connectors</h6>
+//           <button
+//             className="btn btn-outline-primary btn-sm"
+//             onClick={() => createElement('bpmn:Task', 'REST', { connectorType: 'REST' })}
+//           >
+//             REST
+//           </button>
+//         </div>
+
+//         {/* BPMN Canvas */}
+//         <div className="flex-grow-1 position-relative" ref={canvasRef} />
+
+//         {/* Properties Panel */}
+//         <div
+//           ref={panelRef}
+//           className="bg-white border-start p-3"
+//           style={{ width: '300px', overflowY: 'auto' }}
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CreateIntegration;
+
+
+
+
+
 

@@ -39,17 +39,17 @@ function App() {
 
         {/* home layout */}
         <Route element={<FirstLayout />}>
-          <Route path={ROUTES?.DASHBOARD} element={<ProtectedRoutes component={<Dashboard />} />} />
-          <Route path={ROUTES?.MONITORDASHBOARD} element={<ProtectedRoutes component={<MonitorDashboard />} />} />
+          <Route path={ROUTES?.DASHBOARD} element={<ProtectedRoutes component={<Dashboard />} moduleCode="dashboard" />} />
+          <Route path={ROUTES?.MONITORDASHBOARD} element={<ProtectedRoutes component={<MonitorDashboard />} moduleCode='monitor-dashboard' />} />
           {/* <Route element={<ProtectedRoutes component={<Dashboard />} />} /> */}
-          <Route path={ROUTES?.CREATEINT} element={<ProtectedRoutes component={<CreateIntegration />} />} />
-          <Route path={ROUTES?.CONNECTORES} element={<ProtectedRoutes component={<Connectors />} />} />
-          <Route path={ROUTES?.QUEUE} element={<ProtectedRoutes component={<QueueManagement />} />} />
-          <Route path={ROUTES?.MESSAGETRACKER} element={<ProtectedRoutes component={<MessageTracker />} />} />
-          <Route path={ROUTES?.PASSWORDPOLICY} element={<ProtectedRoutes component={<PasswordPolicy />} />} />
-          <Route path={ROUTES?.AUDITLOG} element={<ProtectedRoutes component={<AuditLog />} />} />
-          <Route path={ROUTES?.ROLE} element={<ProtectedRoutes component={<Role />} />} />
-          <Route path={ROUTES?.STAFF} element={<ProtectedRoutes component={<Staff />} />} />
+          <Route path={ROUTES?.CREATEINT} element={<ProtectedRoutes component={<CreateIntegration />} moduleCode='create-integration' />} />
+          <Route path={ROUTES?.CONNECTORES} element={<ProtectedRoutes component={<Connectors />} moduleCode='connector-manager' />} />
+          <Route path={ROUTES?.QUEUE} element={<ProtectedRoutes component={<QueueManagement />} moduleCode='queues' />} />
+          <Route path={ROUTES?.MESSAGETRACKER} element={<ProtectedRoutes component={<MessageTracker />} moduleCode='message-tracker' />} />
+          <Route path={ROUTES?.PASSWORDPOLICY} element={<ProtectedRoutes component={<PasswordPolicy />} moduleCode='password-policy' />} />
+          <Route path={ROUTES?.AUDITLOG} element={<ProtectedRoutes component={<AuditLog />} moduleCode='audit-log' />} />
+          <Route path={ROUTES?.ROLE} element={<ProtectedRoutes component={<Role />} moduleCode='role' />} />
+          <Route path={ROUTES?.STAFF} element={<ProtectedRoutes component={<Staff />} moduleCode='staff' />} />
           <Route path={ROUTES?.ADDSTAFF} element={<ProtectedRoutes component={<AddStaff />} />} />
           <Route path={ROUTES?.ADDROLE} element={<ProtectedRoutes component={<AddRole />} />} />
         </Route>

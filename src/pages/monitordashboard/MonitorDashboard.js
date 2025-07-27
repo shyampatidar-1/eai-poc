@@ -134,17 +134,17 @@ export default function MonitorDashboard() {
 
   const data = [
     { service: 'Customer API', error: 'HTTP 500 Internal Server Error', time: '1 min ago' },
-    { service: 'Order Processor', error: 'No matching rule found', time: '1 min ago' },
-    { service: 'Order Processor', error: 'Timeout connecting to DB', time: '2 min ago' },
-    { service: 'Payment Service', error: 'Accessing SQL routing error', time: '2 min ago' },
-    { service: 'Payment Service', error: 'Demolitter message turmindn', time: '2 min ago' },
+    { service: 'Order Processor', error: 'No matching rule found', time: '15 min ago' },
+    { service: 'Order Processor', error: 'Timeout connecting to DB', time: '3 hr ago' },
+    { service: 'Payment Service', error: 'Accessing SQL routing error', time: '2 day ago' },
+    { service: 'Payment Service', error: 'Demolitter message turmindn', time: '5 day ago' },
   ];
 
   return (
     <div className=" main_datatable" >
       <h5 className="mb-3 fs-3 fw-600">Monitoring Dashboard</h5>
       <div className="row g-3">
-        <div className="col-12 col-lg-8 d-flex flex-column gap-3">
+        <div className="col-12 col-lg-12 d-flex flex-column gap-3">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h5 className="mb-3 text-secondary">Process Health</h5>
             <div className="row g-3">
@@ -191,95 +191,6 @@ export default function MonitorDashboard() {
           </div>
         </div>
 
-        <div className="col-12 col-lg-4 d-flex flex-column gap-3">
-          {/* <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '300px' }}>
-            <h6 className="text-secondary mb-2">Uptime</h6>
-            <h3 className="fw-bold text-primary mb-3">99.9%</h3>
-            <div style={{ height: '100%' }}>
-              <Line data={lineData} options={{ responsive: true, maintainAspectRatio: false, elements: { line: { tension: 0.4, borderWidth: 2 }, point: { radius: 0 } }, plugins: { legend: { display: false }, tooltip: { enabled: true, backgroundColor: '#3B82F6', titleColor: '#fff', bodyColor: '#fff' } }, scales: { x: { grid: { display: false }, ticks: { color: '#9CA3AF' } }, y: { grid: { display: false }, ticks: { display: false } } }, layout: { padding: { top: 10, right: 10, bottom: 0, left: 0 } } }} />
-            </div>
-          </div> */}
-
-          <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '300px' }}>
-            <h6 className="text-secondary mb-2">Uptime</h6>
-            <h3 className="fw-bold text-primary mb-3">99.9%</h3>
-
-            {/* 👇 Set a fixed height for the chart container */}
-            <div style={{ height: '200px' }}>
-              <Line
-                data={lineData}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  elements: {
-                    line: { tension: 0.4, borderWidth: 2 },
-                    point: { radius: 0 },
-                  },
-                  plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                      enabled: true,
-                      backgroundColor: '#3B82F6',
-                      titleColor: '#fff',
-                      bodyColor: '#fff',
-                    },
-                  },
-                  scales: {
-                    x: {
-                      grid: { display: false },
-                      ticks: { color: '#9CA3AF' },
-                    },
-                    y: {
-                      grid: { display: false },
-                      ticks: { display: false },
-                    },
-                  },
-                  layout: {
-                    padding: { top: 10, right: 10, bottom: 0, left: 0 },
-                  },
-                }}
-              />
-            </div>
-          </div>
-
-
-
-          {/* <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-2">Alert 1ms</h6>
-            <div className="d-flex justify-content-between align-items-center">
-              <button className="btn btn-sm btn-primary">Mark as Resolved</button>
-              <button className="btn btn-sm btn-outline-secondary">Mute</button>
-            </div>
-          </div> */}
-
-          {/* <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-3">Load Distribution</h6>
-            <div className="d-flex justify-content-between border-bottom py-2">
-              <span>US-East</span><span className="text-warning">Warning</span><span className="text-danger">Error</span>
-            </div>
-            <div className="d-flex justify-content-between border-bottom py-2">
-              <span>Info</span><span className="text-success">▲ 4</span><span>1 min ago</span>
-            </div>
-            <div className="d-flex justify-content-between border-bottom py-2">
-              <span>Warning</span><span className="text-danger">Error</span><span>1 min ago</span>
-            </div>
-            <div className="d-flex justify-content-between border-bottom py-2">
-              <span>Error</span><span className="text-success">▲ 4</span><span>1 min ago</span>
-            </div>
-          </div> */}
-        </div>
-
-        {/* <div className="col-12">
-          <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '350px' }}>
-            <h6 className="text-secondary mb-3">Load Distribution</h6>
-            <Line data={lineChartData} options={options} />
-            <div className="mt-2 text-muted small d-flex justify-content-center gap-3">
-              <span><span className="me-1" style={{ color: '#36A2EB' }}>●</span>US-East</span>
-              <span><span className="me-1" style={{ color: '#FF6384' }}>●</span>US-West</span>
-              <span><span className="me-1" style={{ color: '#4BC0C0' }}>●</span>EU-Central</span>
-            </div>
-          </div>
-        </div> */}
         <div className="col-12">
           <div className="bg-white p-3 rounded-4 shadow-sm" style={{ height: '360px' }}>
             <h6 className="text-secondary mb-3">Load Distribution</h6>
@@ -288,12 +199,6 @@ export default function MonitorDashboard() {
             <div style={{ height: '300px' }}>
               <Line data={lineChartData} options={options} />
             </div>
-
-            {/* <div className="mt-2 text-muted small d-flex justify-content-center gap-3">
-              <span><span className="me-1" style={{ color: '#36A2EB' }}>●</span>FTP</span>
-              <span><span className="me-1" style={{ color: '#FF6384' }}>●</span>ORACLE</span>
-              <span><span className="me-1" style={{ color: '#4BC0C0' }}>●</span>JMS</span>
-            </div> */}
           </div>
         </div>
 
