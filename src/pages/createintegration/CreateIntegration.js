@@ -1,200 +1,3 @@
-// const CreateIntegration = () => {
-//   return (
-//     <div>
-//       {/* Header */}
-//       <div className="header-bar">
-//         <h5 className="mb-0">Enterprise AA/Integration</h5>
-//         <div>
-//           <button className="btn btn-outline-light btn-sm me-1">Validate</button>
-//           <button className="btn btn-outline-light btn-sm me-1">Version: 1</button>
-//           <button className="btn btn-outline-light btn-sm me-1">Fit</button>
-//           <button className="btn btn-outline-light btn-sm">Deploy</button>
-//         </div>
-//       </div>
-
-//       <div className="d-flex">
-//         {/* Sidebar */}
-//         <div className="content col-md-2">
-//           <h6>Process Modeller</h6>
-//           <div className="mb-3">
-//             <div><strong>BPMN Elements</strong></div>
-//             {['Start', 'End Event', 'Task', 'Timer', 'Message', 'Gateway', 'Sub-process'].map(btn => (
-//               <button key={btn} className="btn btn-light btn-sm">{btn}</button>
-//             ))}
-//           </div>
-
-//           <div className="mb-3">
-//             <div><strong>Application Connectors</strong></div>
-//             {['Oracle', 'SAP', 'Salesforce', 'REST', 'FTP'].map(btn => (
-//               <button key={btn} className="btn btn-light btn-sm">{btn}</button>
-//             ))}
-//           </div>
-
-//           <div>
-//             <div><strong>Data Enrichers</strong></div>
-//             {['Data Mapper', 'Script', 'Transformer'].map(btn => (
-//               <button key={btn} className="btn btn-light btn-sm">{btn}</button>
-//             ))}
-//           </div>
-//         </div>
-
-//         {/* Main Content */}
-//         <div className="col-md-7 mt-4">
-//           <h5 className="mb-3 ms-3">Order Fulfillment</h5>
-
-//           <div className="flow-row">
-//             <div className="step-box">Start</div>
-//             <div className="arrow-right"></div>
-//             <div className="step-box">Process Order</div>
-//             <div className="arrow-right"></div>
-//             <div className="step-box gateway">Gateway</div>
-//           </div>
-
-//           <div className="row mt-3">
-//             <div className="col-6 d-flex justify-content-center">
-//               <div className="column-flow">
-//                 <div className="vertical-line"></div>
-//                 <div className="step-box text-warning border-warning">⏱ 2 hours</div>
-//               </div>
-//             </div>
-//             <div className="col-6 d-flex justify-content-center">
-//               <div className="column-flow">
-//                 <div className="vertical-line"></div>
-//                 <div className="step-box">Query uvenow</div>
-//                 <div className="arrow-down"></div>
-//                 <div className="step-box">REST</div>
-//                 <div className="arrow-down"></div>
-//                 <div className="step-box">Update Order</div>
-//                 <div className="arrow-down"></div>
-//                 <div className="step-box end">End</div>
-//               </div>
-//             </div>
-//           </div>
-
-//           <div className="warning-box">⚠️ Warning: 1</div>
-//         </div>
-
-//         {/* Right Panel */}
-//         <div className="properties-panel col-md-3">
-//           <div className="  col-md-11 m-auto">
-//             <h5>Properties</h5>
-//             <label className="form-label">Name</label>
-//             <input className="form-control" defaultValue="Query Inventory" />
-
-//             <label className="form-label">Description</label>
-//             <input className="form-control" defaultValue="Query Inventory status" />
-
-//             <label className="form-label">Retry Count</label>
-//             <input type="number" className="form-control" defaultValue="3" />
-
-//             <label className="form-label">Retry Interval (sec)</label>
-//             <input type="number" className="form-control" defaultValue="60" />
-
-//             <div className="form-check mt-2">
-//               <input className="form-check-input" type="checkbox" defaultChecked />
-//               <label className="form-check-label">Retry On Failure</label>
-//             </div>
-
-//             <label className="form-label">Timeout (sec)</label>
-//             <input type="number" className="form-control" defaultValue="120" />
-
-//             <label className="form-label">Headers</label>
-//             <input type="text" className="form-control mb-1" placeholder="API Key" defaultValue="{{apiToken}}" />
-
-//             <label className="form-label">Output Mapping</label>
-//             <input type="text" className="form-control" placeholder="Map output here" />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default CreateIntegration;
-
-// import React, { useEffect, useRef } from 'react';
-// import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
-// import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
-
-// import 'bpmn-js/dist/assets/diagram-js.css';
-// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
-// import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
-
-
-// const CreateIntegration = () => {
-//   const canvasRef = useRef(null);
-//   const panelRef = useRef(null);
-
-//   useEffect(() => {
-//     const modeler = new BpmnJS({
-//       container: canvasRef.current,
-//       propertiesPanel: {
-//         parent: panelRef.current,
-//       },
-
-
-//       additionalModules: [
-//         require('bpmn-js-properties-panel'),
-//         require('bpmn-js-properties-panel/lib/provider/camunda'),
-//       ],
-
-//       moddleExtensions: {
-//         camunda: camundaModdleDescriptor,
-//       },
-//     });
-
-// //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-// // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-// //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-// //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-// //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-// //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-// //   id="Definitions_1"
-// //   targetNamespace="http://bpmn.io/schema/bpmn">
-// //   <bpmn:process id="Process_1" isExecutable="true">
-// //     <bpmn:startEvent id="StartEvent_1"/>
-// //   </bpmn:process>
-// //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-// //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-// //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-// //         <dc:Bounds x="100" y="100" width="36" height="36"/>
-// //       </bpmndi:BPMNShape>
-// //     </bpmndi:BPMNPlane>
-// //   </bpmndi:BPMNDiagram>
-// // </bpmn:definitions>`;
-//  const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
-//       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-//         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-//         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-//         xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-//         xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-//         id="Definitions_1"
-//         targetNamespace="http://bpmn.io/schema/bpmn">
-
-//         <bpmn:process id="Process_1" isExecutable="true" />
-
-//         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-//           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
-//         </bpmndi:BPMNDiagram>
-//       </bpmn:definitions>`
-//     modeler.importXML(xml).catch(console.error);
-
-//     return () => {
-//       modeler.destroy();
-//     };
-//   }, []);
-
-//   return (
-//     <div style={{ display: 'flex', height: '100vh' }}>
-//       <div ref={canvasRef} style={{ flex: 1 }} />
-//       <div ref={panelRef} style={{ width: '300px', borderLeft: '1px solid #ccc' }} />
-//     </div>
-//   );
-// };
-
-
-// export default CreateIntegration
-
 
 
 // import React, { useEffect, useRef } from 'react';
@@ -227,26 +30,7 @@
 
 //     modelerRef.current = modeler;
 
-//     //     const xml = `<?xml version="1.0" encoding="UTF-8"?>
-//     // <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-//     //   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-//     //   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-//     //   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-//     //   xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-//     //   id="Definitions_1"
-//     //   targetNamespace="http://bpmn.io/schema/bpmn">
-//     //   <bpmn:process id="Process_1" isExecutable="true">
-//     //     <bpmn:startEvent id="StartEvent_1"/>
-//     //   </bpmn:process>
-//     //   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-//     //     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-//     //       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-//     //         <dc:Bounds x="100" y="100" width="36" height="36"/>
-//     //       </bpmndi:BPMNShape>
-//     //     </bpmndi:BPMNPlane>
-//     //   </bpmndi:BPMNDiagram>
-//     // </bpmn:definitions>`;
-//     const xml = `<? xml version = "1.0" encoding = "UTF-8" ?>
+//     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 //       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 //         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
 //         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
@@ -260,7 +44,7 @@
 //         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
 //           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
 //         </bpmndi:BPMNDiagram>
-//       </bpmn:definitions>`
+//       </bpmn:definitions>`;
 
 //     modeler.importXML(xml).catch(console.error);
 
@@ -269,7 +53,8 @@
 //     };
 //   }, []);
 
-//   const createElement = async (type) => {
+
+//   const createElement = async (type, label = '') => {
 //     const modeler = modelerRef.current;
 //     const elementFactory = modeler.get('elementFactory');
 //     const modeling = modeler.get('modeling');
@@ -279,52 +64,44 @@
 
 //     const shape = elementFactory.createShape({ type });
 
-//     // Create random position to avoid overlapping
 //     const x = Math.floor(Math.random() * 400 + 100);
 //     const y = Math.floor(Math.random() * 300 + 100);
 
 //     modeling.createShape(shape, { x, y }, rootElement);
+
+//     if (label) {
+//       setTimeout(() => {
+//         modeling.updateLabel(shape, label);
+//       }, 0);
+//     }
 //   };
 
 //   return (
 //     <div className="d-flex flex-column vh-100">
-//       {/* Top Bar */}
-//       {/* <div className="d-flex justify-content-between align-items-center px-4 py-2 bg-primary text-white">
-//         <div className="fw-bold">Enterprise AA/Integration</div>
-//         <div className="d-flex align-items-center gap-3">
-//           <select className="form-select form-select-sm w-auto">
-//             <option>Version: 1.2</option>
-//           </select>
-//           <button className="btn btn-light btn-sm">Validate</button>
-//           <button className="btn btn-light btn-sm">Fit</button>
-//           <button className="btn btn-success btn-sm">Deploy</button>
-//         </div>
-//       </div> */}
-
-//       {/* Main Content */}
 //       <div className="d-flex flex-grow-1">
 //         {/* Left Sidebar */}
 //         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
-//           <h6 className="text-muted">Process Modeller</h6>
+//           {/* <h6 className="text-muted">Process Modeller</h6> */}
 
 //           <div className="mb-4">
-//             <div className="fw-bold mb-2">BPMN Elements</div>
+//             <div className="fw-bold mb-2">Process Modeller</div>
 //             <div className="d-flex flex-wrap gap-2">
-//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent')}>Start</button>
-//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent')}>End</button>
-//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task')}>Task</button>
-//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway')}>Gateway</button>
-//               <button className="btn btn-outline-secondary btn-sm" >Sub-process</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent', 'Start')}>Start</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent', 'End')}>End</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task', 'Task')}>Task</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway', 'Gateway')}>Gateway</button>
+//               {/* <button className="btn btn-outline-secondary btn-sm">Sub-process</button> */}
 //             </div>
 //           </div>
 
 //           <div className="mb-4">
 //             <div className="fw-bold mb-2">App Connectors</div>
 //             <div className="d-flex flex-wrap gap-2">
-//               <button className="btn btn-outline-primary btn-sm" >REST</button>
-//               <button className="btn btn-outline-primary btn-sm">FTP</button>
-//               <button className="btn btn-outline-primary btn-sm">SAP</button>
-//               <button className="btn btn-outline-primary btn-sm">Salesforce</button>
+//               <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'REST')}>REST</button>
+//               <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'FTP')}>FTP</button>
+//               <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'SAP')}>SAP</button>
+//               <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'Salesforce')}>Salesforce</button>
+//               <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:DataStoreReference', 'Database')}>Database</button>
 //             </div>
 //           </div>
 
@@ -339,15 +116,14 @@
 //         </div>
 
 //         {/* BPMN Canvas */}
-
 //         <div className="flex-grow-1 position-relative" ref={canvasRef} />
 
 //         {/* Properties Panel */}
-//         <div
+//         {/* <div
 //           ref={panelRef}
 //           className="bg-white border-start p-3"
 //           style={{ width: '300px', overflowY: 'auto' }}
-//         />
+//         /> */}
 //       </div>
 //     </div>
 //   );
@@ -355,177 +131,18 @@
 
 // export default CreateIntegration;
 
-
-import React, { useEffect, useRef } from 'react';
-import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
-import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
-
-import 'bpmn-js/dist/assets/diagram-js.css';
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
-import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
-
-const CreateIntegration = () => {
-  const canvasRef = useRef(null);
-  const panelRef = useRef(null);
-  const modelerRef = useRef(null);
-
-  useEffect(() => {
-    const modeler = new BpmnJS({
-      container: canvasRef.current,
-      propertiesPanel: {
-        parent: panelRef.current,
-      },
-      additionalModules: [
-        require('bpmn-js-properties-panel'),
-        require('bpmn-js-properties-panel/lib/provider/camunda'),
-      ],
-      moddleExtensions: {
-        camunda: camundaModdleDescriptor,
-      },
-    });
-
-    modelerRef.current = modeler;
-
-    const xml = `<?xml version="1.0" encoding="UTF-8"?>
-      <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-        xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-        xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-        id="Definitions_1"
-        targetNamespace="http://bpmn.io/schema/bpmn">
-
-        <bpmn:process id="Process_1" isExecutable="true" />
-
-        <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-          <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
-        </bpmndi:BPMNDiagram>
-      </bpmn:definitions>`;
-
-    modeler.importXML(xml).catch(console.error);
-
-    return () => {
-      modeler.destroy();
-    };
-  }, []);
-
-  // const createElement = async (type) => {
-  //   const modeler = modelerRef.current;
-  //   const elementFactory = modeler.get('elementFactory');
-  //   const modeling = modeler.get('modeling');
-  //   const canvas = modeler.get('canvas');
-
-  //   const rootElement = canvas.getRootElement();
-
-  //   // Create a shape of the given BPMN type
-  //   const shape = elementFactory.createShape({ type });
-
-  //   // Random position to avoid overlap
-  //   const x = Math.floor(Math.random() * 400 + 100);
-  //   const y = Math.floor(Math.random() * 300 + 100);
-
-  //   // Add shape to the diagram
-  //   modeling.createShape(shape, { x, y }, rootElement);
-
-  //   // Set default label based on type
-  //   let label = '';
-  //   if (type === 'bpmn:StartEvent') label = 'Start';
-  //   else if (type === 'bpmn:EndEvent') label = 'End';
-  //   else if (type === 'bpmn:Task') label = 'Task';
-  //   else if (type === 'bpmn:ExclusiveGateway') label = 'Gateway';
-
-  //   if (label) {
-  //     setTimeout(() => {
-  //       modeling.updateLabel(shape, label);
-  //     }, 0);
-  //   }
-  // };
-
-  const createElement = async (type, label = '') => {
-    const modeler = modelerRef.current;
-    const elementFactory = modeler.get('elementFactory');
-    const modeling = modeler.get('modeling');
-    const canvas = modeler.get('canvas');
-
-    const rootElement = canvas.getRootElement();
-
-    const shape = elementFactory.createShape({ type });
-
-    const x = Math.floor(Math.random() * 400 + 100);
-    const y = Math.floor(Math.random() * 300 + 100);
-
-    modeling.createShape(shape, { x, y }, rootElement);
-
-    if (label) {
-      setTimeout(() => {
-        modeling.updateLabel(shape, label);
-      }, 0);
-    }
-  };
-
-  return (
-    <div className="d-flex flex-column vh-100">
-      <div className="d-flex flex-grow-1">
-        {/* Left Sidebar */}
-        <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
-          {/* <h6 className="text-muted">Process Modeller</h6> */}
-
-          <div className="mb-4">
-            <div className="fw-bold mb-2">Process Modeller</div>
-            <div className="d-flex flex-wrap gap-2">
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent', 'Start')}>Start</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent', 'End')}>End</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task', 'Task')}>Task</button>
-              <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway', 'Gateway')}>Gateway</button>
-              {/* <button className="btn btn-outline-secondary btn-sm">Sub-process</button> */}
-            </div>
-          </div>
-
-          <div className="mb-4">
-            <div className="fw-bold mb-2">App Connectors</div>
-            <div className="d-flex flex-wrap gap-2">
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'REST')}>REST</button>
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'FTP')}>FTP</button>
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'SAP')}>SAP</button>
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'Salesforce')}>Salesforce</button>
-              <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:DataStoreReference', 'Database')}>Database</button>
-            </div>
-          </div>
-
-          <div>
-            <div className="fw-bold mb-2">Data Enrichers</div>
-            <div className="d-flex flex-wrap gap-2">
-              <button className="btn btn-outline-warning btn-sm">Script</button>
-              <button className="btn btn-outline-warning btn-sm">Mapper</button>
-              <button className="btn btn-outline-warning btn-sm">Transformer</button>
-            </div>
-          </div>
-        </div>
-
-        {/* BPMN Canvas */}
-        <div className="flex-grow-1 position-relative" ref={canvasRef} />
-
-        {/* Properties Panel */}
-        <div
-          ref={panelRef}
-          className="bg-white border-start p-3"
-          style={{ width: '300px', overflowY: 'auto' }}
-        />
-      </div>
-    </div>
-  );
-};
-
-export default CreateIntegration;
+// last code in this file for properties panel
 
 // import React, { useEffect, useRef } from 'react';
 // import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
 // import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
-// import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 
 // import 'bpmn-js/dist/assets/diagram-js.css';
 // import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
 // import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+// import CustomPropertiesProvider from './CustomPropertiesProvider';
+
+
 
 // const CreateIntegration = () => {
 //   const canvasRef = useRef(null);
@@ -533,48 +150,6 @@ export default CreateIntegration;
 //   const modelerRef = useRef(null);
 
 //   useEffect(() => {
-//     // ✅ Inline Custom Properties Provider
-//     function CustomPropertiesProvider(propertiesPanel) {
-//       console.log('✅ CustomPropertiesProvider initialized');
-//       propertiesPanel.registerProvider(500, this);
-//     }
-
-//     CustomPropertiesProvider.$inject = ['propertiesPanel'];
-
-//     CustomPropertiesProvider.prototype.getGroups = function (element) {
-//       console.log('🧩 getGroups called for:', element);
-
-//       return function (groups) {
-//         const generalGroup = groups.find(group => group.id === 'general');
-//         if (generalGroup) {
-//           const bo = element.businessObject;
-//           console.log('👀 connectorType =', bo.connectorType);
-//           if (bo && bo.connectorType === 'REST') {
-//             console.log('✅ Injecting REST props...');
-//             generalGroup.entries.push(
-//               entryFactory.textField({
-//                 id: 'restUrl',
-//                 label: 'REST URL',
-//                 modelProperty: 'restUrl',
-//               }),
-//               entryFactory.selectBox({
-//                 id: 'restMethod',
-//                 label: 'HTTP Method',
-//                 modelProperty: 'restMethod',
-//                 selectOptions: [
-//                   { name: 'GET', value: 'GET' },
-//                   { name: 'POST', value: 'POST' },
-//                   { name: 'PUT', value: 'PUT' },
-//                   { name: 'DELETE', value: 'DELETE' },
-//                 ],
-//               })
-//             );
-//           }
-//         }
-//         return groups;
-//       };
-//     };
-
 //     const modeler = new BpmnJS({
 //       container: canvasRef.current,
 //       propertiesPanel: {
@@ -584,9 +159,9 @@ export default CreateIntegration;
 //         require('bpmn-js-properties-panel'),
 //         require('bpmn-js-properties-panel/lib/provider/camunda'),
 //         {
-//           __init__: ['customPropertiesProvider'],
-//           customPropertiesProvider: ['type', CustomPropertiesProvider],
-//         },
+//           __init__: ['customProvider'],
+//           customProvider: ['type', CustomPropertiesProvider],
+//         }
 //       ],
 //       moddleExtensions: {
 //         camunda: camundaModdleDescriptor,
@@ -629,10 +204,9 @@ export default CreateIntegration;
 
 //     const businessObject = moddle.create(type, {
 //       id: `${type.replace(':', '_')}_${idSuffix}`,
-//       name: label,
+//       name: label
 //     });
 
-//     // ✅ Set custom properties
 //     Object.entries(customProps).forEach(([key, value]) => {
 //       businessObject[key] = value;
 //     });
@@ -647,14 +221,11 @@ export default CreateIntegration;
 
 //     modeling.createShape(shape, { x, y }, rootElement);
 //     selection.select(shape);
-
-//     console.log('Final BusinessObject:', businessObject);
 //   };
 
 //   return (
 //     <div className="d-flex flex-column vh-100">
 //       <div className="d-flex flex-grow-1">
-//         {/* Left Sidebar */}
 //         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
 //           <h6 className="text-muted">App Connectors</h6>
 //           <button
@@ -665,10 +236,8 @@ export default CreateIntegration;
 //           </button>
 //         </div>
 
-//         {/* BPMN Canvas */}
 //         <div className="flex-grow-1 position-relative" ref={canvasRef} />
 
-//         {/* Properties Panel */}
 //         <div
 //           ref={panelRef}
 //           className="bg-white border-start p-3"
@@ -686,3 +255,479 @@ export default CreateIntegration;
 
 
 
+// import React, { useEffect, useRef, useState } from 'react';
+// import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
+// import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+
+// import 'bpmn-js/dist/assets/diagram-js.css';
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+// import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+
+// const connectorDefaults = {
+//   REST: {
+//     connectorType: 'API',
+//     url: 'https://sap.example.com/employee/job',
+//     method: 'GET',
+//     headers: [{ key: 'Authorization', value: 'Bearer ---' }],
+//     authentication: 'None',
+//     retryPolicy: 'Disabled',
+//     timeout: 60000,
+//     inputMapping: '',
+//     outputMapping: '',
+//   },
+//   FTP: {
+//     connectorType: 'FTP',
+//     url: 'ftp://example.com/data',
+//     method: 'PUT',
+//     headers: [],
+//     authentication: 'Basic',
+//     retryPolicy: 'Retry Twice',
+//     timeout: 45000,
+//     inputMapping: '',
+//     outputMapping: '',
+//   },
+//   SAP: {
+//     connectorType: 'SAP',
+//     url: 'https://sap.example.com/api',
+//     method: 'POST',
+//     headers: [],
+//     authentication: 'OAuth',
+//     retryPolicy: 'Retry Once',
+//     timeout: 50000,
+//     inputMapping: '',
+//     outputMapping: '',
+//   },
+//   Salesforce: {
+//     connectorType: 'Salesforce',
+//     url: 'https://salesforce.com/api',
+//     method: 'POST',
+//     headers: [],
+//     authentication: 'OAuth',
+//     retryPolicy: 'Retry Twice',
+//     timeout: 50000,
+//     inputMapping: '',
+//     outputMapping: '',
+//   },
+//   Database: {
+//     connectorType: 'Database',
+//     url: 'jdbc:mysql://localhost:3306/mydb',
+//     method: 'Query',
+//     headers: [],
+//     authentication: 'None',
+//     retryPolicy: 'Disabled',
+//     timeout: 30000,
+//     inputMapping: '',
+//     outputMapping: '',
+//   }
+// };
+
+// const CreateIntegration = () => {
+//   const canvasRef = useRef(null);
+//   const modelerRef = useRef(null);
+
+//   const [selectedConnectorType, setSelectedConnectorType] = useState('');
+//   const [connectorConfig, setConnectorConfig] = useState(null);
+
+//   useEffect(() => {
+//     const modeler = new BpmnJS({
+//       container: canvasRef.current,
+//       additionalModules: [
+//         require('bpmn-js-properties-panel'),
+//         require('bpmn-js-properties-panel/lib/provider/camunda'),
+//       ],
+//       moddleExtensions: {
+//         camunda: camundaModdleDescriptor,
+//       },
+//     });
+
+//     modelerRef.current = modeler;
+
+//     const xml = `<?xml version="1.0" encoding="UTF-8"?>
+//       <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+//         xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+//         xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+//         xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+//         xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+//         id="Definitions_1"
+//         targetNamespace="http://bpmn.io/schema/bpmn">
+//         <bpmn:process id="Process_1" isExecutable="true" />
+//         <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+//           <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+//         </bpmndi:BPMNDiagram>
+//       </bpmn:definitions>`;
+
+//     modeler.importXML(xml).catch(console.error);
+
+//     return () => modeler.destroy();
+//   }, []);
+
+//   const createElement = async (type, label = '') => {
+//     const modeler = modelerRef.current;
+//     const elementFactory = modeler.get('elementFactory');
+//     const modeling = modeler.get('modeling');
+//     const canvas = modeler.get('canvas');
+//     const rootElement = canvas.getRootElement();
+
+//     const shape = elementFactory.createShape({ type });
+//     const x = Math.floor(Math.random() * 400 + 100);
+//     const y = Math.floor(Math.random() * 300 + 100);
+
+//     modeling.createShape(shape, { x, y }, rootElement);
+
+//     if (label) {
+//       setTimeout(() => modeling.updateLabel(shape, label), 0);
+//     }
+
+//     const defaultValues = connectorDefaults[label];
+//     if (defaultValues) {
+//       setSelectedConnectorType(label);
+//       setConnectorConfig({ ...defaultValues });
+//     } else {
+//       setSelectedConnectorType('');
+//       setConnectorConfig(null);
+//     }
+//   };
+
+//   const handleInputChange = (field, value) => {
+//     setConnectorConfig((prev) => ({
+//       ...prev,
+//       [field]: value
+//     }));
+//   };
+
+//   return (
+//     <div className="d-flex flex-column vh-100">
+//       <div className="d-flex flex-grow-1">
+//         {/* Sidebar */}
+//         <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
+//           <div className="mb-4">
+//             <div className="fw-bold mb-2">Process Modeller</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent', 'Start')}>Start</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent', 'End')}>End</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task', 'Task')}>Task</button>
+//               <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway', 'Gateway')}>Gateway</button>
+//             </div>
+//           </div>
+
+//           <div className="mb-4">
+//             <div className="fw-bold mb-2">App Connectors</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               {['REST', 'FTP', 'SAP', 'Salesforce', 'Database'].map((type) => (
+//                 <button key={type} className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', type)}>{type}</button>
+//               ))}
+//             </div>
+//           </div>
+
+//           <div>
+//             <div className="fw-bold mb-2">Data Enrichers</div>
+//             <div className="d-flex flex-wrap gap-2">
+//               <button className="btn btn-outline-warning btn-sm">Script</button>
+//               <button className="btn btn-outline-warning btn-sm">Mapper</button>
+//               <button className="btn btn-outline-warning btn-sm">Transformer</button>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Canvas */}
+//         <div className="flex-grow-1 position-relative" ref={canvasRef} />
+
+//         {/* Editable Right Panel */}
+//         {connectorConfig && (
+//           <div className="bg-white border-start p-3" style={{ width: '320px', overflowY: 'auto' }}>
+//             <h6 className="fw-bold mb-3">Properties – {selectedConnectorType}</h6>
+
+//             {Object.entries(connectorConfig).map(([key, val]) => (
+//               key !== 'headers' ? (
+//                 <div className="mb-2" key={key}>
+//                   <label className="form-label text-capitalize">{key.replace(/([A-Z])/g, ' $1')}</label>
+//                   <input
+//                     type="text"
+//                     className="form-control form-control-sm"
+//                     value={val}
+//                     onChange={(e) => handleInputChange(key, e.target.value)}
+//                   />
+//                 </div>
+//               ) : (
+//                 <div className="mb-2" key="headers">
+//                   <label className="form-label">Headers</label>
+//                   {val.length === 0 && <div className="text-muted small">No headers</div>}
+//                   {val.map((h, i) => (
+//                     <div className="d-flex gap-1 mb-1" key={i}>
+//                       <input
+//                         type="text"
+//                         className="form-control form-control-sm"
+//                         placeholder="Key"
+//                         value={h.key}
+//                         onChange={(e) => {
+//                           const updated = [...val];
+//                           updated[i].key = e.target.value;
+//                           handleInputChange('headers', updated);
+//                         }}
+//                       />
+//                       <input
+//                         type="text"
+//                         className="form-control form-control-sm"
+//                         placeholder="Value"
+//                         value={h.value}
+//                         onChange={(e) => {
+//                           const updated = [...val];
+//                           updated[i].value = e.target.value;
+//                           handleInputChange('headers', updated);
+//                         }}
+//                       />
+//                     </div>
+//                   ))}
+//                 </div>
+//               )
+//             ))}
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CreateIntegration;
+
+
+import React, { useEffect, useRef, useState } from 'react';
+import BpmnJS from 'bpmn-js/dist/bpmn-modeler.development';
+import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+
+import 'bpmn-js/dist/assets/diagram-js.css';
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css';
+
+// Default configuration per connector type
+const connectorDefaults = {
+  REST: {
+    connectorType: 'API',
+    url: 'https://sap.example.com/employee/job',
+    method: 'GET',
+    headers: [{ key: 'Authorization', value: 'Bearer ---' }],
+    authentication: 'None',
+    retryPolicy: 'Disabled',
+    timeout: 60000,
+    inputMapping: '',
+    outputMapping: '',
+  },
+  FTP: {
+    connectorType: 'FTP',
+    url: 'ftp://example.com/data',
+    method: 'PUT',
+    headers: [],
+    authentication: 'Basic',
+    retryPolicy: 'Retry Twice',
+    timeout: 45000,
+    inputMapping: '',
+    outputMapping: '',
+  },
+  SAP: {
+    connectorType: 'SAP',
+    url: 'https://sap.example.com/api',
+    method: 'POST',
+    headers: [],
+    authentication: 'OAuth',
+    retryPolicy: 'Retry Once',
+    timeout: 50000,
+    inputMapping: '',
+    outputMapping: '',
+  },
+  Salesforce: {
+    connectorType: 'Salesforce',
+    url: 'https://salesforce.com/api',
+    method: 'POST',
+    headers: [],
+    authentication: 'OAuth',
+    retryPolicy: 'Retry Twice',
+    timeout: 50000,
+    inputMapping: '',
+    outputMapping: '',
+  },
+  Database: {
+    connectorType: 'Database',
+    url: 'jdbc:mysql://localhost:3306/mydb',
+    method: 'Query',
+    headers: [],
+    authentication: 'None',
+    retryPolicy: 'Disabled',
+    timeout: 30000,
+    inputMapping: '',
+    outputMapping: '',
+  }
+};
+
+const CreateIntegration = () => {
+  const canvasRef = useRef(null);
+  const modelerRef = useRef(null);
+
+  const [selectedConnectorType, setSelectedConnectorType] = useState('');
+  const [connectorConfig, setConnectorConfig] = useState(null);
+
+  useEffect(() => {
+    const modeler = new BpmnJS({
+      container: canvasRef.current,
+      additionalModules: [
+        require('bpmn-js-properties-panel'),
+        require('bpmn-js-properties-panel/lib/provider/camunda'),
+      ],
+      moddleExtensions: {
+        camunda: camundaModdleDescriptor,
+      },
+    });
+
+    modelerRef.current = modeler;
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+      <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+        id="Definitions_1"
+        targetNamespace="http://bpmn.io/schema/bpmn">
+        <bpmn:process id="Process_1" isExecutable="true" />
+        <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+          <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1" />
+        </bpmndi:BPMNDiagram>
+      </bpmn:definitions>`;
+
+    modeler.importXML(xml).catch(console.error);
+
+    return () => modeler.destroy();
+  }, []);
+
+  const createElement = async (type, label = '') => {
+    const modeler = modelerRef.current;
+    const elementFactory = modeler.get('elementFactory');
+    const modeling = modeler.get('modeling');
+    const canvas = modeler.get('canvas');
+    const rootElement = canvas.getRootElement();
+
+    const shape = elementFactory.createShape({ type });
+    const x = Math.floor(Math.random() * 400 + 100);
+    const y = Math.floor(Math.random() * 300 + 100);
+
+    modeling.createShape(shape, { x, y }, rootElement);
+
+    if (label) {
+      setTimeout(() => modeling.updateLabel(shape, label), 0);
+    }
+
+    // Show custom config panel if matching connector
+    const defaultValues = connectorDefaults[label];
+    if (defaultValues) {
+      setSelectedConnectorType(label);
+      setConnectorConfig({ ...defaultValues });
+    } else {
+      setSelectedConnectorType('');
+      setConnectorConfig(null);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setConnectorConfig((prev) => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  return (
+    <div className=" main_datatable" >
+      {/* <h5 className="mb-3 fs-3 fw-600"> Create Integration</h5> */}
+      <div className="d-flex flex-column vh-100">
+        <div className="d-flex flex-grow-1">
+          {/* Sidebar */}
+          <div className="bg-light p-3 border-end" style={{ width: '250px' }}>
+            <div className="mb-4">
+              <div className="fw-bold mb-2">Process Modeller</div>
+              <div className="d-flex flex-wrap gap-2">
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:StartEvent', 'Start')}>Start</button>
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:EndEvent', 'End')}>End</button>
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:Task', 'Task')}>Task</button>
+                <button className="btn btn-outline-secondary btn-sm" onClick={() => createElement('bpmn:ExclusiveGateway', 'Gateway')}>Gateway</button>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="fw-bold mb-2">App Connectors</div>
+              <div className="d-flex flex-wrap gap-2">
+                <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'REST')}>REST</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'FTP')}>FTP</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'SAP')}>SAP</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:Task', 'Salesforce')}>Salesforce</button>
+                <button className="btn btn-outline-primary btn-sm" onClick={() => createElement('bpmn:DataStoreReference', 'Database')}>Database</button>
+              </div>
+            </div>
+
+            <div>
+              <div className="fw-bold mb-2">Data Enrichers</div>
+              <div className="d-flex flex-wrap gap-2">
+                <button className="btn btn-outline-warning btn-sm">Script</button>
+                <button className="btn btn-outline-warning btn-sm">Mapper</button>
+                <button className="btn btn-outline-warning btn-sm">Transformer</button>
+              </div>
+            </div>
+          </div>
+
+          {/* BPMN Canvas */}
+          <div className="flex-grow-1 position-relative" ref={canvasRef} />
+
+          {/* Right Properties Panel */}
+          {connectorConfig && (
+            <div className="bg-white border-start p-3" style={{ width: '320px', overflowY: 'auto' }}>
+              <h6 className="fw-bold mb-3">Properties – {selectedConnectorType}</h6>
+              {Object.entries(connectorConfig).map(([key, val]) => (
+                key !== 'headers' ? (
+                  <div className="mb-2" key={key}>
+                    <label className="form-label text-capitalize">{key.replace(/([A-Z])/g, ' $1')}</label>
+                    <input
+                      type="text"
+                      className="form-control form-control-sm"
+                      value={val}
+                      onChange={(e) => handleInputChange(key, e.target.value)}
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-2" key="headers">
+                    <label className="form-label">Headers</label>
+                    {val.length === 0 && <div className="text-muted small">No headers</div>}
+                    {val.map((h, i) => (
+                      <div className="d-flex gap-1 mb-1" key={i}>
+                        <input
+                          type="text"
+                          className="form-control form-control-sm"
+                          placeholder="Key"
+                          value={h.key}
+                          onChange={(e) => {
+                            const updated = [...val];
+                            updated[i].key = e.target.value;
+                            handleInputChange('headers', updated);
+                          }}
+                        />
+                        <input
+                          type="text"
+                          className="form-control form-control-sm"
+                          placeholder="Value"
+                          value={h.value}
+                          onChange={(e) => {
+                            const updated = [...val];
+                            updated[i].value = e.target.value;
+                            handleInputChange('headers', updated);
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateIntegration;

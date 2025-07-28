@@ -45,16 +45,15 @@ import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 
 export default function CustomRestProps(group, element) {
   const bo = element.businessObject;
-  console.log('👀 Checking element:', bo);
-
+  console.log('✅ Injecting REST Props for', bo);
   if (bo && bo.connectorType === 'REST') {
-    console.log('✅ Displaying REST fields');
+    console.log('✅ Injecting REST Props');
 
     group.entries.push(
       entryFactory.textField({
         id: 'restUrl',
         label: 'REST URL',
-        modelProperty: 'restUrl'
+        modelProperty: 'restUrl',
       }),
       entryFactory.selectBox({
         id: 'restMethod',
@@ -64,11 +63,10 @@ export default function CustomRestProps(group, element) {
           { name: 'GET', value: 'GET' },
           { name: 'POST', value: 'POST' },
           { name: 'PUT', value: 'PUT' },
-          { name: 'DELETE', value: 'DELETE' }
-        ]
+          { name: 'DELETE', value: 'DELETE' },
+        ],
       })
     );
   }
-
-  return group;
 }
+

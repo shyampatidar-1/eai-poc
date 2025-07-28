@@ -1,22 +1,17 @@
 import CustomRestProps from "./CustomRestProps";
 
-
-export default function CustomPropertiesProvider(propertiesPanel) {
-  console.log('✅ CustomPropertiesProvider initialized');
-  propertiesPanel.registerProvider(500, this);
+export default function CustomPropertiesProvider(propertiesPanel, translate) {
+  console.log('✅ CustomPropertiesProvider Registered');
+  this.getGroups = function (element) {
+    return function (groups) {
+      const generalGroup = groups.find(group => group.id === 'general');
+      if (generalGroup) {
+        CustomRestProps(generalGroup, element);
+      }
+      return groups;
+    };
+  };
 }
 
-CustomPropertiesProvider.$inject = ['propertiesPanel'];
-
-CustomPropertiesProvider.prototype.getGroups = function (element) {
-  console.log('🧩 getGroups called for:', element);
-
-  return function (groups) {
-    const generalGroup = groups.find(group => group.id === 'general');
-    if (generalGroup) {
-      console.log('💡 Injecting REST props...');
-      CustomRestProps(generalGroup, element);
-    }
-    return groups;
-  };
-};
+CustomPropertiesProvider.$inject = ['propertiesPanel', 'translate'];
+CustomPropertiesProvider.prototype.propertiesProvider = true;

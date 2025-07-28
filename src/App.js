@@ -22,6 +22,7 @@ import Staff from './pages/role-management/staff';
 import AddStaff from './pages/role-management/add-staff';
 import AddRole from './pages/role-management/add-role';
 import { ToastContainer } from 'react-toastify';
+import Mapping from './pages/mapping/mapping';
 
 
 
@@ -48,6 +49,7 @@ function App() {
           <Route path={ROUTES?.MESSAGETRACKER} element={<ProtectedRoutes component={<MessageTracker />} moduleCode='message-tracker' />} />
           <Route path={ROUTES?.PASSWORDPOLICY} element={<ProtectedRoutes component={<PasswordPolicy />} moduleCode='password-policy' />} />
           <Route path={ROUTES?.AUDITLOG} element={<ProtectedRoutes component={<AuditLog />} moduleCode='audit-log' />} />
+          <Route path={ROUTES?.MAPPING} element={<ProtectedRoutes component={<Mapping />} moduleCode='audit-log' />} />
           <Route path={ROUTES?.ROLE} element={<ProtectedRoutes component={<Role />} moduleCode='role' />} />
           <Route path={ROUTES?.STAFF} element={<ProtectedRoutes component={<Staff />} moduleCode='staff' />} />
           <Route path={ROUTES?.ADDSTAFF} element={<ProtectedRoutes component={<AddStaff />} />} />

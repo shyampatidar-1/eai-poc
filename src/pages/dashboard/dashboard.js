@@ -141,148 +141,150 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container-fluid p-4">
-      {/* Top Stats */}
-      <div className="row g-3 mb-3">
-        {[
-          ["Total Integrations", 84],
-          ["Avg Latency", "120 ms"],
-          ["SLA Breaches", 5],
-          ["System Error Rate", "1.3 %"],
-          ["Longest Running", "3.4 hrs"],
-        ].map(([title, value], idx) => (
-          <div className="col-6 col-lg" key={idx}>
+    <div className=" main_datatable" >
+      <h5 className="mb-3 fs-3 fw-600"> Dashboard</h5>
+      <div className="">
+        {/* Top Stats */}
+        <div className="row g-3 mb-3">
+          {[
+            ["Total Integrations", 84],
+            ["Avg Latency", "120 ms"],
+            ["SLA Breaches", 5],
+            ["System Error Rate", "1.3 %"],
+            ["Longest Running", "3.4 hrs"],
+          ].map(([title, value], idx) => (
+            <div className="col-6 col-lg" key={idx}>
+              <div className="bg-white p-3 rounded-4 shadow-sm">
+                <small className="text-muted">{title}</small>
+                <h5 className="fw-bold mt-2">{value}</h5>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mid Section */}
+        <div className="row g-3 mb-3">
+          {/* Live Tracker */}
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm h-100">
+              <h6 className="text-secondary mb-3">Live Process Tracker</h6>
+              <Line data={lineChartData} />
+            </div>
+          </div>
+
+          {/* Top Failing */}
+          <div className="col-md-5">
+            <div className="bg-white p-3 rounded-4 shadow-sm h-100">
+              <h6 className="text-secondary mb-3">Top Failing Integrations</h6>
+              <table className="table table-sm table-borderless mb-0">
+                <thead>
+                  <tr className="small text-muted">
+                    <th>Integration</th>
+                    <th>Failures</th>
+                    <th>Cause</th>
+                  </tr>
+                </thead>
+                <tbody className="small">
+                  <tr>
+                    <td>OMS</td>
+                    <td>12 min ago</td>
+                    <td>Transaction Error</td>
+                  </tr>
+                  <tr>
+                    <td>SAP</td>
+                    <td>12 min ago</td>
+                    <td>Timeout</td>
+                  </tr>
+                  <tr>
+                    <td>FTP</td>
+                    <td>2 min ago</td>
+                    <td>Timeout</td>
+                  </tr>
+                  <tr>
+                    <td>REST</td>
+                    <td>3 min ago</td>
+                    <td>Transaction Error</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Node Health */}
+          <div className="col-md-3">
+            <div className="bg-white p-3 rounded-4 shadow-sm h-100">
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h6 className="text-secondary mb-0">Node Health</h6>
+                <small className="text-muted">Auto Update</small>
+              </div>
+              <ul className="list-group list-group-flush small">
+                {["Application Server", "Database", "Kafka", "API Gateway"].map(
+                  (item, i) => (
+                    <li className="list-group-item border-0 d-flex gap-2 px-0 " key={i}>
+                      <span className="text-success">●</span >
+                      <span>{item}</span>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Charts Row */}
+        <div className="row g-3 mb-3">
+          <div className="col-md-4">
             <div className="bg-white p-3 rounded-4 shadow-sm">
-              <small className="text-muted">{title}</small>
-              <h5 className="fw-bold mt-2">{value}</h5>
+              <h6 className="text-secondary mb-3">Running vs Completed</h6>
+              <Bar data={barData} />
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Mid Section */}
-      <div className="row g-3 mb-3">
-        {/* Live Tracker */}
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm h-100">
-            <h6 className="text-secondary mb-3">Live Process Tracker</h6>
-            <Line data={lineChartData} />
-          </div>
-        </div>
-
-        {/* Top Failing */}
-        <div className="col-md-5">
-          <div className="bg-white p-3 rounded-4 shadow-sm h-100">
-            <h6 className="text-secondary mb-3">Top Failing Integrations</h6>
-            <table className="table table-sm table-borderless mb-0">
-              <thead>
-                <tr className="small text-muted">
-                  <th>Integration</th>
-                  <th>Failures</th>
-                  <th>Cause</th>
-                </tr>
-              </thead>
-              <tbody className="small">
-                <tr>
-                  <td>OMS</td>
-                  <td>12 min ago</td>
-                  <td>Transaction Error</td>
-                </tr>
-                <tr>
-                  <td>SAP</td>
-                  <td>12 min ago</td>
-                  <td>Timeout</td>
-                </tr>
-                <tr>
-                  <td>FTP</td>
-                  <td>2 min ago</td>
-                  <td>Timeout</td>
-                </tr>
-                <tr>
-                  <td>REST</td>
-                  <td>3 min ago</td>
-                  <td>Transaction Error</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Node Health */}
-        <div className="col-md-3">
-          <div className="bg-white p-3 rounded-4 shadow-sm h-100">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <h6 className="text-secondary mb-0">Node Health</h6>
-              <small className="text-muted">Auto Update</small>
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm">
+              <h6 className="text-secondary mb-3">Alerts Over Time</h6>
+              <Bar data={alertsData} />
             </div>
-            <ul className="list-group list-group-flush small">
-              {["Application Server", "Database", "Kafka", "API Gateway"].map(
-                (item, i) => (
-                  <li className="list-group-item border-0 d-flex gap-2 px-0 " key={i}>
-                    <span className="text-success">●</span >
-                    <span>{item}</span>
-                  </li>
-                )
-              )}
-            </ul>
           </div>
-        </div>
-      </div>
 
-      {/* Charts Row */}
-      <div className="row g-3 mb-3">
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-3">Running vs Completed</h6>
-            <Bar data={barData} />
-          </div>
-        </div>
-
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-3">Alerts Over Time</h6>
-            <Bar data={alertsData} />
-          </div>
-        </div>
-
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm text-center">
-            <h6 className="text-secondary mb-3">SLA Compliance</h6>
-            <div className="mx-auto" style={{ width: 150 }}>
-              <Doughnut data={doughnutData} />
-              <div className="fw-bold mt-2">96%</div>
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm text-center">
+              <h6 className="text-secondary mb-3">SLA Compliance</h6>
+              <div className="mx-auto" style={{ width: 150 }}>
+                <Doughnut data={doughnutData} />
+                <div className="fw-bold mt-2">96%</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Grid */}
-      <div className="row g-3">
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-2">Retry Queue Status</h6>
-            <p className="mb-1 small">Retry Queue: Oms</p>
-            <p className="small">Recent API Failures: Middleware</p>
+        {/* Bottom Grid */}
+        <div className="row g-3">
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm">
+              <h6 className="text-secondary mb-2">Retry Queue Status</h6>
+              <p className="mb-1 small">Retry Queue: Oms</p>
+              <p className="small">Recent API Failures: Middleware</p>
+            </div>
           </div>
-        </div>
 
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-2">Recent API Failures</h6>
-            <p className="mb-1 small">GET /api/data — 18:43</p>
-            <p className="small">POST /api/order — 14:32</p>
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm">
+              <h6 className="text-secondary mb-2">Recent API Failures</h6>
+              <p className="mb-1 small">GET /api/data — 18:43</p>
+              <p className="small">POST /api/order — 14:32</p>
+            </div>
           </div>
-        </div>
 
-        <div className="col-md-4">
-          <div className="bg-white p-3 rounded-4 shadow-sm">
-            <h6 className="text-secondary mb-2">Inflight Transactions</h6>
-            <p className="mb-1 small">Completed: 49</p>
-            <p className="small">Ready: 15</p>
+          <div className="col-md-4">
+            <div className="bg-white p-3 rounded-4 shadow-sm">
+              <h6 className="text-secondary mb-2">Inflight Transactions</h6>
+              <p className="mb-1 small">Completed: 49</p>
+              <p className="small">Ready: 15</p>
+            </div>
           </div>
-        </div>
 
-        {/* <div className="col-md-2">
+          {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Maintenance Mode</h6>
             <div className="form-check form-switch mb-2">
@@ -296,7 +298,7 @@ const Dashboard = () => {
           </div>
         </div> */}
 
-        {/* <div className="col-md-2">
+          {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Admin Actions</h6>
             <ul className="small ps-3 mb-0">
@@ -307,7 +309,7 @@ const Dashboard = () => {
           </div>
         </div> */}
 
-        {/* <div className="col-md-2">
+          {/* <div className="col-md-2">
           <div className="bg-white p-3 rounded-4 shadow-sm">
             <h6 className="text-secondary mb-2">Scheduled Jobs</h6>
             <p className="small mb-1">Job Name — 18m 35s</p>
@@ -315,6 +317,7 @@ const Dashboard = () => {
           </div>
         </div> */}
 
+        </div>
       </div>
     </div>
   );

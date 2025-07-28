@@ -135,7 +135,8 @@ import {
   MdOutlinePolicy,
   MdOutlineTrackChanges,
   MdOutlineSupervisorAccount,
-  MdOutlineEventNote
+  MdOutlineEventNote,
+  MdCompareArrows
 } from 'react-icons/md';
 
 import { useEffect, useState } from 'react';
@@ -151,7 +152,7 @@ const Sidebar = () => {
   const permission = useSelector((state) => state?.permission?.value);
   const modulePermission = decryptAEStoJSON(permission);
 
-  const allowedModuleCodes =modulePermission&& modulePermission?.map(item => item?.moduleCode);
+  const allowedModuleCodes = modulePermission && modulePermission?.map(item => item?.moduleCode);
 
 
   const menuItems = [
@@ -173,6 +174,7 @@ const Sidebar = () => {
     },
     { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', moduleCode: 'password-policy', icon: <MdOutlinePolicy className="fs-5" /> },
     { path: ROUTES?.AUDITLOG, label: 'Audit log', moduleCode: 'audit-log', icon: <MdOutlineEventNote className="fs-5" /> },
+    { path: ROUTES?.MAPPING, label: 'Mapping', moduleCode: 'audit-log', icon: <MdCompareArrows className="fs-5" /> },
   ];
 
   const filteredMenuItems = menuItems
