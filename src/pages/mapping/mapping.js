@@ -146,9 +146,9 @@ const Mapping = () => {
 
   return (
     <div className="main_datatable">
-      <h5 className="mb-3 fs-3 fw-600"> Mapping</h5>
+      <h5 className=" fs-3 fw-600"> Mapping</h5>
       <div className="">
-        <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="d-flex justify-content-between align-items-center">
           <h4></h4>
           <button className="btn btn-primary btn-sm">Done</button>
         </div>

@@ -174,7 +174,7 @@ const Sidebar = () => {
     },
     { path: ROUTES?.PASSWORDPOLICY, label: 'Password Policy', moduleCode: 'password-policy', icon: <MdOutlinePolicy className="fs-5" /> },
     { path: ROUTES?.AUDITLOG, label: 'Audit log', moduleCode: 'audit-log', icon: <MdOutlineEventNote className="fs-5" /> },
-    { path: ROUTES?.MAPPING, label: 'Mapping', moduleCode: 'audit-log', icon: <MdCompareArrows className="fs-5" /> },
+    // { path: ROUTES?.MAPPING, label: 'Mapping', moduleCode: 'audit-log', icon: <MdCompareArrows className="fs-5" /> },
   ];
 
   const filteredMenuItems = menuItems
