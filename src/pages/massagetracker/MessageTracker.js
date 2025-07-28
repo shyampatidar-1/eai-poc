@@ -17,7 +17,7 @@ const MessageTracker = () => {
       target: 'ERP System',
       protocol: 'HTTP',
       status: 'Success',
-      duration: 1521
+      duration: 15
     },
     {
       id: 'd4e5a128',
@@ -26,7 +26,7 @@ const MessageTracker = () => {
       target: 'Order Management',
       protocol: 'JMS',
       status: 'Failure',
-      duration: 1273
+      duration: 20
     },
     {
       id: 'c583a157',
@@ -35,7 +35,7 @@ const MessageTracker = () => {
       target: 'User Database',
       protocol: 'HTTP',
       status: 'Success',
-      duration: 1210
+      duration: 11
     },
     {
       id: 'd4e5a128',
@@ -44,7 +44,7 @@ const MessageTracker = () => {
       target: 'Order Management',
       protocol: 'JMS',
       status: 'Failure',
-      duration: 1273
+      duration: 12
     },
     {
       id: 'c583a157',
@@ -53,7 +53,7 @@ const MessageTracker = () => {
       target: 'User Database',
       protocol: 'HTTP',
       status: 'Success',
-      duration: 1210
+      duration: 9
     },
   ];
   const tableColumnsRole = [
@@ -91,7 +91,7 @@ const MessageTracker = () => {
       selector: row => <p className={`rounded-2 px-2 text-white  mb-0 ${row?.status === "Success" ? "bg-success" : "bg-danger"}`}>{row.status}</p>,
     },
     {
-      name: 'Duration (ms)',
+      name: 'Duration min',
       selector: row => row.duration,
     },
   ];
@@ -174,8 +174,8 @@ const MessageTracker = () => {
                 </div>
               </div>
               <p class="mb-1 fs-14"><strong className="fw-500"> Status:</strong> <span class="text-success fw-semibold">Success</span></p>
-              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 04/03/2024 11:30 AM</p>
-              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 04/03/2024 11:30 AM</p>
+              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 04/03/2025 11:30 AM</p>
+              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 04/03/2025 11:50 AM</p>
             </div>
 
             <div class="bg-white rounded shadow-sm p-3 mb-4">
@@ -194,8 +194,8 @@ const MessageTracker = () => {
                 </div>
               </div>
               <p class="mb-1 fs-14"><strong className="fw-500"> Status:</strong> <span class="text-success fw-semibold">Success</span></p>
-              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 04/03/2024 11:30 AM</p>
-              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 04/03/2024 11:30 AM</p>
+              <p class="mb-1 fs-14"><strong className="fw-500">Start:</strong> 10/06/2025 08:30 PM</p>
+              <p class="mb-0 fs-14"><strong className="fw-500">End:</strong> 11/06/2024 09:50 PM</p>
             </div>
 
 

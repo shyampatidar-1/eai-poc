@@ -23,22 +23,22 @@ const AuditLog = () => {
   });
 
   const payload = {
-      pageIndex: page || 0,
-  pageSize: pageSize || DEFAULT_PAGE_LENGTH,
-  sortBy: sortColumn || "id",
-  searchBy: searchTerm,
-  sortingOrder: sortDirection || "desc",
-  fromDate: filterValues.fromDate,
-  toDate: filterValues.toDate,
-  userName: filterValues.user,
-  moduleName: "", // Add if needed
-  description: filterValues.description,
-  action: filterValues.action,
-  ipAddress: filterValues.ipaddress,
+    pageIndex: page || 0,
+    pageSize: pageSize || DEFAULT_PAGE_LENGTH,
+    sortBy: sortColumn || "id",
+    searchBy: searchTerm,
+    sortingOrder: sortDirection || "desc",
+    fromDate: filterValues.fromDate,
+    toDate: filterValues.toDate,
+    userName: filterValues.user,
+    moduleName: "", // Add if needed
+    description: filterValues.description,
+    action: filterValues.action,
+    ipAddress: filterValues.ipaddress,
   };
 
 
-   console.log("filterValues",filterValues)
+  console.log("filterValues", filterValues)
   const handleReset = () => {
     setFilterValues({
       user: "",
@@ -64,25 +64,30 @@ const AuditLog = () => {
   const tableColumnsRole = [
     {
       name: "Sr. No.",
+
       selector: (row, index) => index + 1,
-      width: "100px",
+      width: "80px",
     },
     {
       name: "Timestamp",
       selector: (row) => row.creationDate,
       sortable: true,
+      width: "180px",
     },
     {
       name: "Action",
       selector: (row) => row.action,
       sortable: true,
+      width: "120px",
     },
     {
       name: "Description",
       selector: (row) => row.description,
+      width: "290px",
     },
     {
       name: "User",
+      width: "150px",
       selector: (row) => row.userName,
     },
     {
@@ -101,12 +106,12 @@ const AuditLog = () => {
     modal.show();
   };
 
-const handleApplyFilter = () => {
-  setPage(0); // optional: reset to first page
-  const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
-  modal.hide();
-  fetchAuditLogData(); // fetch data with new filters
-};
+  const handleApplyFilter = () => {
+    setPage(0); // optional: reset to first page
+    const modal = window.bootstrap.Modal.getInstance(filterModalRef.current);
+    modal.hide();
+    fetchAuditLogData(); // fetch data with new filters
+  };
 
   const fetchAuditLogData = async () => {
     try {
