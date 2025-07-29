@@ -1206,8 +1206,8 @@ const connectorPalette = [
     group: "Files & Storage",
     connectors: [
       { label: "FTP/SFTP", type: "bpmn:Task" },
-      { label: "Amazon S3", type: "bpmn:Task" },
-      { label: "Google Drive", type: "bpmn:Task" }
+      // { label: "Amazon S3", type: "bpmn:Task" },
+      // { label: "Google Drive", type: "bpmn:Task" }
     ]
   },
   {

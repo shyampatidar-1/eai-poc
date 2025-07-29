@@ -133,7 +133,7 @@
 const QueueManagement = () => {
   const queueCardsData = [
     {
-      queueName: "Core.Commands.User",
+      queueName: "OMS",
       type: "Command",
       typeColor: "btn-info",
       messagesTitle: "Messages",
@@ -145,6 +145,7 @@ const QueueManagement = () => {
       errorTitle: "Error",
       error: "0.2%",
       retriesTitle: "Retries",
+      failed: "Failed",
       retries: 2,
       graph: 2,
       actions: [
@@ -154,7 +155,7 @@ const QueueManagement = () => {
       ]
     },
     {
-      queueName: "Core.Events.Internal",
+      queueName: "SALESFORCE",
       type: "Event",
       typeColor: "btn-success",
       messagesTitle: "Messages",
@@ -166,6 +167,7 @@ const QueueManagement = () => {
       errorTitle: "Error",
       error: "0%",
       retriesTitle: "Retries",
+      failed: "Failed",
       retries: 0,
       graph: 0,
       actions: [
@@ -175,7 +177,7 @@ const QueueManagement = () => {
       ]
     },
     {
-      queueName: "Edge.Events.External.Triggered",
+      queueName: "SAP",
       type: "DLQ",
       typeColor: "btn-danger",
       messagesTitle: "Messages",
@@ -187,6 +189,7 @@ const QueueManagement = () => {
       errorTitle: "Pause",
       error: "1.1%",
       retriesTitle: "Purge",
+      failed: "Failed",
       retries: 5,
       graph: 5,
       actions: [
@@ -196,7 +199,7 @@ const QueueManagement = () => {
       ]
     },
     {
-      queueName: "Retry.PaymentAuthoriz",
+      queueName: "LOYALTY SYSTEM",
       type: "Retry",
       typeColor: "btn-warning",
       messagesTitle: "Messages",
@@ -208,6 +211,7 @@ const QueueManagement = () => {
       errorTitle: "Pause",
       error: "1.1%",
       retriesTitle: "Purge",
+      failed: "Failed",
       retries: 22,
       graph: 22,
       actions: [
@@ -217,7 +221,7 @@ const QueueManagement = () => {
       ]
     },
     {
-      queueName: "DLQ.NotificationService",
+      queueName: "NETACT",
       type: "DLQ",
       typeColor: "btn-danger",
       messagesTitle: "Messages",
@@ -229,6 +233,7 @@ const QueueManagement = () => {
       errorTitle: "Errors",
       error: "5.3%",
       retriesTitle: "DL3 Count",
+      failed: "Failed",
       retries: 5,
       graph: 5,
       actions: [
@@ -238,7 +243,7 @@ const QueueManagement = () => {
       ]
     },
     {
-      queueName: "Schedule.DailyReconciliation",
+      queueName: "SAM",
       type: "ST",
       typeColor: "btn-secondary",
       messagesTitle: "Messages",
@@ -250,6 +255,7 @@ const QueueManagement = () => {
       errorTitle: "Retries",
       error: "0%",
       retriesTitle: "Retries",
+      failed: "Failed",
       retries: 0,
       graph: 0,
       actions: [
@@ -264,7 +270,7 @@ const QueueManagement = () => {
   return (<>
     <div className='main_datatable'>
       <div className='d-flex justify-content-between'>
-        <h5 className="fs-3 fw-600 ">Enterprise Queue Management</h5>
+        <h5 className="fs-3 fw-600 ">Queue Management</h5>
       </div>
 
       <div className="row gx-4 my-3">
@@ -778,7 +784,7 @@ const QueueManagement = () => {
                     <div style={{ width: '12px', height: '12px' }} className="bg-secondary rounded-circle"></div>
                   </div>
                   <p className="m-0 fs-6 fw-bolder">{queueData.queueName}</p>
-                  <button className={`btn  btn-sm   p-1 ${queueData.typeColor}`}>{queueData.type}</button>
+                  {/* <button className={`btn  btn-sm   p-1 ${queueData.typeColor}`}>{queueData.type}</button> */}
                 </div>
 
 
@@ -817,6 +823,7 @@ const QueueManagement = () => {
                   </div>
                   <div className="col-4 mb-3">
                     <h6>{queueData.graph}</h6>
+                    <small>{queueData.failed}</small>
                     <small>&nbsp;</small>
                   </div>
                 </div>
