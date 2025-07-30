@@ -3,9 +3,14 @@ import TableLayout from "../../components/layout/table-layout";
 import { DEFAULT_PAGE_LENGTH } from "../../utils/app-constants";
 import { getAuditLog } from "../../hooks/services/api-services";
 import { toastEmitter } from "../../utils/utilities";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const AuditLog = () => {
   const [rowData, setRowData] = useState([]);
+  const [rowDataFull, setRowDataFull] = useState([]);
   const [pending, setPending] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(0);
@@ -97,9 +102,6 @@ const AuditLog = () => {
     },
   ];
 
-  const handleExport = () => {
-    alert("Export button clicked — add export logic here");
-  };
 
   const openFilterModal = () => {
     const modal = new window.bootstrap.Modal(filterModalRef.current);
@@ -138,6 +140,102 @@ const AuditLog = () => {
     fetchAuditLogData();
   }, [page, pageSize, searchTerm, sortColumn, sortDirection]);
 
+
+  const fetchAuditLogDataFullData = async () => {
+    const defaultPayload = {
+      pageIndex: 0,
+      pageSize: 0,
+      sortBy: "",
+      searchBy: "",
+      sortingOrder: "desc",
+      fromDate: filterValues.fromDate,
+      toDate: filterValues.toDate,
+      userName: filterValues.user,
+      moduleName: "", // Add if needed
+      description: filterValues.description,
+      action: filterValues.action,
+      ipAddress: filterValues.ipaddress,
+    };
+    try {
+      const response = await getAuditLog(defaultPayload);
+
+      if (response.status !== 200) {
+        toastEmitter("error", response?.data?.message);
+      } else {
+        // Safe fallback with null-item filtering
+        const rawList = response?.data?.data || [];
+
+
+        setRowDataFull(rawList);
+
+      }
+    } catch (err) {
+      toastEmitter("error", "Something went wrong. Please try again later.");
+    } finally {
+      setPending(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAuditLogDataFullData();
+  }, [filterValues]);
+
+
+  // pdf export and excel export
+  const handleExportExcel = () => {
+    const exportData = rowDataFull.map((row, index) => ({
+      "Sr. No.": index + 1,
+      "Timestamp": row.creationDate,
+      "Action": row.action,
+      "Description": row.description,
+      "User": row.userName,
+      "IP Address": "192.168.1.2", // static or replace with row.ip if available
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "AuditLog");
+
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+
+    saveAs(blob, "Audit_Log_Export.xlsx");
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+
+    const tableColumn = [
+      "Sr. No.",
+      "Timestamp",
+      "Action",
+      "Description",
+      "User",
+      "IP Address",
+    ];
+
+    const tableRows = rowDataFull.map((row, index) => [
+      index + 1,
+      row.creationDate,
+      row.action,
+      row.description,
+      row.userName,
+      "192.168.1.2", // static IP or row.ip
+    ]);
+
+    // ❗ Call autoTable(doc, options) instead of doc.autoTable
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 20,
+      styles: { fontSize: 8 },
+    });
+
+    doc.save("Audit_Log_Export.pdf");
+  };
+
+
+
   return (
     <div className="main_datatable">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -149,9 +247,13 @@ const AuditLog = () => {
           >
             Filter
           </button>
-          {/* <button className="btn btn-outline-secondary" onClick={handleExport}>
-            Export
-          </button> */}
+          <button className="btn btn-outline-secondary" onClick={handleExportExcel}>
+            Export to Excel
+          </button>
+
+          <button className="btn btn-outline-secondary ms-2" onClick={handleExportPDF}>
+            Export to PDF
+          </button>
         </div>
       </div>
 
